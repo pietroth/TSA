@@ -1,0 +1,27 @@
+package br.com.pietroth.tsa.core.world.biome;
+
+import br.com.pietroth.tsa.core.world.WorldConfiguration;
+
+public class BiomePicker {
+    private final BiomeRegister biomeRegister;
+
+    public BiomePicker(BiomeRegister biomeRegister) {
+        this.biomeRegister = biomeRegister;
+    }
+
+    public BiomeType pickBiome(float temperature, float elevation, float humidity, float lake) {
+        if (elevation < WorldConfiguration.SEA_LEVEL) {
+            return biomeRegister.get(10); // ocean
+        }
+
+        if (lake < 0.08f && elevation > WorldConfiguration.SEA_LEVEL) {
+            return biomeRegister.get(11); // lake
+        }
+
+        if (temperature > 0.55 && humidity < 0.40) {
+            return biomeRegister.get(2); // desert
+        }
+
+        return biomeRegister.get(1); // plains
+    }
+}
