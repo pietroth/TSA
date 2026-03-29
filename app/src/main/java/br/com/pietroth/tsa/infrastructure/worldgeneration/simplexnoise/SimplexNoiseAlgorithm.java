@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.infrastructure.world_generation.simplex_noise;
+package br.com.pietroth.tsa.infrastructure.worldgeneration.simplexnoise;
 
 import br.com.pietroth.tsa.core.world.generation.NoiseAlgorithm;
 import de.articdive.jnoise.generators.noisegen.opensimplex.FastSimplexNoiseGenerator;
@@ -9,7 +9,6 @@ public class SimplexNoiseAlgorithm implements NoiseAlgorithm {
     private final JNoise jnoise;
     private final long seed;
 
-    @SuppressWarnings("null")
     public SimplexNoiseAlgorithm(long seed) {
         this.seed = seed;
         this.jnoise = JNoise.newBuilder()

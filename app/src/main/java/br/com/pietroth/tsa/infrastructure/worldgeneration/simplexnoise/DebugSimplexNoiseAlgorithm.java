@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.infrastructure.world_generation.simplex_noise;
+package br.com.pietroth.tsa.infrastructure.worldgeneration.simplexnoise;
 
 import javax.swing.*;
 

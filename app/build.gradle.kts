@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     // This dependency is used by the application.
-    implementation(libs.guava)
+    implementation("com.google.guava:guava:33.0.0-jre")
     implementation("de.articdive:jnoise-pipeline:4.1.0")
     implementation("de.articdive:jnoise-modifiers:4.1.0")
     implementation("dev.dominion.ecs:dominion-ecs-api:0.9.0")

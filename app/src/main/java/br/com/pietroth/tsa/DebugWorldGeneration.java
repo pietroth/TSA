@@ -5,7 +5,7 @@ import br.com.pietroth.tsa.core.world.chunk.*;
 import br.com.pietroth.tsa.core.world.chunk.generation.*;
 import br.com.pietroth.tsa.core.world.biome.*;
 import br.com.pietroth.tsa.core.world.generation.*;
-import br.com.pietroth.tsa.infrastructure.world_generation.simplex_noise.SimplexNoiseAlgorithm;
+import br.com.pietroth.tsa.infrastructure.worldgeneration.simplexnoise.SimplexNoiseAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;
