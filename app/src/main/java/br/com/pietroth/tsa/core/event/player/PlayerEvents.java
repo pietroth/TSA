@@ -12,10 +12,10 @@ public class PlayerEvents {
         this.eventDispatcher = eventDispatcher;
     }
 
-    public void publishPlayerMoved(float sx, float sy) {
+    public void publish_PlayerMoved(float sx, float sy) {
         PlayerMovedData data = new PlayerMovedData(sx, sy);
-        Event<PlayerMovedData> event = new Event<>
-            (EventIdentifier.Player.getGlobalId(), EventIdentifier.Player.PLAYER_MOVED.getId(), data);
+        Event<PlayerMovedData> event = new Event<>(
+            EventIdentifier.Player.getGlobalId(), EventIdentifier.Player.PLAYER_MOVED.getId(), data);
         eventDispatcher.enqueue(event);
     }
 }

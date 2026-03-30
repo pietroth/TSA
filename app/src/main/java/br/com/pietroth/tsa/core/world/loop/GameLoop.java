@@ -51,7 +51,7 @@ public class GameLoop extends TicksPerSecondRunnable {
 
         ecsRuntime.schedule(new MovementSystem(ecsRuntime.getContainer()));
 
-        playerEvents.publishPlayerMoved(5f, 0f);
+        playerEvents.publish_PlayerMoved(5f, 0f);
 
         dispatcher.run();
     }
