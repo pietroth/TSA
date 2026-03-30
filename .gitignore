@@ -9,4 +9,6 @@ build
 
 # Ignore test output directories
 **/test/
-test
+**/bin/
+bin/
+test/
