@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.world.loop;
+package br.com.pietroth.tsa.core;
 
 public abstract class TicksPerSecondRunnable implements Runnable {
 

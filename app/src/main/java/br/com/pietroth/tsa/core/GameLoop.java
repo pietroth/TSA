@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.world.loop;
+package br.com.pietroth.tsa.core;
 
 import br.com.pietroth.tsa.core.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.ecs.component.PositionComponent;
