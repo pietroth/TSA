@@ -8,31 +8,27 @@ import br.com.pietroth.tsa.core.world.WorldConfiguration;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.event.*;
 import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.event.codec.Codecs;
 import br.com.pietroth.tsa.core.event.player.PlayerEvents;
-import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedCodec;
 import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedExecuter;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
 
 public class GameLoop extends TicksPerSecondRunnable {
 
     private final ECSRuntime ecsRuntime;
-    private final CodecRegistry codecRegistry;
+    private final CodecRegistry registry;
 
     private EventDispatcher dispatcher;
 
-    public GameLoop(ECSRuntime ecsRuntime, CodecRegistry codecRegistry) {
+    public GameLoop(ECSRuntime ecsRuntime, CodecRegistry registry) {
         super(WorldConfiguration.TPS);
         this.ecsRuntime = ecsRuntime;
-        this.codecRegistry = codecRegistry;
+        this.registry = registry;
     }
 
     @Override
     protected void initialize() {
-        codecRegistry.register(
-            (byte) EventIdentifier.Player.getGlobalId(),
-            (byte) EventIdentifier.Player.PLAYER_MOVED.getId(),
-            new PlayerMovedCodec()
-        );
+        registerCodecs(registry);
 
         ecsRuntime.createEntity(
             new PlayerComponent(1),
@@ -61,5 +57,9 @@ public class GameLoop extends TicksPerSecondRunnable {
     protected void tick() {
         ecsRuntime.tick();
         dispatcher.run();
+    }
+
+    private void registerCodecs(CodecRegistry registry) {
+        Codecs.registerCodecs(registry);
     }
 }
