@@ -2,6 +2,7 @@ package br.com.pietroth.tsa.infrastructure.ecs.dominion;
 
 import br.com.pietroth.tsa.core.ecs.ECSContainer;
 import br.com.pietroth.tsa.core.ecs.entity.ECSEntity;
+import br.com.pietroth.tsa.core.ecs.entity.EntityConsumer;
 import dev.dominion.ecs.api.Dominion;
 import dev.dominion.ecs.api.Entity;
 
@@ -25,47 +26,41 @@ public class DominionContainer implements ECSContainer {
     }
 
     @Override
-    public Iterable<ECSEntity> findEntitiesWith(Class<?>... componentTypes) {
+    public void forEachEntityWith(Class<?>[] componentTypes, EntityConsumer consumer) {
         if (componentTypes == null || componentTypes.length == 0) {
             throw new IllegalArgumentException("At least one component type must be provided.");
         }
 
         switch (componentTypes.length) {
             case 1:
-                return dominion.findEntitiesWith(componentTypes[0])
-                        .stream()
-                        .map(r -> wrapEntity(r.entity()))
-                        .toList();
+                dominion.findEntitiesWith(componentTypes[0])
+                        .forEach(r -> consumer.accept(wrapEntity(r.entity())));
+                return;
 
             case 2:
-                return dominion.findEntitiesWith(componentTypes[0], componentTypes[1])
-                        .stream()
-                        .map(r -> wrapEntity(r.entity()))
-                        .toList();
+                dominion.findEntitiesWith(componentTypes[0], componentTypes[1])
+                        .forEach(r -> consumer.accept(wrapEntity(r.entity())));
+                return;
 
             case 3:
-                return dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2])
-                        .stream()
-                        .map(r -> wrapEntity(r.entity()))
-                        .toList();
-
+                dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2])
+                        .forEach(r -> consumer.accept(wrapEntity(r.entity())));
+                return;
+    
             case 4:
-                return dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2], componentTypes[3])
-                        .stream()
-                        .map(r -> wrapEntity(r.entity()))
-                        .toList();
+                dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2], componentTypes[3])
+                        .forEach(r -> consumer.accept(wrapEntity(r.entity())));
+                return;
 
             case 5:
-                return dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2], componentTypes[3], componentTypes[4])
-                        .stream()
-                        .map(r -> wrapEntity(r.entity()))
-                        .toList();
+                dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2], componentTypes[3], componentTypes[4])
+                        .forEach(r -> consumer.accept(wrapEntity(r.entity())));
+                return;
 
             case 6:
-                return dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2], componentTypes[3], componentTypes[4], componentTypes[5])
-                        .stream()
-                        .map(r -> wrapEntity(r.entity()))
-                        .toList();
+                dominion.findEntitiesWith(componentTypes[0], componentTypes[1], componentTypes[2], componentTypes[3], componentTypes[4], componentTypes[5])
+                        .forEach(r -> consumer.accept(wrapEntity(r.entity())));
+                return;
 
             default:
                 throw new IllegalArgumentException("Dominion supports a maximum of 6 components per query.");

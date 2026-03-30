@@ -12,11 +12,10 @@ public class MovementUseCase {
     }
 
     public void execute(float sx, float sy) {
-        container.findEntitiesWith(VelocityComponent.class, PositionComponent.class)
-            .forEach(entity -> {
-                VelocityComponent velocity = entity.get(VelocityComponent.class);
-                velocity.x += sx;
-                velocity.y += sy;
-            });
+        container.forEachEntityWith(new Class[]{VelocityComponent.class, PositionComponent.class}, entity -> {
+            VelocityComponent velocity = entity.get(VelocityComponent.class);
+            velocity.x += sx;
+            velocity.y += sy;
+        });
     }
 }
