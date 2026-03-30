@@ -1,7 +1,7 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.core.application.MovementUseCase;
-import br.com.pietroth.tsa.core.event.CodecRegistry;
+import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.GameLoop;
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 

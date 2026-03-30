@@ -7,6 +7,7 @@ import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.world.WorldConfiguration;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.event.*;
+import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.event.player.PlayerEvents;
 import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedCodec;
 import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedExecuter;

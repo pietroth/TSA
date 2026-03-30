@@ -1,6 +1,8 @@
-package br.com.pietroth.tsa.core.event;
+package br.com.pietroth.tsa.core.event.codec;
 
 import java.nio.ByteBuffer;
+
+import br.com.pietroth.tsa.core.event.EventData;
 
 public interface EventCodec<T extends EventData> {
     void encode(ByteBuffer buffer, T data);

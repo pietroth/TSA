@@ -2,6 +2,9 @@ package br.com.pietroth.tsa.core.event;
 
 import java.nio.ByteBuffer;
 
+import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.event.codec.EventCodec;
+
 public class EventEncoder {
 
     private final CodecRegistry codecRegistry;

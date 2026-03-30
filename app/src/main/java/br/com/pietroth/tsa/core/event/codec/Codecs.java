@@ -1,5 +1,6 @@
-package br.com.pietroth.tsa.core.event;
+package br.com.pietroth.tsa.core.event.codec;
 
+import br.com.pietroth.tsa.core.event.EventIdentifier;
 import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedCodec;
 
 public class Codecs {

@@ -2,7 +2,7 @@ package br.com.pietroth.tsa.core.event.player.playermoved;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.event.EventCodec;
+import br.com.pietroth.tsa.core.event.codec.EventCodec;
 
 public class PlayerMovedCodec implements EventCodec<PlayerMovedData> {
 
