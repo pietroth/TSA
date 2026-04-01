@@ -13,7 +13,7 @@ public class EventEncoder {
         this.codecRegistry = codecRegistry;
     }
 
-    public byte[] encode(Event<EventData> event) {
+    public byte[] encode(Event<? extends EventData> event) {
         ByteBuffer buffer = ByteBuffer.allocate(1024); 
 
         short eventId = (short)((event.getFamily() << 8) | (event.getType() & 0xFF));
