@@ -37,12 +37,7 @@ public class GameLoop extends TicksPerSecondRunnable {
         );
 
         dispatcher = new EventDispatcher(256, 256);
-
-        dispatcher.register(
-            (byte) EventIdentifier.Player.getGlobalId(),
-            (byte) EventIdentifier.Player.PLAYER_MOVED.getId(),
-            new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer()))
-        );
+        registerExecuters(dispatcher);
 
         PlayerEvents playerEvents = new PlayerEvents(dispatcher);
 
@@ -61,5 +56,13 @@ public class GameLoop extends TicksPerSecondRunnable {
 
     private void registerCodecs(CodecRegistry registry) {
         Codecs.registerCodecs(registry);
+    }
+
+    private void registerExecuters(EventDispatcher dispatcher) {
+        dispatcher.register(
+            (byte) EventIdentifier.Player.getGlobalId(),
+            (byte) EventIdentifier.Player.PLAYER_MOVED.getId(),
+            new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer()))
+        );
     }
 }
