@@ -27,7 +27,6 @@ public class TCPClientConnection implements Connection {
 
     @Override
     public byte[] read() throws IOException {
-
         byte[] buffer = new byte[1024];
         int bytesRead = input.read(buffer);
 
