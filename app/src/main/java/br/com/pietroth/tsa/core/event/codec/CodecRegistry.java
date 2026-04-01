@@ -6,18 +6,18 @@ import java.util.Map;
 import br.com.pietroth.tsa.core.event.EventData;
 
 public class CodecRegistry {
-    private final Map<Short, EventCodec<? extends EventData>> registry = new HashMap<>();
+    private final Map<Short, Codec<? extends EventData>> registry = new HashMap<>();
 
-    public void register(byte family, byte type, EventCodec<? extends EventData> codec) {
+    public void register(byte family, byte type, Codec<? extends EventData> codec) {
         short eventId = (short)((family << 8) | (type & 0xFF));
         registry.put(eventId, codec);
     }
 
-    public EventCodec<? extends EventData> get(short eventId) {
+    public Codec<? extends EventData> get(short eventId) {
         return registry.get(eventId);
     }
 
-    public EventCodec<? extends EventData> get(byte family, byte type) {
+    public Codec<? extends EventData> get(byte family, byte type) {
         short eventId = (short)((family << 8) | (type & 0xFF));
         return registry.get(eventId);
     }

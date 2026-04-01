@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import br.com.pietroth.tsa.core.event.EventData;
 
-public interface EventCodec<T extends EventData> {
+public interface Codec<T extends EventData> {
     void encode(ByteBuffer buffer, T data);
     T decode(ByteBuffer buffer);
 }

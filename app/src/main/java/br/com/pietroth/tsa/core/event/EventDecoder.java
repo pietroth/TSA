@@ -3,7 +3,7 @@ package br.com.pietroth.tsa.core.event;
 import java.nio.ByteBuffer;
 
 import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.event.codec.EventCodec;
+import br.com.pietroth.tsa.core.event.codec.Codec;
 
 public class EventDecoder {
 
@@ -20,7 +20,7 @@ public class EventDecoder {
         byte family = (byte)((eventId >> 8) & 0xFF);
         byte type   = (byte)(eventId & 0xFF);
 
-        EventCodec<?> codec = codecRegistry.get(eventId);
+        Codec<?> codec = codecRegistry.get(eventId);
 
         Object payload = codec.decode(buffer);
 

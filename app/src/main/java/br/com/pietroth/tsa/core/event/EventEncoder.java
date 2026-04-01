@@ -3,7 +3,7 @@ package br.com.pietroth.tsa.core.event;
 import java.nio.ByteBuffer;
 
 import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.event.codec.EventCodec;
+import br.com.pietroth.tsa.core.event.codec.Codec;
 
 public class EventEncoder {
 
@@ -22,7 +22,7 @@ public class EventEncoder {
         buffer.putShort(eventId);
 
         @SuppressWarnings("unchecked")
-        EventCodec<EventData> codec = (EventCodec<EventData>) codecRegistry.get(event.getFamily(), event.getType());
+        Codec<EventData> codec = (Codec<EventData>) codecRegistry.get(event.getFamily(), event.getType());
 
         codec.encode(buffer, event.getData());
 
