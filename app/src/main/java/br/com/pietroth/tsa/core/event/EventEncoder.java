@@ -14,20 +14,23 @@ public class EventEncoder {
     }
 
     public byte[] encode(Event<? extends EventData> event) {
-        ByteBuffer buffer = ByteBuffer.allocate(1024); 
+        @SuppressWarnings("unchecked")
+        Codec<EventData> codec =
+            (Codec<EventData>) codecRegistry.get(event.getFamily(), event.getType());
+
+        int payloadSize = codec.size();
+        int totalSize = 4 + 2 + payloadSize; // 4 bytes for length prefix + 2 bytes for event ID + payload size
+
+        ByteBuffer buffer = ByteBuffer.allocate(totalSize);
 
         buffer.position(4); // Reserve space for the length prefix
 
         short eventId = (short)((event.getFamily() << 8) | (event.getType() & 0xFF));
         buffer.putShort(eventId);
 
-        @SuppressWarnings("unchecked")
-        Codec<EventData> codec = (Codec<EventData>) codecRegistry.get(event.getFamily(), event.getType());
-
         codec.encode(buffer, event.getData());
 
-        int length = buffer.position() - 4; // Calculate the length of the event data
-        buffer.putInt(0, length); // Write the length prefix at the reserved space
+        buffer.putInt(0, totalSize); // Write the length prefix at the reserved space
 
         byte[] raw = new byte[buffer.position()];
         buffer.flip();
