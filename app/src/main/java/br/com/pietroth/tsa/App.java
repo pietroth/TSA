@@ -18,7 +18,11 @@ public class App {
         CodecRegistry codecRegistry = new CodecRegistry();
 
         // Game Loop
-        GameLoop loop = new GameLoop(runtime, codecRegistry);
+        GameLoop loop = GameLoop.builder()
+                .ecsRuntime(runtime)
+                .registry(codecRegistry)
+                .build();
+                
         new Thread(loop).start();
 
         // Movement UseCase
