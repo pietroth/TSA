@@ -5,13 +5,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
+import br.com.pietroth.tsa.core.event.EventDecoder;
+import br.com.pietroth.tsa.core.event.EventDispatcher;
+import br.com.pietroth.tsa.core.event.EventEncoder;
+
 public class TCPServer implements Server {
     private final int port;
     private final ExecutorService clientPool;
+    private final EventDecoder decoder;
+    private final EventDispatcher dispatcher;
+    private final EventEncoder encoder;
 
-    public TCPServer(int port, ExecutorService clientPool) {
-        this.port = port;
-        this.clientPool = clientPool;
+    private TCPServer(Builder builder) {
+        this.port = builder.port;
+        this.clientPool = builder.clientPool;
+        this.decoder = builder.decoder;
+        this.dispatcher = builder.dispatcher;
+        this.encoder = builder.encoder;
     }
 
     @Override
@@ -21,7 +31,15 @@ public class TCPServer implements Server {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
-                clientPool.submit(new ClientHandler(clientSocket));
+
+                clientPool.submit(
+                    ClientHandler.builder()
+                        .clientSocket(clientSocket)
+                        .decoder(decoder)
+                        .connection(new TCPClientConnection(clientSocket, encoder))
+                        .dispatcher(dispatcher)
+                        .build()
+                );
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,7 +48,53 @@ public class TCPServer implements Server {
 
     @Override
     public void stop() {
-        System.out.println("Stopping TCP Server...");
+        clientPool.shutdownNow();
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private int port;
+        private ExecutorService clientPool;
+        private EventDecoder decoder;
+        private EventDispatcher dispatcher;
+        private EventEncoder encoder;
+
+        public Builder port(int port) {
+            this.port = port;
+            return this;
+        }
+
+        public Builder clientPool(ExecutorService clientPool) {
+            this.clientPool = clientPool;
+            return this;
+        }
+
+        public Builder decoder(EventDecoder decoder) {
+            this.decoder = decoder;
+            return this;
+        }
+
+        public Builder dispatcher(EventDispatcher dispatcher) {
+            this.dispatcher = dispatcher;
+            return this;
+        }
+
+        public Builder encoder(EventEncoder encoder) {
+            this.encoder = encoder;
+            return this;
+        }
+
+        public TCPServer build() {
+            if (port <= 0) throw new IllegalStateException("Port must be set");
+            if (clientPool == null) throw new IllegalStateException("ExecutorService is required");
+            if (decoder == null) throw new IllegalStateException("EventDecoder is required");
+            if (dispatcher == null) throw new IllegalStateException("EventDispatcher is required");
+            if (encoder == null) throw new IllegalStateException("EventEncoder is required");
+
+            return new TCPServer(this);
+        }
     }
 }
- 

@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Arrays;
+import java.io.DataInputStream;
+import java.io.EOFException;
 
 import br.com.pietroth.tsa.core.event.EventEncoder;
 import br.com.pietroth.tsa.core.event.Event;
 import br.com.pietroth.tsa.core.event.EventData;
-import br.com.pietroth.tsa.core.event.codec.Codec;
-import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
 
 public class TCPClientConnection implements Connection {
     private final InputStream input;
@@ -27,14 +26,20 @@ public class TCPClientConnection implements Connection {
 
     @Override
     public byte[] read() throws IOException {
-        byte[] buffer = new byte[1024];
-        int bytesRead = input.read(buffer);
+        DataInputStream dis = new DataInputStream(input);
 
-        if (bytesRead == -1) {
-            throw new IOException("Disconnected");
+        int length;
+        try {
+            length = dis.readInt();
+
+        } catch (EOFException e) {
+            throw new IOException("Disconnected", e);
         }
 
-        return Arrays.copyOf(buffer, bytesRead);
+        byte[] raw = new byte[length];
+        dis.readFully(raw);    
+
+        return raw;
     }
 
     @Override
