@@ -13,17 +13,47 @@ public class EventDecoder {
         this.codecRegistry = codecRegistry;
     }
 
-    public Event<?> decode(byte[] raw) {
+    public Event<? extends EventData> decode(byte[] raw) {
+        if (raw == null) {
+            throw new IllegalArgumentException("raw cannot be null");
+        }
+
         ByteBuffer buffer = ByteBuffer.wrap(raw);
 
+        if (buffer.remaining() < 6) {
+            throw new IllegalStateException(
+                "Corrupted message: too small to contain length prefix and eventId"
+            );
+        }
+
+        int totalSize = buffer.getInt(); 
+
+        if (totalSize != raw.length) {
+            throw new IllegalStateException(
+                "Corrupted message: declared size " + totalSize +
+                " does not match actual size " + raw.length
+            );
+        }
+
         short eventId = buffer.getShort();
-        byte family = (byte)((eventId >> 8) & 0xFF);
-        byte type   = (byte)(eventId & 0xFF);
+
+        byte family = (byte) ((eventId >> 8) & 0xFF);
+        byte type = (byte) (eventId & 0xFF);
 
         Codec<?> codec = codecRegistry.get(eventId);
+        if (codec == null) {
+            throw new IllegalStateException("No codec found for eventId: " + eventId);
+        }
 
         Object payload = codec.decode(buffer);
 
-        return new Event<EventData>(family, type, EventData.class.cast(payload));
+        if (buffer.hasRemaining()) {
+            throw new IllegalStateException(
+                "Corrupted message: payload decoder did not consume all bytes, " +
+                buffer.remaining() + " bytes left"
+            );
+        }
+
+        return new Event<>(family, type, EventData.class.cast(payload));
     }
 }
