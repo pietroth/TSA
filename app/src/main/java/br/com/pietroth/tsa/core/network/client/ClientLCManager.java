@@ -28,7 +28,7 @@ public class ClientLCManager implements ConnectionCreatedListener {
                 .build();
 
         if (clients.putIfAbsent(id, client) != null) {
-            throw new IllegalStateException("ID duplicado (isso nem deveria acontecer)");
+            throw new IllegalStateException("Duplicate client ID: " + id);
         }
     }
 

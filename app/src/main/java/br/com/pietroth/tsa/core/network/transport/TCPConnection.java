@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-
 import java.io.DataInputStream;
 import java.io.EOFException;
+import java.util.List;
+import java.util.ArrayList;
 
 import br.com.pietroth.tsa.core.event.EventEncoder;
 import br.com.pietroth.tsa.core.event.Event;
@@ -16,6 +17,7 @@ public class TCPConnection implements Connection {
     private final InputStream input;
     private final OutputStream output;
     private final EventEncoder encoder;
+    private final List<ConnectionReceivedListener> listeners = new ArrayList<>();
 
     public TCPConnection(
         Socket socket, EventEncoder encoder) throws IOException 
@@ -25,9 +27,34 @@ public class TCPConnection implements Connection {
         this.encoder = encoder;
     }
 
+    public void subscribe(ConnectionReceivedListener listener) {
+        listeners.add(listener);
+    }
+
+    public void unsubscribe(ConnectionReceivedListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyConnectionReceived(Connection connection, byte[] data) {
+        for (ConnectionReceivedListener listener : listeners) {
+            listener.onConnectionReceived(connection, data);
+        }
+    }
+
     @Override 
     public void run() {
-        // No-op, reading is handled by ClientHandler
+        while (true) {
+            try {
+                byte[] data = read();
+                    
+                if (listeners != null) {
+                    notifyConnectionReceived(this, data);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
