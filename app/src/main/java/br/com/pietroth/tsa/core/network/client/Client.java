@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.network.session;
+package br.com.pietroth.tsa.core.network.client;
 
 import br.com.pietroth.tsa.core.network.transport.Connection;
 
@@ -40,5 +40,19 @@ public class Client {
         public Client build() {
             return new Client(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+
+        Client other = (Client) o;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
     }
 }
