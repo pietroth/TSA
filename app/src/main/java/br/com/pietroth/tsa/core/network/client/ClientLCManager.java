@@ -39,4 +39,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
     public Client getClientById(int id) {
         return clients.get(id);
     }
+
+    public void disconnectClient(int id) {
+        clients.remove(id);
+    }
 }
