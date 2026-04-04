@@ -12,12 +12,12 @@ import br.com.pietroth.tsa.core.event.EventEncoder;
 import br.com.pietroth.tsa.core.event.Event;
 import br.com.pietroth.tsa.core.event.EventData;
 
-public class TCPClientConnection implements Connection {
+public class TCPConnection implements Connection {
     private final InputStream input;
     private final OutputStream output;
     private final EventEncoder encoder;
 
-    public TCPClientConnection(
+    public TCPConnection(
         Socket socket, EventEncoder encoder) throws IOException 
     {
         this.input = socket.getInputStream();

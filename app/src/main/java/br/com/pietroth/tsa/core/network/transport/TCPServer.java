@@ -49,7 +49,7 @@ public class TCPServer implements Server {
                 System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
 
                 clientPool.submit(
-                    new TCPClientConnection(clientSocket, encoder)
+                    new TCPConnection(clientSocket, encoder)
                 );
             }
         } catch (IOException e) {
