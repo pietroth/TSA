@@ -35,4 +35,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
     public Collection<Client> getClientsView() {
         return Collections.unmodifiableCollection(clients.values());
     }
+
+    public Client getClientById(int id) {
+        return clients.get(id);
+    }
 }
