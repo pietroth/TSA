@@ -16,7 +16,6 @@ public class GameLoop extends TicksPerSecondRunnable {
 
     private final ECSRuntime ecsRuntime;
     private final CodecRegistry registry;
-    private final GameConfiguration configuration;
 
     private EventDispatcher dispatcher;
 
@@ -24,7 +23,6 @@ public class GameLoop extends TicksPerSecondRunnable {
         super(30);
         this.ecsRuntime = builder.ecsRuntime;
         this.registry = builder.registry;
-        this.configuration = builder.configuration;
     }
 
     @Override
@@ -74,7 +72,6 @@ public class GameLoop extends TicksPerSecondRunnable {
     public static class Builder {
         private ECSRuntime ecsRuntime;
         private CodecRegistry registry;
-        private GameConfiguration configuration;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
@@ -86,15 +83,9 @@ public class GameLoop extends TicksPerSecondRunnable {
             return this;
         }
 
-        public Builder configuration(GameConfiguration configuration) {
-            this.configuration = configuration;
-            return this;
-        }
-
         public GameLoop build() {
             if (ecsRuntime == null) throw new IllegalStateException("ECSRuntime is required");
             if (registry == null) throw new IllegalStateException("CodecRegistry is required");
-            if (configuration == null) throw new IllegalStateException("GameConfiguration is required");
             return new GameLoop(this);
         }
     }

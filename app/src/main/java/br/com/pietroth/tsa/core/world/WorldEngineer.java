@@ -11,7 +11,7 @@ public class WorldEngineer {
 
     public World createWorld(WorldData worldData) {
         World world = new World(worldData, chunkManager);
-        short size = WorldConfiguration.INITIAL_WORLD_SIZE;
+        short size = WorldConstants.INITIAL_WORLD_SIZE;
 
         for (int x = -size / 2; x < size / 2; x++) {
             for (int y = -size / 2; y < size / 2; y++) {

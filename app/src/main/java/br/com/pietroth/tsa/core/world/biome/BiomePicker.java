@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.world.biome;
 
-import br.com.pietroth.tsa.core.world.WorldConfiguration;
+import br.com.pietroth.tsa.core.world.WorldConstants;
 
 public class BiomePicker {
     private final BiomeRegister biomeRegister;
@@ -10,11 +10,11 @@ public class BiomePicker {
     }
 
     public BiomeType pickBiome(float temperature, float elevation, float humidity, float lake) {
-        if (elevation < WorldConfiguration.SEA_LEVEL) {
+        if (elevation < WorldConstants.SEA_LEVEL) {
             return biomeRegister.get(10); // ocean
         }
 
-        if (lake < 0.08f && elevation > WorldConfiguration.SEA_LEVEL) {
+        if (lake < 0.08f && elevation > WorldConstants.SEA_LEVEL) {
             return biomeRegister.get(11); // lake
         }
 

@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.world.chunk;
 
-import br.com.pietroth.tsa.core.world.WorldConfiguration;
+import br.com.pietroth.tsa.core.world.WorldConstants;
 
 public class Chunk {
 
@@ -12,12 +12,12 @@ public class Chunk {
         this.x = x;
         this.y = y;
 
-        int size = WorldConfiguration.BLOCKS_PER_CHUNK;
+        int size = WorldConstants.BLOCKS_PER_CHUNK;
         this.blocks = new short[size * size];
     }
 
     private int index(int bx, int by) {
-        int size = WorldConfiguration.BLOCKS_PER_CHUNK;
+        int size = WorldConstants.BLOCKS_PER_CHUNK;
         return bx + by * size;
     }
 
@@ -46,10 +46,10 @@ public class Chunk {
     }
 
     public int getGlobalBlockX(int localX) {
-        return x * WorldConfiguration.BLOCKS_PER_CHUNK + localX;
+        return x * WorldConstants.BLOCKS_PER_CHUNK + localX;
     }
 
     public int getGlobalBlockY(int localY) {
-        return y * WorldConfiguration.BLOCKS_PER_CHUNK + localY;
+        return y * WorldConstants.BLOCKS_PER_CHUNK + localY;
     }
 }

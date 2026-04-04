@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.world.WorldConfiguration;
+import br.com.pietroth.tsa.core.world.WorldConstants;
 import br.com.pietroth.tsa.core.world.chunk.*;
 import br.com.pietroth.tsa.core.world.chunk.generation.*;
 import br.com.pietroth.tsa.core.world.biome.*;
@@ -57,7 +57,7 @@ public class DebugWorldGeneration {
         ChunkFiller filler = new NoiseChunkFiller(biomePicker, temperatureLayer, elevationLayer, humidityLayer, lakeNoiseLayer);
 
         manager = new ChunkManager(loader, filler);
-        blocksPerChunk = WorldConfiguration.BLOCKS_PER_CHUNK;
+        blocksPerChunk = WorldConstants.BLOCKS_PER_CHUNK;
     }
 
     public void start() {

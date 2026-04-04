@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.world.chunk.generation;
 
-import br.com.pietroth.tsa.core.world.WorldConfiguration;
+import br.com.pietroth.tsa.core.world.WorldConstants;
 import br.com.pietroth.tsa.core.world.biome.BiomePicker;
 import br.com.pietroth.tsa.core.world.chunk.Chunk;
 import br.com.pietroth.tsa.core.world.generation.NoiseLayer;
@@ -31,7 +31,7 @@ public class NoiseChunkFiller implements ChunkFiller {
     @Override
     public void fill(Chunk chunk) {
 
-        int size = WorldConfiguration.BLOCKS_PER_CHUNK;
+        int size = WorldConstants.BLOCKS_PER_CHUNK;
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
