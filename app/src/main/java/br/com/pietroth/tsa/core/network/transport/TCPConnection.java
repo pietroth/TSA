@@ -9,22 +9,15 @@ import java.io.EOFException;
 import java.util.List;
 import java.util.ArrayList;
 
-import br.com.pietroth.tsa.core.event.EventEncoder;
-import br.com.pietroth.tsa.core.event.Event;
-import br.com.pietroth.tsa.core.event.EventData;
-
 public class TCPConnection implements Connection {
     private final InputStream input;
     private final OutputStream output;
-    private final EventEncoder encoder;
     private final List<ConnectionReceivedListener> listeners = new ArrayList<>();
 
-    public TCPConnection(
-        Socket socket, EventEncoder encoder) throws IOException 
+    public TCPConnection(Socket socket) throws IOException 
     {
         this.input = socket.getInputStream();
         this.output = socket.getOutputStream();
-        this.encoder = encoder;
     }
 
     public void subscribe(ConnectionReceivedListener listener) {
@@ -76,8 +69,7 @@ public class TCPConnection implements Connection {
     }
 
     @Override
-    public void send(Event<? extends EventData> event) throws IOException {
-        byte[] data = encoder.encode(event);
+    public void send(byte[] data) throws IOException {
         output.write(data);
         output.flush();
     }
