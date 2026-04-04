@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+
+import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
+
 import java.io.DataInputStream;
 import java.io.EOFException;
 
@@ -22,6 +25,11 @@ public class TCPClientConnection implements Connection {
         this.input = socket.getInputStream();
         this.output = socket.getOutputStream();
         this.encoder = encoder;
+    }
+
+    @Override 
+    public void run() {
+        // No-op, reading is handled by ClientHandler
     }
 
     @Override
