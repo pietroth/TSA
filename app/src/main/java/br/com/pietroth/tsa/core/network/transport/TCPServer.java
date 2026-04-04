@@ -12,15 +12,11 @@ import br.com.pietroth.tsa.core.event.EventEncoder;
 public class TCPServer implements Server {
     private final int port;
     private final ExecutorService clientPool;
-    private final EventDecoder decoder;
-    private final EventDispatcher dispatcher;
     private final EventEncoder encoder;
 
     private TCPServer(Builder builder) {
         this.port = builder.port;
         this.clientPool = builder.clientPool;
-        this.decoder = builder.decoder;
-        this.dispatcher = builder.dispatcher;
         this.encoder = builder.encoder;
     }
 
@@ -33,12 +29,7 @@ public class TCPServer implements Server {
                 System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
 
                 clientPool.submit(
-                    ClientHandler.builder()
-                        .clientSocket(clientSocket)
-                        .decoder(decoder)
-                        .connection(new TCPClientConnection(clientSocket, encoder))
-                        .dispatcher(dispatcher)
-                        .build()
+                    new TCPClientConnection(clientSocket, encoder)
                 );
             }
         } catch (IOException e) {

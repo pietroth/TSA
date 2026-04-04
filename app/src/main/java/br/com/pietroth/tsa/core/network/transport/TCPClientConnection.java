@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
-
 import java.io.DataInputStream;
 import java.io.EOFException;
 
