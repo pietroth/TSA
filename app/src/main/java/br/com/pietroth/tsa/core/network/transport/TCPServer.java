@@ -48,8 +48,11 @@ public class TCPServer implements Server {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
 
+                TCPConnection connection = new TCPConnection(clientSocket, encoder);
+                notifyConnectionCreated(connection);
+
                 clientPool.submit(
-                    new TCPConnection(clientSocket, encoder)
+                    connection
                 );
             }
         } catch (IOException e) {
