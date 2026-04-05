@@ -4,10 +4,10 @@ import java.util.Map;
 
 import br.com.pietroth.tsa.core.communication.MessageData;
 
-public class IntentionValidatorDispatcher {
+public class IntentionVD {
     private final Map<Short, IntentionValidator<? extends MessageData>> validators;
 
-    public IntentionValidatorDispatcher(Map<Short, IntentionValidator<? extends MessageData>> validators) {
+    public IntentionVD(Map<Short, IntentionValidator<? extends MessageData>> validators) {
         this.validators = validators;
     }
 
