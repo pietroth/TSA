@@ -55,6 +55,8 @@ public class EventDecoder {
             );
         }
 
-        return new Event<>(family, type, MessageData.class.cast(payload));
+        MessageData data = (MessageData) payload;
+
+        return new Event<MessageData>(family, type, data);
     }
 }
