@@ -1,6 +1,8 @@
 package br.com.pietroth.tsa.core.communication.event;
 
-public class Event<T extends EventData> {
+import br.com.pietroth.tsa.core.communication.MessageData;
+
+public class Event<T extends MessageData> {
     private final byte family;
     private final byte type;
     private final T data;

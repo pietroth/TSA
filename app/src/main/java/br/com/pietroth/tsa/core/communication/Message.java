@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.communication.message;
+package br.com.pietroth.tsa.core.communication;
 
 public abstract class Message<T extends MessageData> {
     private final String family;

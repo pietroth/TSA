@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.communication.event.player.playermoved;
+package br.com.pietroth.tsa.core.communication.player.playermoved;
 
 import java.nio.ByteBuffer;
 

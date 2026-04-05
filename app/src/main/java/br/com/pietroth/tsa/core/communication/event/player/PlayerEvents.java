@@ -3,7 +3,7 @@ package br.com.pietroth.tsa.core.communication.event.player;
 import br.com.pietroth.tsa.core.communication.event.Event;
 import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
 import br.com.pietroth.tsa.core.communication.event.EventIdentifier;
-import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedData;
+import br.com.pietroth.tsa.core.communication.player.playermoved.PlayerMovedData;
 
 public class PlayerEvents {
     private final EventDispatcher eventDispatcher;

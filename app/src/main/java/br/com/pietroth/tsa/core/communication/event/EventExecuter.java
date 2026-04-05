@@ -1,5 +1,7 @@
 package br.com.pietroth.tsa.core.communication.event;
 
-public interface EventExecuter<T extends EventData> {
+import br.com.pietroth.tsa.core.communication.MessageData;
+
+public interface EventExecuter<T extends MessageData> {
     void execute(T event);
 }

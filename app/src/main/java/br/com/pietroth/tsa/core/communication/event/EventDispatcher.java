@@ -3,12 +3,14 @@ package br.com.pietroth.tsa.core.communication.event;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import br.com.pietroth.tsa.core.communication.MessageData;
+
 public class EventDispatcher implements Runnable {
 
-    private final Queue<Event<? extends EventData>> current;
-    private final Queue<Event<? extends EventData>> next;  
+    private final Queue<Event<? extends MessageData>> current;
+    private final Queue<Event<? extends MessageData>> next;  
 
-    private final EventExecuter<? extends EventData>[][] executers; 
+    private final EventExecuter<? extends MessageData>[][] executers; 
 
     private boolean processing;
 
@@ -20,7 +22,7 @@ public class EventDispatcher implements Runnable {
         processing = false;
     }
 
-    public void register(byte family, byte type, EventExecuter<? extends EventData> executer) {
+    public void register(byte family, byte type, EventExecuter<? extends MessageData> executer) {
         executers[family & 0xFF][type & 0xFF] = executer;
     }
 
@@ -28,7 +30,7 @@ public class EventDispatcher implements Runnable {
     public void run() {
         processing = true;
 
-        Event<? extends EventData> event;
+        Event<? extends MessageData> event;
         while ((event = current.poll()) != null) {
             dispatch(event);
         }
@@ -40,24 +42,23 @@ public class EventDispatcher implements Runnable {
         next.clear();
     }
 
-    private void dispatch(Event<? extends EventData> event) {
+    private void dispatch(Event<? extends MessageData> event) {
         byte family = event.getFamily();
         byte type = event.getType();
 
-        EventExecuter<? extends EventData> executer = executers[family & 0xFF][type & 0xFF];
+        EventExecuter<? extends MessageData> executer = executers[family & 0xFF][type & 0xFF];
 
         if (executer != null) {
             dispatchEvent(event, executer);
         }
     }
 
-    private <T extends EventData> void dispatchEvent(Event<T> event, EventExecuter<? extends EventData> executer) {
-        @SuppressWarnings("unchecked")
-        EventExecuter<T> typedExecuter = (EventExecuter<T>) executer;
-        typedExecuter.execute(event.getData());
+    @SuppressWarnings("unchecked")
+    private <T extends MessageData> void dispatchEvent(Event<? extends MessageData> event, EventExecuter<? extends MessageData> executer) {
+        ((EventExecuter<T>) executer).execute((T) event.getData());
     }
 
-    public void enqueue(Event<? extends EventData> event) {
+    public void enqueue(Event<? extends MessageData> event) {
         if (processing) {
             next.add(event);
         } else {

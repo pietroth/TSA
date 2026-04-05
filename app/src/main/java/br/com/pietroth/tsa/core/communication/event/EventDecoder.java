@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 
 import br.com.pietroth.tsa.core.communication.event.codec.Codec;
 import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.communication.MessageData;
 
 public class EventDecoder {
 
@@ -13,7 +14,7 @@ public class EventDecoder {
         this.codecRegistry = codecRegistry;
     }
 
-    public Event<? extends EventData> decode(byte[] raw) {
+    public Event<? extends MessageData> decode(byte[] raw) {
         if (raw == null) {
             throw new IllegalArgumentException("raw cannot be null");
         }
@@ -54,6 +55,6 @@ public class EventDecoder {
             );
         }
 
-        return new Event<>(family, type, EventData.class.cast(payload));
+        return new Event<>(family, type, MessageData.class.cast(payload));
     }
 }

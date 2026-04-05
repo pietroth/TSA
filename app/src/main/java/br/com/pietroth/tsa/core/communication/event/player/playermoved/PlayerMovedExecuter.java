@@ -2,6 +2,7 @@ package br.com.pietroth.tsa.core.communication.event.player.playermoved;
 
 import br.com.pietroth.tsa.core.application.MovementUseCase;
 import br.com.pietroth.tsa.core.communication.event.EventExecuter;
+import br.com.pietroth.tsa.core.communication.player.playermoved.PlayerMovedData;
 
 public class PlayerMovedExecuter implements EventExecuter<PlayerMovedData> {
     private final MovementUseCase movementUseCase;                          
