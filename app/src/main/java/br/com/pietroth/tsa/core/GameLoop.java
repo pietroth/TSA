@@ -12,6 +12,7 @@ import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.codec.Codecs;
 import br.com.pietroth.tsa.core.communication.event.player.PlayerEvents;
 import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
 
 public class GameLoop extends TicksPerSecondRunnable {
 
@@ -29,6 +30,8 @@ public class GameLoop extends TicksPerSecondRunnable {
     @Override
     protected void initialize() {
         registerCodecs(registry);
+        IntentionVDSingleton.INSTANCE.getIntentionVD();
+
 
         ecsRuntime.createEntity(
             new PlayerComponent(1),
