@@ -20,10 +20,12 @@ public class TCPConnection implements Connection {
         this.output = socket.getOutputStream();
     }
 
+    @Override
     public void subscribe(ConnectionReceivedListener listener) {
         listeners.add(listener);
     }
 
+    @Override
     public void unsubscribe(ConnectionReceivedListener listener) {
         listeners.remove(listener);
     }
