@@ -1,21 +1,21 @@
 package br.com.pietroth.tsa.core.communication;
 
 public abstract class Message<T extends MessageData> {
-    private final String family;
-    private final String type;
+    private final byte family;
+    private final byte type;
     private final T data;
 
-    public Message(String family, String type, T data) {
+    public Message(byte family, byte type, T data) {
         this.family = family;
         this.type = type;
         this.data = data;
     }
 
-    public String getFamily() {
+    public byte getFamily() {
         return family;
     }
 
-    public String getType() {
+    public byte getType() {
         return type;
     }
 
