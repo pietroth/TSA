@@ -8,14 +8,17 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.pietroth.tsa.core.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.network.transport.Connection;
 
 public class ClientLCManager implements ConnectionCreatedListener {
     private final Map<Integer, Client> clients;
     private final AtomicInteger idGenerator = new AtomicInteger(0);
+    private final IntentionGateway intentionGateway;
 
-    public ClientLCManager(int maxClients) {
+    public ClientLCManager(int maxClients, IntentionGateway intentionGateway) {
         this.clients = new ConcurrentHashMap<>();
+        this.intentionGateway = intentionGateway;
     }
 
     @Override
@@ -26,6 +29,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
                 .id(id)
                 .connection(connection)
                 .build();
+                
+        client.getConnection().subscribe(intentionGateway);
 
         if (clients.putIfAbsent(id, client) != null) {
             throw new IllegalStateException("Duplicate client ID: " + id);
