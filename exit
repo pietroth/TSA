@@ -45,7 +45,7 @@
 [33m2eda8cd[m Create Server interface in core.server.Server
 [33m6814f62[m Create registerExecuters ​​and use it in the GameLoop.
 [33m863b21d[m Add the registerCodecs method and use it in GameLoop.
-[33me2344d4[m Change the position of Codecs to core.event.codec
+[33me2344d4[m Change the position of Codecs to core.codec
 [33m0c40162[m Create Codecs class
 [33m0e947e3[m Change the loop classes from br.com.pietroth.tsa.core.world.loop; to br.com.pietroth.tsa.core;
 [33m507426c[m Standardize the names of camelCase event publishing methods to a hybrid Prefix-PascalCase name.

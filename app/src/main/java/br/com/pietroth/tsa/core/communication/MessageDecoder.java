@@ -2,9 +2,9 @@ package br.com.pietroth.tsa.core.communication;
 
 import java.nio.ByteBuffer;
 
+import br.com.pietroth.tsa.core.communication.codec.Codec;
+import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.Event;
-import br.com.pietroth.tsa.core.communication.event.codec.Codec;
-import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.intention.Intention;
 
 public class MessageDecoder {

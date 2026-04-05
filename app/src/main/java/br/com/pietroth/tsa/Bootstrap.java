@@ -1,18 +1,14 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.communication.MessageIdentifier;
 import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
-import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.communication.event.Executers;
+import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.ecs.ECSRuntime;
-import br.com.pietroth.tsa.core.ecs.component.PositionComponent;
-import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
-import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
-import br.com.pietroth.tsa.core.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.GameLoop;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
-import br.com.pietroth.tsa.core.communication.event.codec.Codecs;
+import br.com.pietroth.tsa.core.communication.codec.Codecs;
 import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
-import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
+import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveCodec;
 
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;
@@ -26,26 +22,20 @@ public class Bootstrap {
     }
 
     public void boot() {
-        registerCodecs(registry);
-        registerExecuters(dispatcher);
+        Codecs codecs = new Codecs.Builder()
+            .playerMovementCodec(new PlayerMoveCodec())
+            .build();
+        codecs.registerCodecs(registry);
+        Executers executers = new Executers.Builder()
+            .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
+            .build();
+        executers.registerExecuters(dispatcher);
 
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
             .eventDispatcher(dispatcher)
             .build();
         new Thread(loop).start();
-    }
-
-    private void registerCodecs(CodecRegistry registry) {
-        Codecs.registerCodecs(registry);
-    }
-
-    private void registerExecuters(EventDispatcher dispatcher) {
-        dispatcher.register(
-            (byte) MessageIdentifier.Player.getGlobalId(),
-            (byte) MessageIdentifier.Player.PLAYER_MOVED.getId(),
-            new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer()))
-        );
     }
 
     public static class Builder {

@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.communication.event.codec;
+package br.com.pietroth.tsa.core.communication.codec;
 
 import java.nio.ByteBuffer;
 

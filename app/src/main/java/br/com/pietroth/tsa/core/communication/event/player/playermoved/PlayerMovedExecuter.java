@@ -2,9 +2,9 @@ package br.com.pietroth.tsa.core.communication.event.player.playermoved;
 
 import br.com.pietroth.tsa.core.application.MovementUseCase;
 import br.com.pietroth.tsa.core.communication.event.EventExecuter;
-import br.com.pietroth.tsa.core.communication.player.playermoved.PlayerMovementData;
+import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveData;
 
-public class PlayerMovedExecuter implements EventExecuter<PlayerMovementData> {
+public class PlayerMovedExecuter implements EventExecuter<PlayerMoveData> {
     private final MovementUseCase movementUseCase;                          
 
     public PlayerMovedExecuter(MovementUseCase movementUseCase) {
@@ -12,7 +12,7 @@ public class PlayerMovedExecuter implements EventExecuter<PlayerMovementData> {
     }
 
     @Override
-    public void execute(PlayerMovementData data) {
+    public void execute(PlayerMoveData data) {
         movementUseCase.execute(data.sx, data.sy);
     }
     

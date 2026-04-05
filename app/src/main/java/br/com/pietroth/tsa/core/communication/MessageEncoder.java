@@ -1,11 +1,9 @@
-package br.com.pietroth.tsa.core.communication.event;
+package br.com.pietroth.tsa.core.communication;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.communication.event.codec.Codec;
-import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.communication.Message;
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.codec.Codec;
+import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 
 public class MessageEncoder {
 
