@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.communication.message;
 
-public abstract class Message<T extends Object> {
+public abstract class Message<T extends MessageData> {
     private final String family;
     private final String type;
     private final T data;
