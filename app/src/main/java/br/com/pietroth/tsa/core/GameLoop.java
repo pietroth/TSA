@@ -6,6 +6,7 @@ import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
+import br.com.pietroth.tsa.core.communication.MessageIdentifier;
 import br.com.pietroth.tsa.core.communication.event.*;
 import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.codec.Codecs;
@@ -59,8 +60,8 @@ public class GameLoop extends TicksPerSecondRunnable {
 
     private void registerExecuters(EventDispatcher dispatcher) {
         dispatcher.register(
-            (byte) EventIdentifier.Player.getGlobalId(),
-            (byte) EventIdentifier.Player.PLAYER_MOVED.getId(),
+            (byte) MessageIdentifier.Player.getGlobalId(),
+            (byte) MessageIdentifier.Player.PLAYER_MOVED.getId(),
             new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer()))
         );
     }
