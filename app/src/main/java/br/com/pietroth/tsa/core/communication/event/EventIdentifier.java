@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.event;
+package br.com.pietroth.tsa.core.communication.event;
 
 public class EventIdentifier {
     public static enum Player {

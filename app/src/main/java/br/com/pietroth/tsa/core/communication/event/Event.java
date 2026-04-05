@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.event;
+package br.com.pietroth.tsa.core.communication.event;
 
 public class Event<T extends EventData> {
     private final byte family;

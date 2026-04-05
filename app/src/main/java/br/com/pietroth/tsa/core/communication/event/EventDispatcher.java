@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.event;
+package br.com.pietroth.tsa.core.communication.event;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

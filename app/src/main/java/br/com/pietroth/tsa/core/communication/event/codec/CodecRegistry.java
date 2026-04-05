@@ -1,9 +1,9 @@
-package br.com.pietroth.tsa.core.event.codec;
+package br.com.pietroth.tsa.core.communication.event.codec;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.pietroth.tsa.core.event.EventData;
+import br.com.pietroth.tsa.core.communication.event.EventData;
 
 public class CodecRegistry {
     private final Map<Short, Codec<? extends EventData>> registry = new HashMap<>();

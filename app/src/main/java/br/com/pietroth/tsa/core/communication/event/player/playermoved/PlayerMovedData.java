@@ -1,6 +1,6 @@
-package br.com.pietroth.tsa.core.event.player.playermoved;
+package br.com.pietroth.tsa.core.communication.event.player.playermoved;
 
-import br.com.pietroth.tsa.core.event.EventData;
+import br.com.pietroth.tsa.core.communication.event.EventData;
 
 public class PlayerMovedData implements EventData {
     public final float sx;

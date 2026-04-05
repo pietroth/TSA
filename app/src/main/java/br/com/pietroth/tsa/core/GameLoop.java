@@ -5,12 +5,12 @@ import br.com.pietroth.tsa.core.ecs.component.PositionComponent;
 import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
-import br.com.pietroth.tsa.core.event.*;
-import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.event.codec.Codecs;
-import br.com.pietroth.tsa.core.event.player.PlayerEvents;
-import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedExecuter;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
+import br.com.pietroth.tsa.core.communication.event.*;
+import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.communication.event.codec.Codecs;
+import br.com.pietroth.tsa.core.communication.event.player.PlayerEvents;
+import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
 
 public class GameLoop extends TicksPerSecondRunnable {
 

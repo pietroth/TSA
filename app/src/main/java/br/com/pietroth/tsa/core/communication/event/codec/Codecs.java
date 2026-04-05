@@ -1,7 +1,7 @@
-package br.com.pietroth.tsa.core.event.codec;
+package br.com.pietroth.tsa.core.communication.event.codec;
 
-import br.com.pietroth.tsa.core.event.EventIdentifier;
-import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedCodec;
+import br.com.pietroth.tsa.core.communication.event.EventIdentifier;
+import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedCodec;
 
 public class Codecs {
     public static void registerCodecs(CodecRegistry registry) {

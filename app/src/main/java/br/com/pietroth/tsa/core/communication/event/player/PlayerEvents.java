@@ -1,9 +1,9 @@
-package br.com.pietroth.tsa.core.event.player;
+package br.com.pietroth.tsa.core.communication.event.player;
 
-import br.com.pietroth.tsa.core.event.player.playermoved.PlayerMovedData;
-import br.com.pietroth.tsa.core.event.Event;
-import br.com.pietroth.tsa.core.event.EventDispatcher;
-import br.com.pietroth.tsa.core.event.EventIdentifier;
+import br.com.pietroth.tsa.core.communication.event.Event;
+import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
+import br.com.pietroth.tsa.core.communication.event.EventIdentifier;
+import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedData;
 
 public class PlayerEvents {
     private final EventDispatcher eventDispatcher;

@@ -1,8 +1,8 @@
-package br.com.pietroth.tsa.core.event.codec;
+package br.com.pietroth.tsa.core.communication.event.codec;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.event.EventData;
+import br.com.pietroth.tsa.core.communication.event.EventData;
 
 public interface Codec<T extends EventData> {
     int size();

@@ -1,9 +1,9 @@
-package br.com.pietroth.tsa.core.event;
+package br.com.pietroth.tsa.core.communication.event;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.event.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.event.codec.Codec;
+import br.com.pietroth.tsa.core.communication.event.codec.Codec;
+import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
 
 public class EventDecoder {
 

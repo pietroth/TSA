@@ -1,8 +1,8 @@
-package br.com.pietroth.tsa.core.event.player.playermoved;
+package br.com.pietroth.tsa.core.communication.event.player.playermoved;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.event.codec.Codec;
+import br.com.pietroth.tsa.core.communication.event.codec.Codec;
 
 public class PlayerMovedCodec implements Codec<PlayerMovedData> {
 
