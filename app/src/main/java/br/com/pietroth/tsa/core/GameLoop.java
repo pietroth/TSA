@@ -5,32 +5,22 @@ import br.com.pietroth.tsa.core.ecs.component.PositionComponent;
 import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
-import br.com.pietroth.tsa.core.application.MovementUseCase;
-import br.com.pietroth.tsa.core.communication.MessageIdentifier;
 import br.com.pietroth.tsa.core.communication.event.*;
-import br.com.pietroth.tsa.core.communication.event.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.communication.event.codec.Codecs;
-import br.com.pietroth.tsa.core.communication.event.player.PlayerEvents;
-import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
 import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
 
 public class GameLoop extends TicksPerSecondRunnable {
-
     private final ECSRuntime ecsRuntime;
-    private final CodecRegistry registry;
-
     private EventDispatcher dispatcher;
 
     private GameLoop(Builder builder) {
         super(30);
         this.ecsRuntime = builder.ecsRuntime;
-        this.registry = builder.registry;
+        this.dispatcher = builder.dispatcher;
     }
 
     @Override
     protected void initialize() {
-        registerCodecs(registry);
-        IntentionVDSingleton.INSTANCE.getIntentionVD();
+        scheduleSystems();
 
         ecsRuntime.createEntity(
             new PlayerComponent(1),
@@ -38,16 +28,7 @@ public class GameLoop extends TicksPerSecondRunnable {
             new VelocityComponent(0, 0)
         );
 
-        dispatcher = new EventDispatcher(256, 256);
-        registerExecuters(dispatcher);
-
-        PlayerEvents playerEvents = new PlayerEvents(dispatcher);
-
-        ecsRuntime.schedule(new MovementSystem(ecsRuntime.getContainer()));
-
-        playerEvents.publish_PlayerMoved(5f, 0f);
-
-        dispatcher.run();
+        IntentionVDSingleton.INSTANCE.getIntentionVD();
     }
 
     @Override
@@ -56,16 +37,8 @@ public class GameLoop extends TicksPerSecondRunnable {
         dispatcher.run();
     }
 
-    private void registerCodecs(CodecRegistry registry) {
-        Codecs.registerCodecs(registry);
-    }
-
-    private void registerExecuters(EventDispatcher dispatcher) {
-        dispatcher.register(
-            (byte) MessageIdentifier.Player.getGlobalId(),
-            (byte) MessageIdentifier.Player.PLAYER_MOVED.getId(),
-            new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer()))
-        );
+    private void scheduleSystems() {
+        ecsRuntime.schedule(new MovementSystem(ecsRuntime.getContainer()));
     }
 
     public static Builder builder() {
@@ -74,21 +47,25 @@ public class GameLoop extends TicksPerSecondRunnable {
 
     public static class Builder {
         private ECSRuntime ecsRuntime;
-        private CodecRegistry registry;
+        private EventDispatcher dispatcher;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
             return this;
         }
 
-        public Builder registry(CodecRegistry registry) {
-            this.registry = registry;
+        public Builder eventDispatcher(EventDispatcher dispatcher) {
+            this.dispatcher = dispatcher;
             return this;
         }
 
         public GameLoop build() {
-            if (ecsRuntime == null) throw new IllegalStateException("ECSRuntime is required");
-            if (registry == null) throw new IllegalStateException("CodecRegistry is required");
+            if (ecsRuntime == null) {
+                throw new IllegalStateException("ECSRuntime must be provided");
+            }
+            if (dispatcher == null) {
+                throw new IllegalStateException("EventDispatcher must be provided");
+            }
             return new GameLoop(this);
         }
     }
