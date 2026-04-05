@@ -32,7 +32,6 @@ public class GameLoop extends TicksPerSecondRunnable {
         registerCodecs(registry);
         IntentionVDSingleton.INSTANCE.getIntentionVD();
 
-
         ecsRuntime.createEntity(
             new PlayerComponent(1),
             new PositionComponent(0, 0),
