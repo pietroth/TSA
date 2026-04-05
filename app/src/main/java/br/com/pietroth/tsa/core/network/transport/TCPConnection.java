@@ -41,6 +41,11 @@ public class TCPConnection implements Connection {
         while (true) {
             try {
                 byte[] data = read();
+
+                // debug log
+                if (data != null && data.length > 0) {
+                     System.out.println("Received data from client: " + data.length + " bytes");
+                }
                     
                 if (listeners != null) {
                     notifyConnectionReceived(this, data);

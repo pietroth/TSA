@@ -6,12 +6,17 @@ import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
+
+import java.util.concurrent.ExecutorService;
+
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.*;
 import br.com.pietroth.tsa.core.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
 import br.com.pietroth.tsa.core.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.network.protocol.IntentionGateway;
+import br.com.pietroth.tsa.core.network.transport.Server;
+import br.com.pietroth.tsa.core.network.transport.TCPServer;
 
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
@@ -34,6 +39,13 @@ public class GameLoop extends TicksPerSecondRunnable {
         );
 
         IntentionVDSingleton.INSTANCE.getIntentionVD();
+
+        Server server = TCPServer.builder()
+            .port(5555)
+            .clientPool(java.util.concurrent.Executors.newCachedThreadPool())
+            .build();
+
+        server.start();
     }
 
     @Override
