@@ -35,7 +35,7 @@ public class TCPServer implements Server {
     }
 
     @Override
-    public void start() {
+    public void run() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("TCP Server started on port " + port);
             while (true) {
@@ -52,11 +52,6 @@ public class TCPServer implements Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void stop() {
-        clientPool.shutdownNow();
     }
 
     public static Builder builder() {

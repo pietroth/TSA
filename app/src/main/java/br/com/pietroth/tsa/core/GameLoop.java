@@ -21,6 +21,7 @@ import br.com.pietroth.tsa.core.network.transport.TCPServer;
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
     private EventDispatcher dispatcher;
+    private Server server;
 
     private GameLoop(Builder builder) {
         super(30);
@@ -40,18 +41,17 @@ public class GameLoop extends TicksPerSecondRunnable {
 
         IntentionVDSingleton.INSTANCE.getIntentionVD();
 
-        Server server = TCPServer.builder()
+        server = TCPServer.builder()
             .port(5555)
             .clientPool(java.util.concurrent.Executors.newCachedThreadPool())
             .build();
-
-        server.start();
     }
 
     @Override
     protected void tick() {
         ecsRuntime.tick();
         dispatcher.run();
+        server.run();
 
         IntentionGateway intentionGateway = new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher);
         ClientLCManagerSingleton.init(10, intentionGateway);
