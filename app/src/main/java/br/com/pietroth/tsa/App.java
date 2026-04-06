@@ -1,8 +1,8 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.core.application.MovementUseCase;
-import br.com.pietroth.tsa.core.GameLoop;
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
+import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
 
 import javax.swing.*;
@@ -18,12 +18,12 @@ public class App {
         EventDispatcher eventDispatcher = new EventDispatcher(256, 256);
 
         // Game Loop
-        GameLoop loop = GameLoop.builder()
-                .ecsRuntime(runtime)
-                .eventDispatcher(eventDispatcher)
-                .build();
-                
-        new Thread(loop).start();
+        Bootstrap bootstrap = new Bootstrap.Builder()
+            .ecsRuntime(runtime)
+            .codecRegistry(new CodecRegistry())
+            .eventDispatcher(eventDispatcher)
+            .build();
+        bootstrap.boot();
 
         // Movement UseCase
         MovementUseCase movementUseCase =
