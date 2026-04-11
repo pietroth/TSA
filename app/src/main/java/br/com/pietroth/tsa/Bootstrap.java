@@ -8,6 +8,8 @@ import br.com.pietroth.tsa.core.GameLoop;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
 import br.com.pietroth.tsa.core.communication.codec.Codecs;
 import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
+import br.com.pietroth.tsa.core.communication.intention.Validators;
 import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveCodec;
 
 public class Bootstrap {
@@ -22,6 +24,8 @@ public class Bootstrap {
     }
 
     public void boot() {
+        Validators validators = new Validators(IntentionVDSingleton.INSTANCE.getIntentionVD());
+        validators.registerValidators();
         Codecs codecs = new Codecs.Builder()
             .playerMovementCodec(new PlayerMoveCodec())
             .build();
