@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class IntentionVDSingleton {
     private static IntentionVD instance;
 
-    public static void initialize() {
+    public static void init() {
         if (instance != null) {
             throw new IllegalStateException("IntentionVDSingleton is already initialized");
         }
