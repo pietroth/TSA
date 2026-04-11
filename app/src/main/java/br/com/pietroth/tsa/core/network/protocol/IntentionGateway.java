@@ -20,9 +20,16 @@ public class IntentionGateway implements ConnectionReceivedListener {
     @Override
     public void onConnectionReceived(Connection connection, byte[] data) {
         IntentionVD intentionVD = IntentionVDSingleton.get();
+        System.out.println("Gateway raw bytes: " + data.length);
 
         Intention<? extends MessageData> intention = decoder.decode(data);
+
+        System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
+            + " type=" + (intention.getType() & 0xFF)
+            + " data=" + intention.getData());
+
         int validate = intentionVD.validate(intention);
+        System.out.println("Validation result=" + validate);
 
         if (validate >= 1) {
             Event<? extends MessageData> event = new Event<>(intention.getFamily(), intention.getType(), intention.getData());
