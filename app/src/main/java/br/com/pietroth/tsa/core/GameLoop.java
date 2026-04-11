@@ -6,7 +6,6 @@ import br.com.pietroth.tsa.core.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.ecs.component.PositionComponent;
 import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
-import br.com.pietroth.tsa.core.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.*;
