@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.core.application.MovementUseCase;
+import br.com.pietroth.tsa.core.application.player.PlayerMovementUseCase;
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 
@@ -23,8 +24,8 @@ public class App {
         bootstrap.boot();
 
         // Movement UseCase
-        MovementUseCase movementUseCase =
-                new MovementUseCase(runtime.getContainer());
+        PlayerMovementUseCase playerMovement =
+                new PlayerMovementUseCase(runtime.getContainer());
 
         // Input
         JFrame frame = new JFrame("TSA Debug Input");
@@ -39,22 +40,22 @@ public class App {
                 switch (e.getKeyCode()) {
 
                     case KeyEvent.VK_W: 
-                        movementUseCase.execute(0, 1);
+                        playerMovement.execute(1, 0, 1);
                         System.out.println("W");
                         break;
 
                     case KeyEvent.VK_S:
-                        movementUseCase.execute(0, -1);
+                        playerMovement.execute(1, 0, -1);
                         System.out.println("S");
                         break;
 
                     case KeyEvent.VK_A:
-                        movementUseCase.execute(1, 0);
+                        playerMovement.execute(1, 1, 0);
                         System.out.println("A");
                         break;
 
                     case KeyEvent.VK_D:
-                        movementUseCase.execute(-1, 0);
+                        playerMovement.execute(1, -1, 0);
                         System.out.println("D");
                         break;
 
