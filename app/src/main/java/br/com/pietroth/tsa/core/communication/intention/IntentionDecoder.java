@@ -22,6 +22,24 @@ public class IntentionDecoder {
 
         ByteBuffer buffer = ByteBuffer.wrap(raw);
 
+        if (raw.length < 2) {
+            throw new IllegalStateException("Corrupted message: missing intentionId");
+        }
+
+        if (buffer.remaining() < 6) {
+            throw new IllegalStateException(
+                "Corrupted message: too small to contain totalSize and intentionId"
+            );
+        }
+
+        int length = buffer.getInt();
+        if (length != raw.length) {
+            throw new IllegalStateException(
+                "Corrupted message: declared size " + length +
+                " does not match actual size " + raw.length
+            );
+        }
+
         short intentionId = buffer.getShort();
         byte family = (byte) ((intentionId >> 8) & 0xFF);
         byte type = (byte) (intentionId & 0xFF);

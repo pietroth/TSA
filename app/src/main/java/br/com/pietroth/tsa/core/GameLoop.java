@@ -8,6 +8,7 @@ import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.communication.event.*;
+import br.com.pietroth.tsa.core.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.network.transport.Server;
 import br.com.pietroth.tsa.core.network.transport.TCPServer;
 
@@ -34,6 +35,7 @@ public class GameLoop extends TicksPerSecondRunnable {
             .port(5555)
             .clientPool(Executors.newCachedThreadPool())
             .build();
+        server.subscribe(ClientLCManagerSingleton.get());
         new Thread(server).start();
     }
 

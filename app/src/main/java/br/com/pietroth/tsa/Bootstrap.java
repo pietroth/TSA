@@ -1,6 +1,5 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
 import br.com.pietroth.tsa.core.communication.event.EventDispatcherSingleton;
 import br.com.pietroth.tsa.core.communication.event.Executers;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
@@ -32,14 +31,13 @@ public class Bootstrap {
             .playerMovementCodec(new PlayerMoveCodec())
             .build();
         codecs.registerCodecs();
-        
+
         EventDispatcherSingleton.init(256, 256);
-        EventDispatcher dispatcher = EventDispatcherSingleton.get();
 
         IntentionVDSingleton.init();
 
         ClientLCManagerSingleton.init(
-            10, new IntentionGateway(new IntentionDecoder(registry), dispatcher));
+            10, new IntentionGateway(new IntentionDecoder(registry)));
 
         Validators validators = new Validators.Builder()
             .intentionVD(IntentionVDSingleton.get())
@@ -48,7 +46,6 @@ public class Bootstrap {
         validators.registerValidators();
 
         Executers executers = new Executers.Builder()
-            .dispatcher(dispatcher)
             .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
             .build();
         executers.registerExecuters();

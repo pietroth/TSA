@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.util.List;
@@ -70,8 +71,14 @@ public class TCPConnection implements Connection {
             throw new IOException("Disconnected", e);
         }
 
+        if (length < 6) {
+            throw new IOException("Invalid frame size: " + length);
+        }
+
         byte[] raw = new byte[length];
-        dis.readFully(raw);    
+        ByteBuffer.wrap(raw).putInt(length);
+
+        dis.readFully(raw, 4, length -4);    
 
         return raw;
     }

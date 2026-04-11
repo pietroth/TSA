@@ -28,7 +28,6 @@ public class EventDecoder {
         }
 
         int totalSize = buffer.getInt();
-
         if (totalSize != raw.length) {
             throw new IllegalStateException(
                 "Corrupted message: declared size " + totalSize +

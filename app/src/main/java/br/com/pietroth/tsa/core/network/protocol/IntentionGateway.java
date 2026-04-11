@@ -8,15 +8,13 @@ import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
 import br.com.pietroth.tsa.core.communication.MessageData;
 import br.com.pietroth.tsa.core.communication.intention.Intention;
 import br.com.pietroth.tsa.core.communication.event.Event;
-import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
+import br.com.pietroth.tsa.core.communication.event.EventDispatcherSingleton;
 
 public class IntentionGateway implements ConnectionReceivedListener {
     private final IntentionDecoder decoder;
-    private final EventDispatcher dispatcher;
 
-    public IntentionGateway(IntentionDecoder decoder, EventDispatcher dispatcher) {
+    public IntentionGateway(IntentionDecoder decoder) {
         this.decoder = decoder;
-        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
 
         if (validate >= 1) {
             Event<? extends MessageData> event = new Event<>(intention.getFamily(), intention.getType(), intention.getData());
-            dispatcher.enqueue(event);
+            EventDispatcherSingleton.get().enqueue(event);
         }
 
     }
