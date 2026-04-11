@@ -28,25 +28,33 @@ public class Bootstrap {
     }
 
     public void boot() {
+        // Initialization of Singletons
+
         IntentionVDSingleton.init();
         ClientLCManagerSingleton.init(
             10, new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher));
 
+        // Registers
+        
         Validators validators = new Validators.Builder()
             .intentionVD(IntentionVDSingleton.get())
             .playerMoveValidator(new PlayerMoveValidator())
             .build();
         validators.registerValidators();
+
         Codecs codecs = new Codecs.Builder()
             .registry(this.registry)
             .playerMovementCodec(new PlayerMoveCodec())
             .build();
         codecs.registerCodecs();
+
         Executers executers = new Executers.Builder()
             .dispatcher(this.dispatcher)
             .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
             .build();
         executers.registerExecuters();
+
+        // GameLoop builder
 
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
