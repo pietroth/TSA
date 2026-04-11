@@ -11,6 +11,7 @@ import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMov
 import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
 import br.com.pietroth.tsa.core.communication.intention.Validators;
 import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveCodec;
+import br.com.pietroth.tsa.core.communication.intention.player.playermove.PlayerMoveValidator;
 
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;
@@ -24,12 +25,16 @@ public class Bootstrap {
     }
 
     public void boot() {
-        Validators validators = new Validators(IntentionVDSingleton.INSTANCE.getIntentionVD());
+        Validators validators = new Validators.Builder()
+            .intentionVD(IntentionVDSingleton.INSTANCE.getIntentionVD())
+            .playerMoveValidator(new PlayerMoveValidator())
+            .build();
         validators.registerValidators();
         Codecs codecs = new Codecs.Builder()
+            .registry(this.registry)
             .playerMovementCodec(new PlayerMoveCodec())
             .build();
-        codecs.registerCodecs(registry);
+        codecs.registerCodecs();
         Executers executers = new Executers.Builder()
             .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
             .build();
