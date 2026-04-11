@@ -3,7 +3,6 @@ package br.com.pietroth.tsa;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -15,13 +14,11 @@ public class App {
 
         // ECS Runtime
         DominionRuntime runtime = new DominionRuntime();
-        EventDispatcher eventDispatcher = new EventDispatcher(256, 256);
 
         // Game Loop
         Bootstrap bootstrap = new Bootstrap.Builder()
             .ecsRuntime(runtime)
             .codecRegistry(new CodecRegistry())
-            .eventDispatcher(eventDispatcher)
             .build();
         bootstrap.boot();
 
