@@ -53,6 +53,7 @@ public class TCPConnection implements Connection {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                break;
             }
         }
     }
