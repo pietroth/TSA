@@ -26,7 +26,7 @@ public class Bootstrap {
 
     public void boot() {
         Validators validators = new Validators.Builder()
-            .intentionVD(IntentionVDSingleton.INSTANCE.getIntentionVD())
+            .intentionVD(IntentionVDSingleton.get())
             .playerMoveValidator(new PlayerMoveValidator())
             .build();
         validators.registerValidators();

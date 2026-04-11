@@ -37,7 +37,7 @@ public class GameLoop extends TicksPerSecondRunnable {
             new VelocityComponent(0, 0)
         );
 
-        IntentionVDSingleton.INSTANCE.getIntentionVD();
+        IntentionVDSingleton.initialize();
 
         server = TCPServer.builder()
             .port(5555)

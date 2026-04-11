@@ -21,7 +21,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
 
     @Override
     public void onConnectionReceived(Connection connection, byte[] data) {
-        IntentionVD intentionVD = IntentionVDSingleton.INSTANCE.getIntentionVD();
+        IntentionVD intentionVD = IntentionVDSingleton.get();
 
         Intention<? extends MessageData> intention = decoder.decode(data);
         int validate = intentionVD.validate(intention);

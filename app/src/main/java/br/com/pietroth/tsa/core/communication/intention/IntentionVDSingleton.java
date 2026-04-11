@@ -2,16 +2,20 @@ package br.com.pietroth.tsa.core.communication.intention;
 
 import java.util.HashMap;
 
-public enum IntentionVDSingleton {
-    INSTANCE;
+public class IntentionVDSingleton {
+    private static IntentionVD instance;
 
-    private final IntentionVD intentionVD;
-
-    IntentionVDSingleton() {
-        this.intentionVD = new IntentionVD(new HashMap<>());
+    public static void initialize() {
+        if (instance != null) {
+            throw new IllegalStateException("IntentionVDSingleton is already initialized");
+        }
+        instance = new IntentionVD(new HashMap<>());
     }
 
-    public IntentionVD getIntentionVD() {
-        return intentionVD;
+    public static IntentionVD get() {
+        if (instance == null) {
+            throw new IllegalStateException("IntentionVDSingleton is not initialized");
+        }
+        return instance;
     }
 }
