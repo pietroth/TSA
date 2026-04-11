@@ -5,12 +5,14 @@ import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMov
 
 public class Executers {
     private final PlayerMovedExecuter playerMovedExecuter;
+    private final EventDispatcher dispatcher;
 
     public Executers(Builder builder) {
         this.playerMovedExecuter = builder.playerMovedExecuter;
+        this.dispatcher = builder.dispatcher;
     }
 
-    public void registerExecuters(EventDispatcher dispatcher) {
+    public void registerExecuters() {
         dispatcher.register(
             (byte) MessageIdentifier.Player.getGlobalId(),
             (byte) MessageIdentifier.Player.PLAYER_MOVED.getId(),
@@ -24,7 +26,13 @@ public class Executers {
 
     public static class Builder {
         private PlayerMovedExecuter playerMovedExecuter;
+        private EventDispatcher dispatcher;
 
+        public Builder dispatcher(EventDispatcher dispatcher) {
+            this.dispatcher = dispatcher;
+            return this;
+        }
+        
         public Builder playerMovedExecuter(PlayerMovedExecuter playerMovedExecuter) {
             this.playerMovedExecuter = playerMovedExecuter;
             return this;
@@ -32,6 +40,7 @@ public class Executers {
 
         public Executers build() {
             if (playerMovedExecuter == null) throw new IllegalStateException("PlayerMovedExecuter is required");
+            if (dispatcher == null) throw new IllegalStateException("EventDispatcher is required");
             return new Executers(this);
         }
     }

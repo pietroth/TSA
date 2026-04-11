@@ -16,7 +16,7 @@ import br.com.pietroth.tsa.core.communication.intention.player.playermove.Player
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;
     private final CodecRegistry registry;
-    private EventDispatcher dispatcher;
+    private final EventDispatcher dispatcher;
 
     public Bootstrap(Builder builder) {
         this.ecsRuntime = builder.ecsRuntime;
@@ -36,9 +36,10 @@ public class Bootstrap {
             .build();
         codecs.registerCodecs();
         Executers executers = new Executers.Builder()
+            .dispatcher(this.dispatcher)
             .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
             .build();
-        executers.registerExecuters(dispatcher);
+        executers.registerExecuters();
 
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
