@@ -1,14 +1,13 @@
 package br.com.pietroth.tsa.core;
 
+import java.util.concurrent.Executors;
+
 import br.com.pietroth.tsa.core.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.ecs.component.PositionComponent;
 import br.com.pietroth.tsa.core.ecs.component.VelocityComponent;
 import br.com.pietroth.tsa.core.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.world.player.PlayerComponent;
-
-import java.util.concurrent.ExecutorService;
-
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.communication.event.*;
 import br.com.pietroth.tsa.core.communication.intention.IntentionDecoder;
@@ -43,7 +42,7 @@ public class GameLoop extends TicksPerSecondRunnable {
 
         server = TCPServer.builder()
             .port(5555)
-            .clientPool(java.util.concurrent.Executors.newCachedThreadPool())
+            .clientPool(Executors.newCachedThreadPool())
             .build();
     }
 
@@ -55,11 +54,7 @@ public class GameLoop extends TicksPerSecondRunnable {
 
         IntentionGateway intentionGateway = new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher);
         ClientLCManagerSingleton.init(10, intentionGateway);
-        ClientLCManager clientLCManager = ClientLCManagerSingleton.get();
 
-        clientLCManager.getClientsView().forEach(client -> {
-            System.out.println("Client ID: " + client.getId());
-        });
     }
 
     private void scheduleSystems() {
