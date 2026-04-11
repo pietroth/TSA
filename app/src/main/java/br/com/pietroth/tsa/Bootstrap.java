@@ -4,10 +4,13 @@ import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
 import br.com.pietroth.tsa.core.communication.event.Executers;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.ecs.ECSRuntime;
+import br.com.pietroth.tsa.core.network.client.ClientLCManagerSingleton;
+import br.com.pietroth.tsa.core.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.GameLoop;
 import br.com.pietroth.tsa.core.application.MovementUseCase;
 import br.com.pietroth.tsa.core.communication.codec.Codecs;
 import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
 import br.com.pietroth.tsa.core.communication.intention.Validators;
 import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveCodec;
@@ -25,6 +28,10 @@ public class Bootstrap {
     }
 
     public void boot() {
+        IntentionVDSingleton.init();
+        ClientLCManagerSingleton.init(
+            10, new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher));
+
         Validators validators = new Validators.Builder()
             .intentionVD(IntentionVDSingleton.get())
             .playerMoveValidator(new PlayerMoveValidator())
