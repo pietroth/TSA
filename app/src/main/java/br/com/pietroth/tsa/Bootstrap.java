@@ -33,7 +33,7 @@ public class Bootstrap {
         EventDispatcher dispatcher = EventDispatcherSingleton.get();
 
         IntentionVDSingleton.init();
-        
+
         ClientLCManagerSingleton.init(
             10, new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher));
         
@@ -61,9 +61,8 @@ public class Bootstrap {
 
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
-            .eventDispatcher(dispatcher)
             .build();
-        new Thread(loop).start();
+        loop.run();
     }
 
     public static class Builder {
