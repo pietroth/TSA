@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.core.communication.event.EventDispatcher;
+import br.com.pietroth.tsa.core.communication.event.EventDispatcherSingleton;
 import br.com.pietroth.tsa.core.communication.event.Executers;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.ecs.ECSRuntime;
@@ -19,21 +20,23 @@ import br.com.pietroth.tsa.core.communication.intention.player.playermove.Player
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;
     private final CodecRegistry registry;
-    private final EventDispatcher dispatcher;
 
     public Bootstrap(Builder builder) {
         this.ecsRuntime = builder.ecsRuntime;
         this.registry = builder.registry;
-        this.dispatcher = builder.dispatcher;
     }
 
     public void boot() {
         // Initialization of Singletons
 
+        EventDispatcherSingleton.init(256, 256);
+        EventDispatcher dispatcher = EventDispatcherSingleton.get();
+
         IntentionVDSingleton.init();
+        
         ClientLCManagerSingleton.init(
             10, new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher));
-
+        
         // Registers
         
         Validators validators = new Validators.Builder()
@@ -49,7 +52,7 @@ public class Bootstrap {
         codecs.registerCodecs();
 
         Executers executers = new Executers.Builder()
-            .dispatcher(this.dispatcher)
+            .dispatcher(dispatcher)
             .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
             .build();
         executers.registerExecuters();
@@ -66,7 +69,6 @@ public class Bootstrap {
     public static class Builder {
         private ECSRuntime ecsRuntime;
         private CodecRegistry registry;
-        private EventDispatcher dispatcher;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
@@ -78,15 +80,9 @@ public class Bootstrap {
             return this;
         }
 
-        public Builder eventDispatcher(EventDispatcher dispatcher) {
-            this.dispatcher = dispatcher;
-            return this;
-        }
-
         public Bootstrap build() {
             if (ecsRuntime == null) throw new IllegalStateException("ECSRuntime is required");
             if (registry == null) throw new IllegalStateException("CodecRegistry is required");
-            if (dispatcher == null) throw new IllegalStateException("EventDispatcher is required");
             return new Bootstrap(this);
         }
     }
