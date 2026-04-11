@@ -62,7 +62,7 @@ public class Bootstrap {
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
             .build();
-        loop.run();
+        new Thread(loop).start();
     }
 
     public static class Builder {

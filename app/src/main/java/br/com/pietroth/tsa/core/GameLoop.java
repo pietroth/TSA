@@ -41,12 +41,6 @@ public class GameLoop extends TicksPerSecondRunnable {
     protected void tick() {
         ecsRuntime.tick();
         EventDispatcherSingleton.get().run();
-
-        ecsRuntime.getContainer().forEachEntityWith
-            (new Class[]{PositionComponent.class, VelocityComponent.class}, entity -> {
-                PositionComponent position = entity.get(PositionComponent.class);
-                System.out.println("" + position.x + " ," + position.y);
-            });
     }
 
     private void scheduleSystems() {
