@@ -34,13 +34,13 @@ public class GameLoop extends TicksPerSecondRunnable {
             .port(5555)
             .clientPool(Executors.newCachedThreadPool())
             .build();
+        new Thread(server).start();
     }
 
     @Override
     protected void tick() {
         ecsRuntime.tick();
         EventDispatcherSingleton.get().run();
-        server.run();
 
         ecsRuntime.getContainer().forEachEntityWith
             (new Class[]{PositionComponent.class, VelocityComponent.class}, entity -> {
