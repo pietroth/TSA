@@ -44,6 +44,9 @@ public class GameLoop extends TicksPerSecondRunnable {
             .port(5555)
             .clientPool(Executors.newCachedThreadPool())
             .build();
+
+        IntentionGateway intentionGateway = new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher);
+        ClientLCManagerSingleton.init(10, intentionGateway);
     }
 
     @Override
@@ -51,10 +54,6 @@ public class GameLoop extends TicksPerSecondRunnable {
         ecsRuntime.tick();
         dispatcher.run();
         server.run();
-
-        IntentionGateway intentionGateway = new IntentionGateway(new IntentionDecoder(new CodecRegistry()), dispatcher);
-        ClientLCManagerSingleton.init(10, intentionGateway);
-
     }
 
     private void scheduleSystems() {
