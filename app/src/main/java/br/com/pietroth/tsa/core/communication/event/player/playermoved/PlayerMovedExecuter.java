@@ -13,6 +13,7 @@ public class PlayerMovedExecuter implements EventExecuter<PlayerMoveData> {
 
     @Override
     public void execute(PlayerMoveData data) {
+        System.out.println("Executing PlayerMoved: " + data.sx + ", " + data.sy);
         movementUseCase.execute(data.sx, data.sy);
     }
     
