@@ -13,13 +13,11 @@ import br.com.pietroth.tsa.core.network.transport.TCPServer;
 
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
-    private EventDispatcher dispatcher;
     private Server server;
 
     private GameLoop(Builder builder) {
         super(30);
         this.ecsRuntime = builder.ecsRuntime;
-        this.dispatcher = builder.dispatcher;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class GameLoop extends TicksPerSecondRunnable {
     @Override
     protected void tick() {
         ecsRuntime.tick();
-        dispatcher.run();
+        EventDispatcherSingleton.get().run();
         server.run();
     }
 
@@ -55,15 +53,9 @@ public class GameLoop extends TicksPerSecondRunnable {
 
     public static class Builder {
         private ECSRuntime ecsRuntime;
-        private EventDispatcher dispatcher;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
-            return this;
-        }
-
-        public Builder eventDispatcher(EventDispatcher dispatcher) {
-            this.dispatcher = dispatcher;
             return this;
         }
 
@@ -71,9 +63,7 @@ public class GameLoop extends TicksPerSecondRunnable {
             if (ecsRuntime == null) {
                 throw new IllegalStateException("ECSRuntime must be provided");
             }
-            if (dispatcher == null) {
-                throw new IllegalStateException("EventDispatcher must be provided");
-            }
+
             return new GameLoop(this);
         }
     }
