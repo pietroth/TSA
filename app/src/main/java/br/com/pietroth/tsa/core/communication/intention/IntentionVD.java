@@ -18,6 +18,9 @@ public class IntentionVD {
     
     @SuppressWarnings("unchecked")
 	public <T extends MessageData> int validate(Intention<T> intention) {
+        System.out.println("Looking validator for family=" + (intention.getFamily() & 0xFF)
+            + " type=" + (intention.getType() & 0xFF));
+            
         short id = (short)((intention.getFamily() << 8) | (intention.getType() & 0xFF));
         IntentionValidator<T> validator = (IntentionValidator<T>) validators.get(id);
         if (validator == null) {
