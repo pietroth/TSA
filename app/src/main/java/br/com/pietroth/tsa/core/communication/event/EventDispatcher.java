@@ -59,6 +59,9 @@ public class EventDispatcher implements Runnable {
     }
 
     public void enqueue(Event<? extends MessageData> event) {
+        System.out.println("Enqueue event family=" + (event.getFamily() & 0xFF)
+            + " type=" + (event.getType() & 0xFF));
+
         if (processing) {
             next.add(event);
         } else {
