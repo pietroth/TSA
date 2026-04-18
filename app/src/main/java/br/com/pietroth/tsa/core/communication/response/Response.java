@@ -1,7 +1,7 @@
 package br.com.pietroth.tsa.core.communication.response;
 
 public class Response {
-    private int correlationId;
+    private int correlationId; // Correlation ID with Intention
     private byte status;
 
     public Response(int status, int correlationId) {

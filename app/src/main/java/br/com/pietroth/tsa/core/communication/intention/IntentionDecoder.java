@@ -40,6 +40,7 @@ public class IntentionDecoder {
             );
         }
 
+        int correlationId = buffer.getInt();
         short intentionId = buffer.getShort();
         byte family = (byte) ((intentionId >> 8) & 0xFF);
         byte type = (byte) (intentionId & 0xFF);
@@ -59,6 +60,6 @@ public class IntentionDecoder {
             );
         }
 
-        return new Intention<>(family, type, data);
+        return new Intention<>(family, type, data, correlationId);
     }
 }
