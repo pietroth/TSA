@@ -22,16 +22,6 @@ public class IntentionDecoder {
 
         ByteBuffer buffer = ByteBuffer.wrap(raw);
 
-        if (raw.length < 10) {
-            throw new IllegalStateException("Corrupted MIDF: too small to contain length, correlationId, and intentionId");
-        }
-
-        if (buffer.remaining() < 10) {
-            throw new IllegalStateException(
-                "Corrupted MIDF: not enough bytes for length, correlationId, and intentionId"
-            );
-        }
-
         int length = buffer.getInt();
         if (length != raw.length) {
             throw new IllegalStateException(
