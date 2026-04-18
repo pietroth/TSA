@@ -2,9 +2,9 @@ package br.com.pietroth.tsa.core.communication.codec;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 
-public interface Codec<T extends MessageData> {
+public interface Codec<T extends MIDFData> {
     int size();
     int size(T data);
     void encode(ByteBuffer buffer, T data);

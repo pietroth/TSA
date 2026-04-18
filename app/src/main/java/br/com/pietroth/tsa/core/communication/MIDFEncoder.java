@@ -5,16 +5,16 @@ import java.nio.ByteBuffer;
 import br.com.pietroth.tsa.core.communication.codec.Codec;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 
-public class MessageEncoder {
+public class MIDFEncoder {
 
     private final CodecRegistry codecRegistry;
 
-    public MessageEncoder(CodecRegistry codecRegistry) {
+    public MIDFEncoder(CodecRegistry codecRegistry) {
         this.codecRegistry = codecRegistry;
     }
 
-    public <T extends MessageData> byte[] encode(Message<T> message) {
-        Codec<? extends MessageData> codec = codecRegistry.get(message.getFamily(), message.getType());
+    public <T extends MIDFData> byte[] encode(MIDF<T> MIDF) {
+        Codec<? extends MIDFData> codec = codecRegistry.get(MIDF.getFamily(), MIDF.getType());
 
         int payloadSize = codec.size();
         int totalSize = 4 + 2 + payloadSize; // 4 bytes for length prefix + 2 bytes for event ID + payload size
@@ -23,12 +23,12 @@ public class MessageEncoder {
 
         buffer.position(4); // Reserve space for the length prefix
 
-        short eventId = (short)((message.getFamily() << 8) | (message.getType() & 0xFF));
+        short eventId = (short)((MIDF.getFamily() << 8) | (MIDF.getType() & 0xFF));
         buffer.putShort(eventId);
 
         @SuppressWarnings("unchecked")
-        Codec<MessageData> c = (Codec<MessageData>) codec;
-        c.encode(buffer, message.getData());
+        Codec<MIDFData> c = (Codec<MIDFData>) codec;
+        c.encode(buffer, MIDF.getData());
 
         buffer.putInt(0, totalSize); // Write the length prefix at the reserved space
 

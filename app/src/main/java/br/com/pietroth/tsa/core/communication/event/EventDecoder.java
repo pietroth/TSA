@@ -2,7 +2,7 @@ package br.com.pietroth.tsa.core.communication.event;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 import br.com.pietroth.tsa.core.communication.codec.Codec;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
 
@@ -14,7 +14,7 @@ public class EventDecoder {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends MessageData> Event<T> decode(byte[] raw) {
+    public <T extends MIDFData> Event<T> decode(byte[] raw) {
         if (raw == null) {
             throw new IllegalArgumentException("raw cannot be null");
         }
@@ -23,14 +23,14 @@ public class EventDecoder {
 
         if (buffer.remaining() < 6) {
             throw new IllegalStateException(
-                "Corrupted message: too small to contain length prefix and eventId"
+                "Corrupted MIDF: too small to contain length prefix and eventId"
             );
         }
 
         int totalSize = buffer.getInt();
         if (totalSize != raw.length) {
             throw new IllegalStateException(
-                "Corrupted message: declared size " + totalSize +
+                "Corrupted MIDF: declared size " + totalSize +
                 " does not match actual size " + raw.length
             );
         }
@@ -49,7 +49,7 @@ public class EventDecoder {
 
         if (buffer.hasRemaining()) {
             throw new IllegalStateException(
-                "Corrupted message: payload decoder did not consume all bytes, " +
+                "Corrupted MIDF: payload decoder did not consume all bytes, " +
                 buffer.remaining() + " bytes left"
             );
         }

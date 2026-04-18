@@ -3,21 +3,21 @@ package br.com.pietroth.tsa.core.communication.codec;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 
 public class CodecRegistry {
     private final Map<Short, Codec<?>> registry = new HashMap<>();
 
-    public <T extends MessageData> void register(byte family, byte type, Codec<T> codec) {
+    public <T extends MIDFData> void register(byte family, byte type, Codec<T> codec) {
         short eventId = (short)((family << 8) | (type & 0xFF));
         registry.put(eventId, codec);
     }
 
-    public Codec<? extends MessageData> get(short eventId) {
+    public Codec<? extends MIDFData> get(short eventId) {
         return registry.get(eventId);
     }
 
-    public Codec<? extends MessageData> get(byte family, byte type) {
+    public Codec<? extends MIDFData> get(byte family, byte type) {
         short eventId = (short)((family << 8) | (type & 0xFF));
         return registry.get(eventId);
     }

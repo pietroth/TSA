@@ -5,7 +5,7 @@ import br.com.pietroth.tsa.core.communication.intention.IntentionVD;
 import br.com.pietroth.tsa.core.network.transport.Connection;
 import br.com.pietroth.tsa.core.network.transport.ConnectionReceivedListener;
 import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 import br.com.pietroth.tsa.core.communication.intention.Intention;
 import br.com.pietroth.tsa.core.communication.event.Event;
 import br.com.pietroth.tsa.core.communication.event.EventDispatcherSingleton;
@@ -22,7 +22,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         IntentionVD intentionVD = IntentionVDSingleton.get();
         System.out.println("Gateway raw bytes: " + data.length);
 
-        Intention<? extends MessageData> intention = decoder.decode(data);
+        Intention<? extends MIDFData> intention = decoder.decode(data);
 
         System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
             + " type=" + (intention.getType() & 0xFF)
@@ -32,7 +32,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         System.out.println("Validation result=" + validate);
 
         if (validate >= 1) {
-            Event<? extends MessageData> event = new Event<>(intention.getFamily(), intention.getType(), intention.getData());
+            Event<? extends MIDFData> event = new Event<>(intention.getFamily(), intention.getType(), intention.getData());
             EventDispatcherSingleton.get().enqueue(event);
         }
 

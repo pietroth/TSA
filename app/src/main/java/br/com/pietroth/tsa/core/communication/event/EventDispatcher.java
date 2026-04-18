@@ -3,14 +3,14 @@ package br.com.pietroth.tsa.core.communication.event;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 
 public class EventDispatcher implements Runnable {
 
-    private final Queue<Event<? extends MessageData>> current;
-    private final Queue<Event<? extends MessageData>> next;  
+    private final Queue<Event<? extends MIDFData>> current;
+    private final Queue<Event<? extends MIDFData>> next;  
 
-    private final EventExecuter<? extends MessageData>[][] executers; 
+    private final EventExecuter<? extends MIDFData>[][] executers; 
 
     private boolean processing;
 
@@ -22,7 +22,7 @@ public class EventDispatcher implements Runnable {
         processing = false;
     }
 
-    public void register(byte family, byte type, EventExecuter<? extends MessageData> executer) {
+    public void register(byte family, byte type, EventExecuter<? extends MIDFData> executer) {
         executers[family & 0xFF][type & 0xFF] = executer;
     }
 
@@ -30,7 +30,7 @@ public class EventDispatcher implements Runnable {
     public void run() {
         processing = true;
 
-        Event<? extends MessageData> event;
+        Event<? extends MIDFData> event;
         while ((event = current.poll()) != null) {
             dispatch(event);
         }
@@ -42,11 +42,11 @@ public class EventDispatcher implements Runnable {
         next.clear();
     }
 
-    private void dispatch(Event<? extends MessageData> event) {
+    private void dispatch(Event<? extends MIDFData> event) {
         byte family = event.getFamily();
         byte type = event.getType();
 
-        EventExecuter<? extends MessageData> executer = executers[family & 0xFF][type & 0xFF];
+        EventExecuter<? extends MIDFData> executer = executers[family & 0xFF][type & 0xFF];
 
         if (executer != null) {
             dispatchEvent(event, executer);
@@ -54,11 +54,11 @@ public class EventDispatcher implements Runnable {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends MessageData> void dispatchEvent(Event<? extends MessageData> event, EventExecuter<? extends MessageData> executer) {
+    private <T extends MIDFData> void dispatchEvent(Event<? extends MIDFData> event, EventExecuter<? extends MIDFData> executer) {
         ((EventExecuter<T>) executer).execute((T) event.getData());
     }
 
-    public void enqueue(Event<? extends MessageData> event) {
+    public void enqueue(Event<? extends MIDFData> event) {
         System.out.println("Enqueue event family=" + (event.getFamily() & 0xFF)
             + " type=" + (event.getType() & 0xFF));
 

@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.communication.event;
 
-import br.com.pietroth.tsa.core.communication.MessageIdentifier;
+import br.com.pietroth.tsa.core.communication.MIDFIdentifier;
 import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
 
 public class Executers {
@@ -12,8 +12,8 @@ public class Executers {
 
     public void registerExecuters() {
         EventDispatcherSingleton.get().register(
-            (byte) MessageIdentifier.Player.getGlobalId(),
-            (byte) MessageIdentifier.Player.PLAYER_MOVED.getId(),
+            (byte) MIDFIdentifier.Player.getGlobalId(),
+            (byte) MIDFIdentifier.Player.PLAYER_MOVED.getId(),
             this.playerMovedExecuter
         );
     }

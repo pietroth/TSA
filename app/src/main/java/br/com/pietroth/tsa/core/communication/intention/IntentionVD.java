@@ -2,22 +2,22 @@ package br.com.pietroth.tsa.core.communication.intention;
 
 import java.util.Map;
 
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 
 public class IntentionVD {
-    private final Map<Short, IntentionValidator<? extends MessageData>> validators;
+    private final Map<Short, IntentionValidator<? extends MIDFData>> validators;
 
-    public IntentionVD(Map<Short, IntentionValidator<? extends MessageData>> validators) {
+    public IntentionVD(Map<Short, IntentionValidator<? extends MIDFData>> validators) {
         this.validators = validators;
     }
 
-    public <T extends MessageData> void registerValidator(byte family, byte type, IntentionValidator<T> validator) {
+    public <T extends MIDFData> void registerValidator(byte family, byte type, IntentionValidator<T> validator) {
         short id = (short)((family << 8) | (type & 0xFF));
         validators.put(id, validator);
     }
     
     @SuppressWarnings("unchecked")
-	public <T extends MessageData> int validate(Intention<T> intention) {
+	public <T extends MIDFData> int validate(Intention<T> intention) {
         System.out.println("Looking validator for family=" + (intention.getFamily() & 0xFF)
             + " type=" + (intention.getType() & 0xFF));
             

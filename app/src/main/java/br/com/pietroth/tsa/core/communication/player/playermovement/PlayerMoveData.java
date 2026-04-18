@@ -1,8 +1,8 @@
 package br.com.pietroth.tsa.core.communication.player.playermovement;
 
-import br.com.pietroth.tsa.core.communication.MessageData;
+import br.com.pietroth.tsa.core.communication.MIDFData;
 
-public class PlayerMoveData implements MessageData {
+public class PlayerMoveData implements MIDFData {
     public final float sx;
     public final float sy;
 
