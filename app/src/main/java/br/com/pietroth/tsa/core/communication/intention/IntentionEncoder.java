@@ -2,7 +2,6 @@ package br.com.pietroth.tsa.core.communication.intention;
 
 import java.nio.ByteBuffer;
 
-import br.com.pietroth.tsa.core.communication.MIDF;
 import br.com.pietroth.tsa.core.communication.MIDFData;
 import br.com.pietroth.tsa.core.communication.codec.Codec;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
@@ -26,7 +25,7 @@ public class IntentionEncoder {
 
         int correlationId = intention.getCorrelationId();
         short intentionId = (short)((intention.getFamily() << 8) | (intention.getType() & 0xFF));
-        
+
         buffer.putInt(correlationId);
         buffer.putShort(intentionId);
 

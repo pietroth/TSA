@@ -23,8 +23,8 @@ public class MIDFEncoder {
 
         buffer.position(4); // Reserve space for the length prefix
 
-        short eventId = (short)((MIDF.getFamily() << 8) | (MIDF.getType() & 0xFF));
-        buffer.putShort(eventId);
+        short MIDFId = (short)((MIDF.getFamily() << 8) | (MIDF.getType() & 0xFF));
+        buffer.putShort(MIDFId);
 
         @SuppressWarnings("unchecked")
         Codec<MIDFData> c = (Codec<MIDFData>) codec;
