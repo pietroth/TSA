@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.communication.codec;
 
-import br.com.pietroth.tsa.core.communication.MIDFIdentifier;
+import br.com.pietroth.tsa.core.communication.MIDFGlossary;
 import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveCodec;
 
 public class Codecs {
@@ -14,8 +14,8 @@ public class Codecs {
 
     public void registerCodecs() {
         this.registry.register(
-            (byte) MIDFIdentifier.Player.getGlobalId(),
-            (byte) MIDFIdentifier.Player.PLAYER_MOVED.getId(),
+            (byte) MIDFGlossary.Player.getGlobalId(),
+            (byte) MIDFGlossary.Player.PLAYER_MOVED.getId(),
             this.playerMovementCodec
         );
     }

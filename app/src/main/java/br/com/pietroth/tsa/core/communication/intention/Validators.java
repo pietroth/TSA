@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.communication.intention;
 
-import br.com.pietroth.tsa.core.communication.MIDFIdentifier;
+import br.com.pietroth.tsa.core.communication.MIDFGlossary;
 import br.com.pietroth.tsa.core.communication.intention.player.playermove.PlayerMoveValidator;
 
 public class Validators {
@@ -14,8 +14,8 @@ public class Validators {
 
     public void registerValidators() {
         intentionVD.registerValidator
-            (MIDFIdentifier.Player.getGlobalId(), 
-            MIDFIdentifier.Player.PLAYER_MOVED.getId(), 
+            (MIDFGlossary.Player.getGlobalId(), 
+            MIDFGlossary.Player.PLAYER_MOVED.getId(), 
             playerMoveValidator);
     }
 

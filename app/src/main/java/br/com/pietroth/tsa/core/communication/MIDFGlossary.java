@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.communication;
 
-public class MIDFIdentifier {
+public class MIDFGlossary {
     public static enum Player {
         PLAYER_MOVED((byte) 10);
 
