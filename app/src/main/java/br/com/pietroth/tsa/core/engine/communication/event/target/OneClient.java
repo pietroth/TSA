@@ -1,13 +1,14 @@
 package br.com.pietroth.tsa.core.engine.communication.event.target;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.pietroth.tsa.core.engine.network.client.ClientId;
 
 public class OneClient implements TargetModifier {
-    public final int clientId;
+    public final AtomicInteger clientId;
 
-    public OneClient(int clientId){
+    public OneClient(AtomicInteger clientId){
         this.clientId = clientId;
     }
 

@@ -1,9 +1,11 @@
 package br.com.pietroth.tsa.core.engine.network.client;
 
-public class ClientId {
-    private final int id;
+import java.util.concurrent.atomic.AtomicInteger;
 
-    public ClientId(int id) {
+public class ClientId {
+    private final AtomicInteger id;
+
+    public ClientId(AtomicInteger id) {
         if (validate(id)) {
             this.id = id;
         }
@@ -11,7 +13,7 @@ public class ClientId {
         throw new ExceptionInInitializerError();
     }
 
-    public boolean validate(int id) { return true; }
+    public boolean validate(AtomicInteger id) { return true; }
 
-    public int getId() { return this.id; }
+    public AtomicInteger getId() { return this.id; }
 }
