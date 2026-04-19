@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import br.com.pietroth.tsa.core.communication.MIDFData;
 import br.com.pietroth.tsa.core.communication.codec.Codec;
 import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.communication.event.target.TargetScope;
 
 public class EventDecoder {
     private final CodecRegistry codecRegistry;
@@ -54,6 +55,6 @@ public class EventDecoder {
             );
         }
 
-        return new Event<>(family, type, data, 0, 0);
+        return new Event<>(family, type, data, 0, null);
     }
 }

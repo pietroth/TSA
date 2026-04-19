@@ -13,8 +13,8 @@ public class PlayerEvents {
             MIDFGlossary.Player.getGlobalId(),
             MIDFGlossary.Player.PLAYER_MOVED.getId(),
             data,
-            0,
-            1
+            1,
+            null
         );
         EventDispatcherSingleton.get().enqueue(event);
     }

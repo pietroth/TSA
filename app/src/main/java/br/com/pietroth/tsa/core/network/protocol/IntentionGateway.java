@@ -32,7 +32,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         System.out.println("Validation result=" + validate);
 
         if (validate >= 1) {
-            Event<? extends MIDFData> event = new Event<>(intention.getFamily(), intention.getType(), intention.getData(), 0, 1);
+            Event<? extends MIDFData> event = new Event<>(intention.getFamily(), intention.getType(), intention.getData(), 1, null);
             EventDispatcherSingleton.get().enqueue(event);
         }
 
