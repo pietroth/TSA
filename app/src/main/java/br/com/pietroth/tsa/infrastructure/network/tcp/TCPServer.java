@@ -1,9 +1,14 @@
-package br.com.pietroth.tsa.core.engine.network.transport;
+package br.com.pietroth.tsa.infrastructure.network.tcp;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
+
+import br.com.pietroth.tsa.core.engine.network.transport.Server;
+import br.com.pietroth.tsa.core.engine.network.transport.Connection;
+import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
+
 import java.util.List;
 import java.util.ArrayList;
 

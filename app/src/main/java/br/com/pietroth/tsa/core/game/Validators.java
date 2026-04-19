@@ -1,7 +1,8 @@
-package br.com.pietroth.tsa.core.engine.communication.intention;
+package br.com.pietroth.tsa.core.game;
 
-import br.com.pietroth.tsa.core.engine.communication.MIDFGlossary;
-import br.com.pietroth.tsa.core.engine.communication.intention.player.playermove.PlayerMoveValidator;
+import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVD;
+import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
 
 public class Validators {
     private final IntentionVD intentionVD;

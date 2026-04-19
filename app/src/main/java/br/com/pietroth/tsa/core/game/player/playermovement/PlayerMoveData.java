@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine.communication.player.playermovement;
+package br.com.pietroth.tsa.core.game.player.playermovement;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 

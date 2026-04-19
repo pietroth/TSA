@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine.ecs.component;
+package br.com.pietroth.tsa.core.game.ecs.component;
 
 public class VelocityComponent {
     public float x;

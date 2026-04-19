@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine.network.transport;
+package br.com.pietroth.tsa.infrastructure.network.tcp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +8,10 @@ import java.nio.ByteBuffer;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.util.List;
+
+import br.com.pietroth.tsa.core.engine.network.transport.Connection;
+import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
+
 import java.util.ArrayList;
 
 public class TCPConnection implements Connection {

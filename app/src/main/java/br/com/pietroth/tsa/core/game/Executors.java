@@ -1,13 +1,13 @@
-package br.com.pietroth.tsa.core.game.initialization;
+package br.com.pietroth.tsa.core.game;
 
-import br.com.pietroth.tsa.core.engine.communication.MIDFGlossary;
 import br.com.pietroth.tsa.core.engine.communication.event.EventDispatcherSingleton;
-import br.com.pietroth.tsa.core.game.player.playermoved.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMovedExecutor;
 
-public class Executers {
-    private final PlayerMovedExecuter playerMovedExecuter;
+public class Executors {
+    private final PlayerMovedExecutor playerMovedExecuter;
 
-    public Executers(Builder builder) {
+    public Executors(Builder builder) {
         this.playerMovedExecuter = builder.playerMovedExecuter;
     }
 
@@ -24,16 +24,16 @@ public class Executers {
     }
 
     public static class Builder {
-        private PlayerMovedExecuter playerMovedExecuter;
+        private PlayerMovedExecutor playerMovedExecuter;
         
-        public Builder playerMovedExecuter(PlayerMovedExecuter playerMovedExecuter) {
+        public Builder playerMovedExecuter(PlayerMovedExecutor playerMovedExecuter) {
             this.playerMovedExecuter = playerMovedExecuter;
             return this;
         }
 
-        public Executers build() {
+        public Executors build() {
             if (playerMovedExecuter == null) throw new IllegalStateException("PlayerMovedExecuter is required");
-            return new Executers(this);
+            return new Executors(this);
         }
     }
 }

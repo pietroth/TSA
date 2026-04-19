@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.core.game.world.chunk;
 
-import br.com.pietroth.tsa.core.engine.world.WorldConstants;
+import br.com.pietroth.tsa.core.game.world.WorldConstants;
 
 public class Chunk {
 

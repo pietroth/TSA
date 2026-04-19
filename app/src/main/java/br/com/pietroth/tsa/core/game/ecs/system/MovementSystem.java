@@ -1,8 +1,8 @@
-package br.com.pietroth.tsa.core.engine.ecs.system;
+package br.com.pietroth.tsa.core.game.ecs.system;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
-import br.com.pietroth.tsa.core.engine.ecs.component.PositionComponent;
-import br.com.pietroth.tsa.core.engine.ecs.component.VelocityComponent;
+import br.com.pietroth.tsa.core.game.ecs.component.PositionComponent;
+import br.com.pietroth.tsa.core.game.ecs.component.VelocityComponent;
 
 public class MovementSystem implements Runnable {
     private final ECSContainer container;

@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine.world;
+package br.com.pietroth.tsa.core.game.world;
 
 public class WorldConstants {
     public static final short BLOCKS_PER_CHUNK = 16;

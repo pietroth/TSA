@@ -1,7 +1,8 @@
-package br.com.pietroth.tsa.core.engine.communication.codec;
+package br.com.pietroth.tsa.core.game;
 
-import br.com.pietroth.tsa.core.engine.communication.MIDFGlossary;
-import br.com.pietroth.tsa.core.engine.communication.player.playermovement.PlayerMoveCodec;
+import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
 
 public class Codecs {
     private final CodecRegistry registry;

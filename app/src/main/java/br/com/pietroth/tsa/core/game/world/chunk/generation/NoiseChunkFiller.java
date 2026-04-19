@@ -1,10 +1,10 @@
-package br.com.pietroth.tsa.core.engine.world.chunk.generation;
+package br.com.pietroth.tsa.core.game.world.chunk.generation;
 
-import br.com.pietroth.tsa.core.engine.world.WorldConstants;
-import br.com.pietroth.tsa.core.engine.world.biome.BiomePicker;
-import br.com.pietroth.tsa.core.engine.world.chunk.Chunk;
-import br.com.pietroth.tsa.core.engine.world.generation.NoiseLayer;
-import br.com.pietroth.tsa.core.engine.world.biome.BiomeType;
+import br.com.pietroth.tsa.core.game.world.WorldConstants;
+import br.com.pietroth.tsa.core.game.world.biome.BiomePicker;
+import br.com.pietroth.tsa.core.game.world.chunk.Chunk;
+import br.com.pietroth.tsa.core.game.world.generation.NoiseLayer;
+import br.com.pietroth.tsa.core.game.world.biome.BiomeType;
 
 public class NoiseChunkFiller implements ChunkFiller {
     private final BiomePicker biomePicker;

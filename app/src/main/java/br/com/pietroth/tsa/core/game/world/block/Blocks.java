@@ -1,10 +1,7 @@
-package br.com.pietroth.tsa.core.game.initialization;
+package br.com.pietroth.tsa.core.game.world.block;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
-import br.com.pietroth.tsa.core.game.world.block.BlockType;
 
 public class Blocks {
     private BlockRegister blockRegister;

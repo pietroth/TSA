@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine.world;
+package br.com.pietroth.tsa.core.game.world;
 
 import java.time.LocalDateTime;
 

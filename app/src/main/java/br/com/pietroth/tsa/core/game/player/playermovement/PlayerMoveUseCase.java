@@ -1,13 +1,13 @@
-package br.com.pietroth.tsa.core.engine.application.player;
+package br.com.pietroth.tsa.core.game.player.playermovement;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
-import br.com.pietroth.tsa.core.engine.ecs.component.VelocityComponent;
-import br.com.pietroth.tsa.core.engine.world.player.PlayerComponent;
+import br.com.pietroth.tsa.core.game.ecs.component.VelocityComponent;
+import br.com.pietroth.tsa.core.game.player.PlayerComponent;
 
-public class PlayerMovementUseCase {
+public class PlayerMoveUseCase {
     private final ECSContainer container;
 
-    public PlayerMovementUseCase(ECSContainer container) {
+    public PlayerMoveUseCase(ECSContainer container) {
         this.container = container;
     }
 

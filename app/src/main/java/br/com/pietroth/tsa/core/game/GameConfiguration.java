@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core;
+package br.com.pietroth.tsa.core.game;
 
 public class GameConfiguration {
     public int port;

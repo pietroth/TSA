@@ -1,9 +1,9 @@
-package br.com.pietroth.tsa.core.engine.communication.event.player;
+package br.com.pietroth.tsa.core.game.player;
 
 import br.com.pietroth.tsa.core.engine.communication.event.Event;
 import br.com.pietroth.tsa.core.engine.communication.event.EventDispatcherSingleton;
-import br.com.pietroth.tsa.core.engine.communication.player.playermovement.PlayerMoveData;
-import br.com.pietroth.tsa.core.engine.communication.MIDFGlossary;
+import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 
 public class PlayerEvents {
 

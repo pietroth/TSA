@@ -1,10 +1,6 @@
-package br.com.pietroth.tsa.core.game.initialization;
+package br.com.pietroth.tsa.core.game.world.biome;
 
 import java.util.List;
-
-import br.com.pietroth.tsa.core.game.world.biome.BiomeRegister;
-import br.com.pietroth.tsa.core.game.world.biome.BiomeType;
-
 import java.util.ArrayList;
 
 public class Biomes {

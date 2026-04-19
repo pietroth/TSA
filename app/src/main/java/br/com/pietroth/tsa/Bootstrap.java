@@ -5,16 +5,16 @@ import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
+import br.com.pietroth.tsa.core.game.Codecs;
+import br.com.pietroth.tsa.core.game.Executers;
 import br.com.pietroth.tsa.core.game.GameLoop;
-import br.com.pietroth.tsa.core.game.initialization.Executers;
-import br.com.pietroth.tsa.core.game.initialization.Validators;
-import br.com.pietroth.tsa.core.engine.application.MovementUseCase;
-import br.com.pietroth.tsa.core.engine.communication.codec.Codecs;
-import br.com.pietroth.tsa.core.game.player.playermoved.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.game.Validators;
+import br.com.pietroth.tsa.core.game.application.MovementUseCase;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMovedExecuter;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
-import br.com.pietroth.tsa.core.engine.communication.intention.player.playermove.PlayerMoveValidator;
 
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;

@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine.communication;
+package br.com.pietroth.tsa.core.game.communication;
 
 public class MIDFGlossary {
     public static enum Player {

@@ -1,17 +1,17 @@
-package br.com.pietroth.tsa.core;
+package br.com.pietroth.tsa.core.game;
 
 import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
-import br.com.pietroth.tsa.core.engine.ecs.component.PositionComponent;
-import br.com.pietroth.tsa.core.engine.ecs.component.VelocityComponent;
-import br.com.pietroth.tsa.core.engine.ecs.system.MovementSystem;
 import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
-import br.com.pietroth.tsa.core.engine.world.player.PlayerComponent;
 import br.com.pietroth.tsa.core.engine.communication.event.*;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
-import br.com.pietroth.tsa.core.engine.network.transport.TCPServer;
+import br.com.pietroth.tsa.core.game.ecs.component.PositionComponent;
+import br.com.pietroth.tsa.core.game.ecs.component.VelocityComponent;
+import br.com.pietroth.tsa.core.game.ecs.system.MovementSystem;
+import br.com.pietroth.tsa.core.game.player.PlayerComponent;
+import br.com.pietroth.tsa.infrastructure.network.tcp.TCPServer;
 
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;

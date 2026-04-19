@@ -1,4 +1,4 @@
 package br.com.pietroth.tsa.core.engine.communication.event.target;
 
-public class AllPlayers implements TargetModifier {
+public class AllClients implements TargetModifier {
 }
