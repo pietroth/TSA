@@ -1,20 +1,20 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.communication.event.EventDispatcherSingleton;
-import br.com.pietroth.tsa.core.communication.event.Executers;
-import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.ecs.ECSRuntime;
-import br.com.pietroth.tsa.core.network.client.ClientLCManagerSingleton;
-import br.com.pietroth.tsa.core.network.protocol.IntentionGateway;
-import br.com.pietroth.tsa.core.GameLoop;
-import br.com.pietroth.tsa.core.application.MovementUseCase;
-import br.com.pietroth.tsa.core.communication.codec.Codecs;
-import br.com.pietroth.tsa.core.communication.event.player.playermoved.PlayerMovedExecuter;
-import br.com.pietroth.tsa.core.communication.intention.IntentionDecoder;
-import br.com.pietroth.tsa.core.communication.intention.IntentionVDSingleton;
-import br.com.pietroth.tsa.core.communication.intention.Validators;
-import br.com.pietroth.tsa.core.communication.player.playermovement.PlayerMoveCodec;
-import br.com.pietroth.tsa.core.communication.intention.player.playermove.PlayerMoveValidator;
+import br.com.pietroth.tsa.core.engine.communication.event.EventDispatcherSingleton;
+import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
+import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
+import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
+import br.com.pietroth.tsa.core.game.GameLoop;
+import br.com.pietroth.tsa.core.game.initialization.Executers;
+import br.com.pietroth.tsa.core.game.initialization.Validators;
+import br.com.pietroth.tsa.core.engine.application.MovementUseCase;
+import br.com.pietroth.tsa.core.engine.communication.codec.Codecs;
+import br.com.pietroth.tsa.core.game.player.playermoved.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
+import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
+import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
+import br.com.pietroth.tsa.core.engine.communication.intention.player.playermove.PlayerMoveValidator;
 
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;

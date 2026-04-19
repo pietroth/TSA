@@ -3,9 +3,9 @@ package br.com.pietroth.tsa.infrastructure.ecs.dominion;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.pietroth.tsa.core.ecs.ECSContainer;
-import br.com.pietroth.tsa.core.ecs.ECSRuntime;
-import br.com.pietroth.tsa.core.ecs.entity.ECSEntity;
+import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
+import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
+import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
 
 public class DominionRuntime implements ECSRuntime {
     private final List<Runnable> systems = new ArrayList<>();

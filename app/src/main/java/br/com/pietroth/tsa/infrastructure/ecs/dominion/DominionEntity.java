@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.infrastructure.ecs.dominion;
 
-import br.com.pietroth.tsa.core.ecs.entity.ECSEntity;
+import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
 import dev.dominion.ecs.api.Entity;
 
 public class DominionEntity implements ECSEntity {

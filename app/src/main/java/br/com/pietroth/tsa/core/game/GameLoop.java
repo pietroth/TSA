@@ -1,0 +1,73 @@
+package br.com.pietroth.tsa.core;
+
+import java.util.concurrent.Executors;
+
+import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
+import br.com.pietroth.tsa.core.engine.ecs.component.PositionComponent;
+import br.com.pietroth.tsa.core.engine.ecs.component.VelocityComponent;
+import br.com.pietroth.tsa.core.engine.ecs.system.MovementSystem;
+import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
+import br.com.pietroth.tsa.core.engine.world.player.PlayerComponent;
+import br.com.pietroth.tsa.core.engine.communication.event.*;
+import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
+import br.com.pietroth.tsa.core.engine.network.transport.Server;
+import br.com.pietroth.tsa.core.engine.network.transport.TCPServer;
+
+public class GameLoop extends TicksPerSecondRunnable {
+    private final ECSRuntime ecsRuntime;
+    private Server server;
+
+    private GameLoop(Builder builder) {
+        super(30);
+        this.ecsRuntime = builder.ecsRuntime;
+    }
+
+    @Override
+    protected void initialize() {
+        scheduleSystems();
+
+        ecsRuntime.createEntity(
+            new PlayerComponent(1),
+            new PositionComponent(0, 0),
+            new VelocityComponent(0, 0)
+        );
+
+        server = TCPServer.builder()
+            .port(5555)
+            .clientPool(Executors.newCachedThreadPool())
+            .build();
+        server.subscribe(ClientLCManagerSingleton.get());
+        new Thread(server).start();
+    }
+
+    @Override
+    protected void tick() {
+        ecsRuntime.tick();
+        EventDispatcherSingleton.get().run();
+    }
+
+    private void scheduleSystems() {
+        ecsRuntime.schedule(new MovementSystem(ecsRuntime.getContainer()));
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private ECSRuntime ecsRuntime;
+
+        public Builder ecsRuntime(ECSRuntime ecsRuntime) {
+            this.ecsRuntime = ecsRuntime;
+            return this;
+        }
+
+        public GameLoop build() {
+            if (ecsRuntime == null) {
+                throw new IllegalStateException("ECSRuntime must be provided");
+            }
+
+            return new GameLoop(this);
+        }
+    }
+}

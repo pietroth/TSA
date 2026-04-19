@@ -1,8 +1,8 @@
 package br.com.pietroth.tsa.infrastructure.ecs.dominion;
 
-import br.com.pietroth.tsa.core.ecs.ECSContainer;
-import br.com.pietroth.tsa.core.ecs.entity.ECSEntity;
-import br.com.pietroth.tsa.core.ecs.entity.EntityConsumer;
+import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
+import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
+import br.com.pietroth.tsa.core.engine.ecs.entity.EntityConsumer;
 import dev.dominion.ecs.api.Dominion;
 import dev.dominion.ecs.api.Entity;
 

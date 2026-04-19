@@ -1,6 +1,6 @@
 package br.com.pietroth.tsa.infrastructure.worldgeneration.simplexnoise;
 
-import br.com.pietroth.tsa.core.world.generation.NoiseAlgorithm;
+import br.com.pietroth.tsa.core.game.world.generation.NoiseAlgorithm;
 import de.articdive.jnoise.generators.noisegen.opensimplex.FastSimplexNoiseGenerator;
 import de.articdive.jnoise.pipeline.JNoise;
 import de.articdive.jnoise.modules.octavation.fractal_functions.FractalFunction;

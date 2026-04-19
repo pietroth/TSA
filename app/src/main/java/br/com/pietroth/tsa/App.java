@@ -1,8 +1,8 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.application.player.PlayerMovementUseCase;
+import br.com.pietroth.tsa.core.engine.application.player.PlayerMovementUseCase;
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
-import br.com.pietroth.tsa.core.communication.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;

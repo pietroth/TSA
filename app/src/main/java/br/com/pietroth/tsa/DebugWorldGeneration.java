@@ -1,10 +1,10 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.world.WorldConstants;
-import br.com.pietroth.tsa.core.world.chunk.*;
-import br.com.pietroth.tsa.core.world.chunk.generation.*;
-import br.com.pietroth.tsa.core.world.biome.*;
-import br.com.pietroth.tsa.core.world.generation.*;
+import br.com.pietroth.tsa.core.game.world.chunk.*;
+import br.com.pietroth.tsa.core.game.world.chunk.generation.*;
+import br.com.pietroth.tsa.core.game.world.biome.*;
+import br.com.pietroth.tsa.core.game.world.generation.*;
+import br.com.pietroth.tsa.core.game.world.WorldConstants;
 import br.com.pietroth.tsa.infrastructure.worldgeneration.simplexnoise.SimplexNoiseAlgorithm;
 
 import javax.swing.*;
