@@ -4,6 +4,7 @@ import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListen
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,6 +48,19 @@ public class ClientLCManager implements ConnectionCreatedListener {
 
     public void disconnectClient(int id) {
         clients.remove(id);
+    }
+
+    public void sendTo(List<Integer> ids, byte[] data) {
+        for (int id : ids) {
+            Client client = clients.get(id);
+            if (client != null) {
+                try {
+                    client.getConnection().send(data);
+                } catch (java.io.IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void sendToAll(byte[] data) {
