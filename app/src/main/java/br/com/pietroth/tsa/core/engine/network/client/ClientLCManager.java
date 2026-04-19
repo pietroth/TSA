@@ -48,4 +48,14 @@ public class ClientLCManager implements ConnectionCreatedListener {
     public void disconnectClient(int id) {
         clients.remove(id);
     }
+
+    public void sendToAll(byte[] data) {
+        clients.values().forEach(client -> {
+            try {
+                client.getConnection().send(data);
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }
