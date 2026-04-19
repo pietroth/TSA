@@ -1,5 +1,6 @@
 package br.com.pietroth.tsa.core.game;
 
+import java.time.Duration;
 import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
@@ -21,12 +22,18 @@ import br.com.pietroth.tsa.infrastructure.network.tcp.TCPServer;
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
     private final CodecRegistry codecRegistry;
+    private final MIDFEncoder midfEncoder;
+    private final EventPublisher eventPublisher;
+    private final EventDeliveryHandler eventDeliveryHandler;
     private Server server;
 
     private GameLoop(Builder builder) {
         super(20);
         this.ecsRuntime = builder.ecsRuntime;
         this.codecRegistry = builder.codecRegistry;
+        this.midfEncoder = new MIDFEncoder(codecRegistry);
+        this.eventDeliveryHandler = new EventDeliveryHandler(midfEncoder);
+        this.eventPublisher = new EventPublisher(eventDeliveryHandler);
     }
 
     @Override
@@ -46,15 +53,17 @@ public class GameLoop extends TicksPerSecondRunnable {
         server.subscribe(ClientLCManagerSingleton.get());
         new Thread(server).start();
 
-        MIDFEncoder midfEncoder = new MIDFEncoder(codecRegistry);
-        EventDeliveryHandler eventDeliveryHandler = new EventDeliveryHandler(midfEncoder);
-        EventPublisher eventPublisher = new EventPublisher(eventDeliveryHandler);
+        try {
+            Thread.sleep(Duration.ofSeconds(20));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         eventPublisher.publish(
             new Event<PlayerMoveData>(
                 MIDFGlossary.Player.getGlobalId(), 
                 MIDFGlossary.Player.PLAYER_MOVED.getId(), 
-                new PlayerMoveData(1211332, 43546464), 
+                new PlayerMoveData(1, 1), 
                 1, 
                 new TargetScope(true)
             )
