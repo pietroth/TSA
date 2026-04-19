@@ -54,6 +54,6 @@ public class EventDecoder {
             );
         }
 
-        return new Event<>(family, type, data);
+        return new Event<>(family, type, data, 0, 0);
     }
 }

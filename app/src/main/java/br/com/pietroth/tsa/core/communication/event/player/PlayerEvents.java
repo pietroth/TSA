@@ -12,7 +12,9 @@ public class PlayerEvents {
         Event<PlayerMoveData> event = new Event<PlayerMoveData>(
             MIDFGlossary.Player.getGlobalId(),
             MIDFGlossary.Player.PLAYER_MOVED.getId(),
-            data
+            data,
+            0,
+            1
         );
         EventDispatcherSingleton.get().enqueue(event);
     }

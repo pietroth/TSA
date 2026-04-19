@@ -9,26 +9,26 @@ public class CodecRegistry {
     private final Map<Short, Codec<?>> registry = new HashMap<>();
 
     public <T extends MIDFData> void register(byte family, byte type, Codec<T> codec) {
-        short eventId = (short)((family << 8) | (type & 0xFF));
-        registry.put(eventId, codec);
+        short MIDFId = (short)((family << 8) | (type & 0xFF));
+        registry.put(MIDFId, codec);
     }
 
-    public Codec<? extends MIDFData> get(short eventId) {
-        return registry.get(eventId);
+    public Codec<? extends MIDFData> get(short MIDFId) {
+        return registry.get(MIDFId);
     }
 
     public Codec<? extends MIDFData> get(byte family, byte type) {
-        short eventId = (short)((family << 8) | (type & 0xFF));
-        return registry.get(eventId);
+        short MIDFId = (short)((family << 8) | (type & 0xFF));
+        return registry.get(MIDFId);
     }
 
     public boolean contains(byte family, byte type) {
-        short eventId = (short)((family << 8) | (type & 0xFF));
-        return registry.containsKey(eventId);
+        short MIDFId = (short)((family << 8) | (type & 0xFF));
+        return registry.containsKey(MIDFId);
     }
 
     public void unregister(byte family, byte type) {
-        short eventId = (short)((family << 8) | (type & 0xFF));
-        registry.remove(eventId);
+        short MIDFId = (short)((family << 8) | (type & 0xFF));
+        registry.remove(MIDFId);
     }
 }
