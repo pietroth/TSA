@@ -3,8 +3,6 @@ package br.com.pietroth.tsa.core.engine.communication.event.target;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import br.com.pietroth.tsa.core.engine.network.client.ClientId;
-
 public class OneClient implements TargetModifier {
     public final AtomicInteger clientId;
 
@@ -13,9 +11,9 @@ public class OneClient implements TargetModifier {
     }
 
     @Override
-    public ArrayList<ClientId> toList() {
-        ArrayList<ClientId> list = new ArrayList<>();
-        list.add(new ClientId(clientId));
+    public ArrayList<AtomicInteger> toList() {
+        ArrayList<AtomicInteger> list = new ArrayList<>();
+        list.add(clientId);
         return list;
     }
 }
