@@ -4,10 +4,10 @@ import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
 import br.com.pietroth.tsa.core.game.ecs.component.PositionComponent;
 import br.com.pietroth.tsa.core.game.ecs.component.VelocityComponent;
 
-public class MovementUseCase {
+public class MoveUseCase {
     private final ECSContainer container;
 
-    public MovementUseCase(ECSContainer container) {
+    public MoveUseCase(ECSContainer container) {
         this.container = container;
     }
 

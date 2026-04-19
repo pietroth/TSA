@@ -2,7 +2,7 @@ package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
-import br.com.pietroth.tsa.core.game.application.player.PlayerMovementUseCase;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -23,8 +23,8 @@ public class App {
         bootstrap.boot();
 
         // Movement UseCase
-        PlayerMovementUseCase playerMovement =
-                new PlayerMovementUseCase(runtime.getContainer());
+        PlayerMoveUseCase playerMovement =
+                new PlayerMoveUseCase(runtime.getContainer());
 
         // Input
         JFrame frame = new JFrame("TSA Debug Input");

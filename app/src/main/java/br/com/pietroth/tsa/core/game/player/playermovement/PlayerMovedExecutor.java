@@ -1,12 +1,12 @@
 package br.com.pietroth.tsa.core.game.player.playermovement;
 
-import br.com.pietroth.tsa.core.engine.communication.event.EventExecuter;
-import br.com.pietroth.tsa.core.game.application.MovementUseCase;
+import br.com.pietroth.tsa.core.engine.communication.event.EventExecutor;
+import br.com.pietroth.tsa.core.game.application.MoveUseCase;
 
-public class PlayerMovedExecuter implements EventExecuter<PlayerMoveData> {
-    private final MovementUseCase movementUseCase;                          
+public class PlayerMovedExecutor implements EventExecutor<PlayerMoveData> {
+    private final MoveUseCase movementUseCase;                          
 
-    public PlayerMovedExecuter(MovementUseCase movementUseCase) {
+    public PlayerMovedExecutor(MoveUseCase movementUseCase) {
         this.movementUseCase = movementUseCase;
     }
 

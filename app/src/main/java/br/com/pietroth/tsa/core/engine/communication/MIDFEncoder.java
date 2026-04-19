@@ -15,6 +15,9 @@ public class MIDFEncoder {
 
     public <T extends MIDFData> byte[] encode(MIDF<T> MIDF) {
         Codec<? extends MIDFData> codec = codecRegistry.get(MIDF.getFamily(), MIDF.getType());
+        if (codec == null) {
+            throw new RuntimeException("Codec not founded. Family Id: " + MIDF.getFamily() + ", Type Id: " + MIDF.getType());
+        }
 
         int payloadSize = codec.size();
         int totalSize = 4 + 2 + payloadSize; // 4 bytes for length prefix + 2 bytes for event ID + payload size

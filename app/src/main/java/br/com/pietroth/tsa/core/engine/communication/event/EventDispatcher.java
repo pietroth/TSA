@@ -10,19 +10,19 @@ public class EventDispatcher implements Runnable {
     private final Queue<Event<? extends MIDFData>> current;
     private final Queue<Event<? extends MIDFData>> next;  
 
-    private final EventExecuter<? extends MIDFData>[][] executers; 
+    private final EventExecutor<? extends MIDFData>[][] executers; 
 
     private boolean processing;
 
     @SuppressWarnings("unchecked")
     public EventDispatcher(int maxFamilies, int maxTypesPerFamily) {
-        executers = new EventExecuter[maxFamilies][maxTypesPerFamily]; 
+        executers = new EventExecutor[maxFamilies][maxTypesPerFamily]; 
         current = new ArrayDeque<>();
         next = new ArrayDeque<>();
         processing = false;
     }
 
-    public void register(byte family, byte type, EventExecuter<? extends MIDFData> executer) {
+    public void register(byte family, byte type, EventExecutor<? extends MIDFData> executer) {
         executers[family & 0xFF][type & 0xFF] = executer;
     }
 
@@ -46,7 +46,7 @@ public class EventDispatcher implements Runnable {
         byte family = event.getFamily();
         byte type = event.getType();
 
-        EventExecuter<? extends MIDFData> executer = executers[family & 0xFF][type & 0xFF];
+        EventExecutor<? extends MIDFData> executer = executers[family & 0xFF][type & 0xFF];
         
         if (executer != null) {
             dispatchEvent(event, executer);
@@ -54,8 +54,8 @@ public class EventDispatcher implements Runnable {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends MIDFData> void dispatchEvent(Event<? extends MIDFData> event, EventExecuter<? extends MIDFData> executer) {
-        ((EventExecuter<T>) executer).execute((T) event.getData());
+    private <T extends MIDFData> void dispatchEvent(Event<? extends MIDFData> event, EventExecutor<? extends MIDFData> executer) {
+        ((EventExecutor<T>) executer).execute((T) event.getData());
     }
 
     public void enqueue(Event<? extends MIDFData> event) {

@@ -6,13 +6,13 @@ import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.game.Codecs;
-import br.com.pietroth.tsa.core.game.Executers;
+import br.com.pietroth.tsa.core.game.Executors;
 import br.com.pietroth.tsa.core.game.GameLoop;
 import br.com.pietroth.tsa.core.game.Validators;
-import br.com.pietroth.tsa.core.game.application.MovementUseCase;
+import br.com.pietroth.tsa.core.game.application.MoveUseCase;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
-import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMovedExecuter;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMovedExecutor;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
 
@@ -45,8 +45,8 @@ public class Bootstrap {
             .build();
         validators.registerValidators();
 
-        Executers executers = new Executers.Builder()
-            .playerMovedExecuter(new PlayerMovedExecuter(new MovementUseCase(ecsRuntime.getContainer())))
+        Executors executers = new Executors.Builder()
+            .playerMovedExecuter(new PlayerMovedExecutor(new MoveUseCase(ecsRuntime.getContainer())))
             .build();
         executers.registerExecuters();
 
@@ -54,6 +54,7 @@ public class Bootstrap {
 
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
+            .codecRegistry(registry)
             .build();
         new Thread(loop).start();
     }
