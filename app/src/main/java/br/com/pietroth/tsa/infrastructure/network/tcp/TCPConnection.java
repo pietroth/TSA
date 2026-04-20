@@ -27,6 +27,13 @@ public class TCPConnection implements Connection {
         this.output = socket.getOutputStream();
     }
 
+    public TCPConnection(Socket socket) throws IOException 
+    {
+        this.id = 0;
+        this.input = socket.getInputStream();
+        this.output = socket.getOutputStream();
+    }
+
     @Override
     public void subscribe(ConnectionReceivedListener listener) {
         listeners.add(listener);

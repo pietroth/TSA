@@ -17,8 +17,6 @@ public class TCPServer implements Server {
     private final ExecutorService clientPool;
     private final List<ConnectionCreatedListener> listeners = new ArrayList<>();
 
-    private int clientNumbers = 0;
-
     private TCPServer(Builder builder) {
         this.port = builder.port;
         this.clientPool = builder.clientPool;
@@ -49,8 +47,7 @@ public class TCPServer implements Server {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
 
-                TCPConnection connection = new TCPConnection(clientSocket, clientNumbers);
-                clientNumbers += 1;
+                TCPConnection connection = new TCPConnection(clientSocket);
                 notifyConnectionCreated(connection);
 
                 clientPool.submit(
