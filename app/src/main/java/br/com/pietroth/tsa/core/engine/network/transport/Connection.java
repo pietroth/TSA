@@ -7,5 +7,6 @@ public interface Connection extends Runnable {
     void send(byte[] data) throws IOException;
     void subscribe(ConnectionReceivedListener listener);
     void unsubscribe(ConnectionReceivedListener listener);
+    void setId(int id);
     int getId();
 }

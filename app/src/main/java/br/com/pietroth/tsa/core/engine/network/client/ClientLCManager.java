@@ -25,6 +25,7 @@ public class ClientLCManager implements ConnectionCreatedListener {
     @Override
     public synchronized void onConnectionCreated(Connection connection) {
         int id = idGenerator.getAndIncrement();
+        connection.setId(id); // Don't remove, this links client id with connection id
 
         Client client = new Client.Builder()
                 .id(id)
