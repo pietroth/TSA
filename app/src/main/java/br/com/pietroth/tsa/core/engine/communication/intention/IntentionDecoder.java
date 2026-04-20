@@ -15,7 +15,7 @@ public class IntentionDecoder {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends MIDFData> Intention<T> decode(byte[] raw) {
+    public <T extends MIDFData> Intention<T> decode(byte[] raw, int originId) {
         if (raw == null) {
             throw new IllegalArgumentException("raw cannot be null");
         }
@@ -50,6 +50,6 @@ public class IntentionDecoder {
             );
         }
 
-        return new Intention<>(family, type, data, correlationId);
+        return new Intention<>(family, type, data, correlationId, originId);
     }
 }

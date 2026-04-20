@@ -47,7 +47,7 @@ public class TCPServer implements Server {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
 
-                TCPConnection connection = new TCPConnection(clientSocket);
+                TCPConnection connection = new TCPConnection(clientSocket, 1);
                 notifyConnectionCreated(connection);
 
                 clientPool.submit(

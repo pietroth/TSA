@@ -22,7 +22,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         IntentionVD intentionVD = IntentionVDSingleton.get();
         System.out.println("Gateway raw bytes: " + data.length);
 
-        Intention<? extends MIDFData> intention = decoder.decode(data);
+        Intention<? extends MIDFData> intention = decoder.decode(data, 10);
 
         System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
             + " type=" + (intention.getType() & 0xFF)

@@ -15,12 +15,14 @@ import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListe
 import java.util.ArrayList;
 
 public class TCPConnection implements Connection {
+    private final int id;
     private final InputStream input;
     private final OutputStream output;
-    private final List<ConnectionReceivedListener> listeners = new ArrayList<>();
+    private List<ConnectionReceivedListener> listeners = new ArrayList<>();
 
-    public TCPConnection(Socket socket) throws IOException 
+    public TCPConnection(Socket socket, int id) throws IOException 
     {
+        this.id = id;
         this.input = socket.getInputStream();
         this.output = socket.getOutputStream();
     }
@@ -91,5 +93,10 @@ public class TCPConnection implements Connection {
     public void send(byte[] data) throws IOException {
         output.write(data);
         output.flush();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 }
