@@ -36,11 +36,10 @@ public class Bootstrap {
         ClientLCManagerSingleton.init(
             10, new IntentionGateway(new IntentionDecoder(registry)));
 
-        Validators validators = new Validators.Builder()
-            .intentionVD(IntentionVDSingleton.get())
-            .playerMoveValidator(new PlayerMoveValidator())
-            .build();
-        validators.registerValidators();
+        Validators.registerAll(
+            IntentionVDSingleton.get(),
+            new PlayerMoveValidator() 
+        );
 
         // GameLoop builder
 
