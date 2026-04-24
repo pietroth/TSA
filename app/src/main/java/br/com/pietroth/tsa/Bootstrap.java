@@ -14,37 +14,38 @@ import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
 import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
 import br.com.pietroth.tsa.core.game.world.block.Blocks;
-import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
 
 public class Bootstrap {
     private final ECSRuntime ecsRuntime;
-    private final CodecRegistry registry;
+    private final CodecRegistry codecRegistry;
+    private final BlockRegister blockRegister;
 
     public Bootstrap(Builder builder) {
         this.ecsRuntime = builder.ecsRuntime;
-        this.registry = builder.registry;
+        this.codecRegistry = builder.codecRegistry;
+        this.blockRegister = builder.blockRegister;
     }
 
     public void boot() {
         Codecs.registerAll(
-            registry, 
+            codecRegistry, 
             new PlayerMoveCodec()
         );
 
-        EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder(registry)));
+        EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder(codecRegistry)));
         IntentionVDSingleton.init();
 
         ClientLCManagerSingleton.init(
-            10, new IntentionGateway(new IntentionDecoder(registry)));
+            10, new IntentionGateway(new IntentionDecoder(codecRegistry)));
 
         Validators.registerAll(
             IntentionVDSingleton.get(),
             new PlayerMoveValidator() 
         );
 
-        Blocks.registerAll(new MemoryBlockRegister(64));
+        Blocks.registerAll(blockRegister);
 
         // GameLoop builder
 
@@ -56,21 +57,28 @@ public class Bootstrap {
 
     public static class Builder {
         private ECSRuntime ecsRuntime;
-        private CodecRegistry registry;
+        private CodecRegistry codecRegistry;
+        private BlockRegister blockRegister;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
             return this;
         }
 
-        public Builder codecRegistry(CodecRegistry registry) {
-            this.registry = registry;
+        public Builder codecRegistry(CodecRegistry codecRegistry) {
+            this.codecRegistry = codecRegistry;
+            return this;
+        }
+
+        public Builder blockRegister(BlockRegister blockRegister) {
+            this.blockRegister = blockRegister;
             return this;
         }
 
         public Bootstrap build() {
             if (ecsRuntime == null) throw new IllegalStateException("ECSRuntime is required");
-            if (registry == null) throw new IllegalStateException("CodecRegistry is required");
+            if (codecRegistry == null) throw new IllegalStateException("CodecRegistry is required");
+            if (blockRegister == null) throw new IllegalStateException("BlockRegister is required");
             return new Bootstrap(this);
         }
     }
