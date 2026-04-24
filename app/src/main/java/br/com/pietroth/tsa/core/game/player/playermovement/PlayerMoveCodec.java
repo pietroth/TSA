@@ -8,26 +8,28 @@ public class PlayerMoveCodec implements Codec<PlayerMoveData> {
 
     @Override
     public int size(PlayerMoveData data) {
-        return size(); // sx + sy
+        return size(); // playerId + sx + sy
     }
 
     @Override
     public int size() {
-        return Float.BYTES * 2; // sx + sy
+        return Integer.BYTES + Float.BYTES * 2; // playerId + sx + sy
     }
 
     @Override
     public void encode(ByteBuffer buffer, PlayerMoveData data) {
+        buffer.putInt(data.playerId);
         buffer.putFloat(data.sx);
         buffer.putFloat(data.sy);
     }
 
     @Override
     public PlayerMoveData decode(ByteBuffer buffer) {
+        int playerId = buffer.getInt();
         float sx = buffer.getFloat();
         float sy = buffer.getFloat();
 
-        return new PlayerMoveData(sx, sy);
+        return new PlayerMoveData(playerId, sx, sy);
     }
     
 }

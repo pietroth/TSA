@@ -7,8 +7,8 @@ import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 
 public class PlayerEvents {
 
-    public static void publish_PlayerMoved(float sx, float sy) {
-        PlayerMoveData data = new PlayerMoveData(sx, sy);
+    public static void publish_PlayerMoved(int playerId, float sx, float sy) {
+        PlayerMoveData data = new PlayerMoveData(playerId, sx, sy);
         Event<PlayerMoveData> event = new Event<PlayerMoveData>(
             MIDFGlossary.Player.getGlobalId(),
             MIDFGlossary.Player.PLAYER_MOVED.getId(),
