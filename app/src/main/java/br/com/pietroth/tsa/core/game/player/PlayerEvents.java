@@ -15,7 +15,7 @@ public class PlayerEvents {
             MIDFGlossary.Player.getGlobalId(),
             MIDFGlossary.Player.PLAYER_MOVED.getId(),
             data,
-            1,
+            originId,
             new TargetScope(new OneClient(playerId))
         );
         EventPublisherSingleton.get().publish(event);
