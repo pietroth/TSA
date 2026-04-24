@@ -23,7 +23,7 @@ public class App {
             .ecsRuntime(runtime)
             .codecRegistry(new CodecRegistry())
             .blockRegister(new MemoryBlockRegister(32))
-            .useCaseRouter(new UseCaseRouter(4096))
+            .useCaseRouter(new UseCaseRouter())
             .build();
         bootstrap.boot();
 

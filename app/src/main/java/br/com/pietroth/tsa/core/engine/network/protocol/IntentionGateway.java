@@ -33,7 +33,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         System.out.println("Validation result=" + validate);
 
         if (validate >= 1) {
-            router.route(intention);
+            router.route(intention.getFamily(), intention.getType(), intention.getData());
         }
 
     }
