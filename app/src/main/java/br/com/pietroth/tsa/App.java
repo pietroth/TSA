@@ -3,6 +3,7 @@ package br.com.pietroth.tsa;
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
+import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -19,6 +20,7 @@ public class App {
         Bootstrap bootstrap = new Bootstrap.Builder()
             .ecsRuntime(runtime)
             .codecRegistry(new CodecRegistry())
+            .blockRegister(new MemoryBlockRegister(32))
             .build();
         bootstrap.boot();
 
