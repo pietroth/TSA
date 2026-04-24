@@ -4,15 +4,18 @@ import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVD;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
+import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 
 public class IntentionGateway implements ConnectionReceivedListener {
     private final IntentionDecoder decoder;
+    private final UseCaseRouter router;
 
-    public IntentionGateway(IntentionDecoder decoder) {
+    public IntentionGateway(IntentionDecoder decoder, UseCaseRouter router) {
         this.decoder = decoder;
+        this.router = router;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         System.out.println("Validation result=" + validate);
 
         if (validate >= 1) {
-            // What must I do?
+            router.route(intention);
         }
 
     }

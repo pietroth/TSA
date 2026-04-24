@@ -17,7 +17,7 @@ public class UseCaseRouter {
         useCases[key] = useCase;
     }
 
-    public void execute(Intention<?> intention) {
+    public void route(Intention<?> intention) {
         int key = pack(intention.getFamily(), intention.getType()) & 0xFFF;
 
         @SuppressWarnings("unchecked")
