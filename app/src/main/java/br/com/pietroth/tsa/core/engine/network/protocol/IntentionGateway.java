@@ -7,8 +7,6 @@ import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListe
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
-import br.com.pietroth.tsa.core.engine.communication.event.Event;
-import br.com.pietroth.tsa.core.engine.communication.event.EventPublisher;
 
 public class IntentionGateway implements ConnectionReceivedListener {
     private final IntentionDecoder decoder;
