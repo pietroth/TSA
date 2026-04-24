@@ -10,7 +10,6 @@ public class EventPublisher {
     }
 
     public void publish(Event<? extends MIDFData> event) {
-        EventDispatcherSingleton.get().enqueue(event);
         deliveryHandler.delivery(event);
     }
 }

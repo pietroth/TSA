@@ -8,7 +8,7 @@ import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingle
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 import br.com.pietroth.tsa.core.engine.communication.event.Event;
-import br.com.pietroth.tsa.core.engine.communication.event.EventDispatcherSingleton;
+import br.com.pietroth.tsa.core.engine.communication.event.EventPublisher;
 
 public class IntentionGateway implements ConnectionReceivedListener {
     private final IntentionDecoder decoder;
@@ -32,9 +32,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         System.out.println("Validation result=" + validate);
 
         if (validate >= 1) {
-            Event<? extends MIDFData> event = new Event<>
-                (intention.getFamily(), intention.getType(), intention.getData(), connection.getId(), null);
-            EventDispatcherSingleton.get().enqueue(event);
+            // What must I do?
         }
 
     }

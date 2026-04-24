@@ -1,12 +1,13 @@
 package br.com.pietroth.tsa;
 
-import br.com.pietroth.tsa.core.engine.communication.event.EventDispatcherSingleton;
+import br.com.pietroth.tsa.core.engine.communication.event.EventDeliveryHandler;
+import br.com.pietroth.tsa.core.engine.communication.event.EventPublisherSingleton;
+import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.game.Codecs;
-import br.com.pietroth.tsa.core.game.Executors;
 import br.com.pietroth.tsa.core.game.GameLoop;
 import br.com.pietroth.tsa.core.game.Validators;
 import br.com.pietroth.tsa.core.game.application.MoveUseCase;
@@ -32,8 +33,7 @@ public class Bootstrap {
             .build();
         codecs.registerCodecs();
 
-        EventDispatcherSingleton.init(256, 256);
-
+        EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder(registry)));
         IntentionVDSingleton.init();
 
         ClientLCManagerSingleton.init(
@@ -44,11 +44,6 @@ public class Bootstrap {
             .playerMoveValidator(new PlayerMoveValidator())
             .build();
         validators.registerValidators();
-
-        Executors executers = new Executors.Builder()
-            .playerMovedExecuter(new PlayerMovedExecutor(new MoveUseCase(ecsRuntime.getContainer())))
-            .build();
-        executers.registerExecuters();
 
         // GameLoop builder
 

@@ -52,28 +52,11 @@ public class GameLoop extends TicksPerSecondRunnable {
             .build();
         server.subscribe(ClientLCManagerSingleton.get());
         new Thread(server).start();
-
-        try {
-            Thread.sleep(Duration.ofSeconds(20));
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        eventPublisher.publish(
-            new Event<PlayerMoveData>(
-                MIDFGlossary.Player.getGlobalId(), 
-                MIDFGlossary.Player.PLAYER_MOVED.getId(), 
-                new PlayerMoveData(1, 1), 
-                1, 
-                new TargetScope(true)
-            )
-        );
     }
 
     @Override
     protected void tick() {
         ecsRuntime.tick();
-        EventDispatcherSingleton.get().run();
     }
 
     private void scheduleSystems() {
