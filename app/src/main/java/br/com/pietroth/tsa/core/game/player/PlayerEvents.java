@@ -2,7 +2,7 @@ package br.com.pietroth.tsa.core.game.player;
 
 import br.com.pietroth.tsa.core.engine.communication.event.Event;
 import br.com.pietroth.tsa.core.engine.communication.event.EventPublisherSingleton;
-import br.com.pietroth.tsa.core.game.MIDFGlossary;
+import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 
 public class PlayerEvents {

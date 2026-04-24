@@ -25,11 +25,10 @@ public class Bootstrap {
     }
 
     public void boot() {
-        Codecs codecs = new Codecs.Builder()
-            .registry(this.registry)
-            .playerMovementCodec(new PlayerMoveCodec())
-            .build();
-        codecs.registerCodecs();
+        Codecs.registerAll(
+            registry, 
+            new PlayerMoveCodec()
+        );
 
         EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder(registry)));
         IntentionVDSingleton.init();
