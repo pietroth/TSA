@@ -1,7 +1,6 @@
 package br.com.pietroth.tsa.core.engine.communication.event;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
@@ -26,10 +25,8 @@ public class EventDeliveryHandler {
         }
 
         TargetModifier modifier = event.getTarget().modifier;
-        List<Integer> ids = modifier.toList().stream()
-            .map(AtomicInteger::get)
-            .toList();
-
+        List<Integer> ids = modifier.toList();
+        
         clientLCManager.sendTo(ids, raw);
     }
 }
