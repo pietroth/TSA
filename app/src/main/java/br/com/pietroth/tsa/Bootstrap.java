@@ -7,6 +7,7 @@ import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
+import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
 import br.com.pietroth.tsa.core.game.Codecs;
 import br.com.pietroth.tsa.core.game.GameLoop;
 import br.com.pietroth.tsa.core.game.Validators;
@@ -21,11 +22,13 @@ public class Bootstrap {
     private final ECSRuntime ecsRuntime;
     private final CodecRegistry codecRegistry;
     private final BlockRegister blockRegister;
+    private final UseCaseRouter useCaseRouter;
 
     public Bootstrap(Builder builder) {
         this.ecsRuntime = builder.ecsRuntime;
         this.codecRegistry = builder.codecRegistry;
         this.blockRegister = builder.blockRegister;
+        this.useCaseRouter = builder.useCaseRouter;
     }
 
     public void boot() {
@@ -38,7 +41,7 @@ public class Bootstrap {
         IntentionVDSingleton.init();
 
         ClientLCManagerSingleton.init(
-            10, new IntentionGateway(new IntentionDecoder(codecRegistry)));
+            10, new IntentionGateway(new IntentionDecoder(codecRegistry), useCaseRouter));
 
         Validators.registerAll(
             IntentionVDSingleton.get(),
@@ -59,6 +62,7 @@ public class Bootstrap {
         private ECSRuntime ecsRuntime;
         private CodecRegistry codecRegistry;
         private BlockRegister blockRegister;
+        private UseCaseRouter useCaseRouter;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
@@ -74,11 +78,17 @@ public class Bootstrap {
             this.blockRegister = blockRegister;
             return this;
         }
+        
+        public Builder useCaseRouter(UseCaseRouter useCaseRouter) {
+            this.useCaseRouter = useCaseRouter;
+            return this;
+        }
 
         public Bootstrap build() {
             if (ecsRuntime == null) throw new IllegalStateException("ECSRuntime is required");
             if (codecRegistry == null) throw new IllegalStateException("CodecRegistry is required");
             if (blockRegister == null) throw new IllegalStateException("BlockRegister is required");
+            if (useCaseRouter == null) throw new IllegalStateException("UseCaseRouter is required");
             return new Bootstrap(this);
         }
     }

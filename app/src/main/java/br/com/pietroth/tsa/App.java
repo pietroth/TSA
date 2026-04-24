@@ -2,6 +2,8 @@ package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
+import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
 
@@ -21,6 +23,7 @@ public class App {
             .ecsRuntime(runtime)
             .codecRegistry(new CodecRegistry())
             .blockRegister(new MemoryBlockRegister(32))
+            .useCaseRouter(new UseCaseRouter(4096))
             .build();
         bootstrap.boot();
 
@@ -39,24 +42,24 @@ public class App {
             public void keyPressed(KeyEvent e) {
 
                 switch (e.getKeyCode()) {
-
-                    case KeyEvent.VK_W: 
-                        playerMovement.execute(1, 0, 1);
+        
+                    case KeyEvent.VK_W:
+                        playerMovement.execute(new PlayerMoveData(1, 0, 1));
                         System.out.println("W");
                         break;
 
                     case KeyEvent.VK_S:
-                        playerMovement.execute(1, 0, -1);
+                        playerMovement.execute(new PlayerMoveData(1, 0, -1));
                         System.out.println("S");
                         break;
 
                     case KeyEvent.VK_A:
-                        playerMovement.execute(1, 1, 0);
+                        playerMovement.execute(new PlayerMoveData(1, 1, 0));
                         System.out.println("A");
                         break;
 
                     case KeyEvent.VK_D:
-                        playerMovement.execute(1, -1, 0);
+                        playerMovement.execute(new PlayerMoveData(1, -1, 0));
                         System.out.println("D");
                         break;
 
