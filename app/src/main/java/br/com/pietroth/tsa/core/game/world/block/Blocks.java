@@ -1,33 +1,19 @@
 package br.com.pietroth.tsa.core.game.world.block;
 
-import java.util.ArrayList;
-import java.util.List;
+public final class Blocks {
 
-public class Blocks {
-    private BlockRegister blockRegister;
-    private List<BlockType> blocks;
+    private Blocks() {}
 
-    public Blocks(BlockRegister blockRegister) {
-        this.blockRegister = blockRegister;
-        this.blocks = new ArrayList<>();
+    public static void registerAll(BlockRegister blockRegister) {
+        if (blockRegister == null) {
+            throw new IllegalStateException("BlockRegister is required");
+        }
 
-        addBlock(new BlockType(1, false, 0)); // air
-        addBlock(new BlockType(10, true, 1.1f)); // grass
-        addBlock(new BlockType(11, true, 0.9f)); // dirt
-        addBlock(new BlockType(20, true, 3.0f)); // stone
-        addBlock(new BlockType(2, false, 0)); // water
-        addBlock(new BlockType(12, true, 0.8f)); // sand
-
-        registerBlocks();
-    }
-
-    private void addBlock(BlockType block) {
-        this.blocks.add(block);
-    }
-
-    private void registerBlocks() {
-        for (BlockType blockType : blocks) {
-                blockRegister.register(blockType);
-            }
+        blockRegister.register(new BlockType(1, false, 0));   // air
+        blockRegister.register(new BlockType(10, true, 1.1f)); // grass
+        blockRegister.register(new BlockType(11, true, 0.9f)); // dirt
+        blockRegister.register(new BlockType(20, true, 3.0f)); // stone
+        blockRegister.register(new BlockType(2, false, 0));   // water
+        blockRegister.register(new BlockType(12, true, 0.8f)); // sand
     }
 }

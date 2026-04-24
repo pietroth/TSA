@@ -12,6 +12,9 @@ import br.com.pietroth.tsa.core.game.GameLoop;
 import br.com.pietroth.tsa.core.game.Validators;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
+import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
+import br.com.pietroth.tsa.core.game.world.block.Blocks;
+import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
 
@@ -40,6 +43,8 @@ public class Bootstrap {
             IntentionVDSingleton.get(),
             new PlayerMoveValidator() 
         );
+
+        Blocks.registerAll(new MemoryBlockRegister(64));
 
         // GameLoop builder
 
