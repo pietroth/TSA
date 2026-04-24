@@ -1,18 +1,21 @@
 package br.com.pietroth.tsa.core.game.world.block;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MemoryBlockRegister implements BlockRegister {
-    private Map<Integer, BlockType> blockTypes = new HashMap<>();
+
+    private final BlockType[] blockTypes;
+
+    public MemoryBlockRegister(int maxId) {
+        this.blockTypes = new BlockType[maxId + 1];
+    }
 
     @Override
     public void register(BlockType blockType) {
-        blockTypes.put(blockType.getId(), blockType);
+        int id = blockType.getId();
+        blockTypes[id] = blockType;
     }
 
     @Override
     public BlockType get(int id) {
-        return blockTypes.get(id);
+        return blockTypes[id];
     }
 }
