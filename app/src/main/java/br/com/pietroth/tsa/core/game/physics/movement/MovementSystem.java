@@ -1,8 +1,7 @@
-package br.com.pietroth.tsa.core.game.ecs.system;
+package br.com.pietroth.tsa.core.game.physics.movement;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
-import br.com.pietroth.tsa.core.game.ecs.component.PositionComponent;
-import br.com.pietroth.tsa.core.game.ecs.component.VelocityComponent;
+import br.com.pietroth.tsa.core.game.physics.PhysicsEvents;
 
 public class MovementSystem implements Runnable {
     private final ECSContainer container;
@@ -27,6 +26,10 @@ public class MovementSystem implements Runnable {
 
             position.x += velocity.x;
             position.y += velocity.y;
+
+            if (velocity.x != 0 || velocity.y != 0) {
+                PhysicsEvents.publish_entityMove(0, velocity.x, velocity.y);
+            }
 
                 velocity.x = 0;
                 velocity.y = 0;
