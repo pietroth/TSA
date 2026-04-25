@@ -1,10 +1,11 @@
 package br.com.pietroth.tsa.core.engine.network.transport;
 
 import java.io.IOException;
+import java.lang.foreign.MemorySegment;
 
 public interface Connection extends Runnable {
-    byte[] read() throws IOException;
-    void send(byte[] data) throws IOException;
+    MemorySegment read() throws IOException;
+    void send(MemorySegment segment) throws IOException;
     void subscribe(ConnectionReceivedListener listener);
     void unsubscribe(ConnectionReceivedListener listener);
     void setId(int id);

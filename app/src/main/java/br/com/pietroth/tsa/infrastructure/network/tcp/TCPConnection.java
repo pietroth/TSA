@@ -3,6 +3,9 @@ package br.com.pietroth.tsa.infrastructure.network.tcp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.io.DataInputStream;
@@ -19,6 +22,8 @@ public class TCPConnection implements Connection {
     private final InputStream input;
     private final OutputStream output;
     private List<ConnectionReceivedListener> listeners = new ArrayList<>();
+
+    private final Arena arena = Arena.ofConfined();
 
     public TCPConnection(Socket socket, int id) throws IOException 
     {
@@ -44,61 +49,52 @@ public class TCPConnection implements Connection {
         listeners.remove(listener);
     }
 
-    private void notifyConnectionReceived(Connection connection, byte[] data) {
+    private void notifyConnectionReceived(Connection connection, MemorySegment segment) {
         for (ConnectionReceivedListener listener : listeners) {
-            listener.onConnectionReceived(connection, data);
+            listener.onConnectionReceived(connection, segment);
         }
     }
 
     @Override 
     public void run() {
-        while (true) {
-            try {
-                byte[] data = read();
+        try (arena) {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    MemorySegment segment = read();
 
-                // debug log
-                if (data != null && data.length > 0) {
-                     System.out.println("Received data from client: " + data.length + " bytes");
+                    if (segment != null) {
+                        notifyConnectionReceived(this, segment);
+                    }
+                } catch (IOException e) {
+                    break;
                 }
-                    
-                if (listeners != null) {
-                    notifyConnectionReceived(this, data);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
             }
         }
     }
 
     @Override
-    public byte[] read() throws IOException {
-        DataInputStream dis = new DataInputStream(input);
+    public MemorySegment read() throws IOException {
+        byte[] header = new byte[4];
+        readFully(input, header, 4);
 
-        int length;
-        try {
-            length = dis.readInt();
+        int length = MemorySegment.ofArray(header).get(ValueLayout.JAVA_INT, 0);
+        if (length < 6) throw new IOException("Invalid frame size");
 
-        } catch (EOFException e) {
-            throw new IOException("Disconnected", e);
-        }
+        MemorySegment segment = arena.allocate(length);
 
-        if (length < 6) {
-            throw new IOException("Invalid frame size: " + length);
-        }
+        segment.set(ValueLayout.JAVA_INT, 0, length);
 
-        byte[] raw = new byte[length];
-        ByteBuffer.wrap(raw).putInt(length);
+        byte[] buffer = new byte[length - 4];
+        readFully(input, buffer, length - 4);
 
-        dis.readFully(raw, 4, length -4);    
+        segment.asSlice(4).copyFrom(MemorySegment.ofArray(buffer));
 
-        return raw;
+        return segment;
     }
 
     @Override
-    public void send(byte[] data) throws IOException {
-        output.write(data);
+    public void send(MemorySegment segment) throws IOException {
+        output.write(segment.toArray(ValueLayout.JAVA_BYTE));
         output.flush();
     }
 
@@ -110,5 +106,14 @@ public class TCPConnection implements Connection {
     @Override
     public int getId() {
         return id;
+    }
+
+    private void readFully(InputStream in, byte[] b, int len) throws IOException {
+        int n = 0;
+        while (n < len) {
+            int count = in.read(b, n, len - n);
+            if (count < 0) throw new EOFException();
+            n += count;
+        }
     }
 }
