@@ -19,9 +19,7 @@ public class IntentionDecoder {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends MIDFData> Intention<T> decode(byte[] raw, int originId) {
-        MemorySegment segment = MemorySegment.ofArray(raw);
-
+    public <T extends MIDFData> Intention<T> decode(MemorySegment segment, int originId) {
         int correlationId = (int) VH_CORRELATION.get(segment, 0L);
         short intentionId = (short) VH_INTENTION.get(segment, 0L);
 
