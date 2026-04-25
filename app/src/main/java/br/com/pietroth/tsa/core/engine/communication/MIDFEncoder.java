@@ -1,7 +1,5 @@
 package br.com.pietroth.tsa.core.engine.communication;
 
-import java.nio.ByteBuffer;
-
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
@@ -13,31 +11,29 @@ public class MIDFEncoder {
         this.codecRegistry = codecRegistry;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends MIDFData> byte[] encode(MIDF<T> MIDF) {
-        Codec<? extends MIDFData> codec = codecRegistry.get(MIDF.getFamily(), MIDF.getType());
+        Codec<T> codec = (Codec<T>) codecRegistry.get(MIDF.getFamily(), MIDF.getType());
         if (codec == null) {
-            throw new RuntimeException("Codec not founded. Family Id: " + MIDF.getFamily() + ", Type Id: " + MIDF.getType());
+            throw new RuntimeException("Codec not found. Family: " + MIDF.getFamily() + ", Type: " + MIDF.getType());
         }
 
         int payloadSize = codec.size();
-        int totalSize = 4 + 2 + payloadSize; // 4 bytes for length prefix + 2 bytes for event ID + payload size
+        int totalSize = 4 + 2 + payloadSize;
 
-        ByteBuffer buffer = ByteBuffer.allocate(totalSize);
+        byte[] raw = new byte[totalSize];
+        int offset = 0;
 
-        buffer.position(4); // Reserve space for the length prefix
+        raw[offset++] = (byte) (totalSize >> 24);
+        raw[offset++] = (byte) (totalSize >> 16);
+        raw[offset++] = (byte) (totalSize >> 8);
+        raw[offset++] = (byte) totalSize;
 
-        short MIDFId = (short)((MIDF.getFamily() << 8) | (MIDF.getType() & 0xFF));
-        buffer.putShort(MIDFId);
+        int MIDFId = ((MIDF.getFamily() << 8) | (MIDF.getType() & 0xFF));
+        raw[offset++] = (byte) (MIDFId >> 8);
+        raw[offset++] = (byte) MIDFId;
 
-        @SuppressWarnings("unchecked")
-        Codec<MIDFData> c = (Codec<MIDFData>) codec;
-        c.encode(buffer, MIDF.getData());
-
-        buffer.putInt(0, totalSize); // Write the length prefix at the reserved space
-
-        byte[] raw = new byte[buffer.position()];
-        buffer.flip();
-        buffer.get(raw);
+        codec.encode(raw, offset, MIDF.getData());
         return raw;
     }
 }

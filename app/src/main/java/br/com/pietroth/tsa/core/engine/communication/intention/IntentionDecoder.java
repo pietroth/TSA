@@ -1,7 +1,5 @@
 package br.com.pietroth.tsa.core.engine.communication.intention;
 
-import java.nio.ByteBuffer;
-
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
@@ -16,40 +14,27 @@ public class IntentionDecoder {
 
     @SuppressWarnings("unchecked")
     public <T extends MIDFData> Intention<T> decode(byte[] raw, int originId) {
-        if (raw == null) {
-            throw new IllegalArgumentException("raw cannot be null");
-        }
+        int offset = 0;
 
-        ByteBuffer buffer = ByteBuffer.wrap(raw);
+        int correlationId = 
+            (raw[offset++] & 0xFF) << 24 |
+            (raw[offset++] & 0xFF) << 16 |
+            (raw[offset++] & 0xFF) << 8 |
+            (raw[offset++] & 0xFF);
 
-        int length = buffer.getInt();
-        if (length != raw.length) {
-            throw new IllegalStateException(
-                "Corrupted MIDF: declared size " + length +
-                " does not match actual size " + raw.length
-            );
-        }
+        int intentionId = 
+            ((raw[offset++] & 0xFF) << 8) |
+            (raw[offset++] & 0xFF);
 
-        int correlationId = buffer.getInt();
-        short intentionId = buffer.getShort();
-        byte family = (byte) ((intentionId >> 8) & 0xFF);
-        byte type = (byte) (intentionId & 0xFF);
+        Codec<T> codec = (Codec<T>) codecRegistry.get((short) intentionId);
+        T data = codec.decode(raw, offset);
 
-        Codec<?> rawCodec = codecRegistry.get(intentionId);
-        if (rawCodec == null) {
-            throw new IllegalStateException("No codec found for intentionId: " + intentionId);
-        }
-
-        Codec<T> codec = (Codec<T>) rawCodec;
-        T data = codec.decode(buffer);
-
-        if (buffer.hasRemaining()) {
-            throw new IllegalStateException(
-                "Corrupted MIDF: payload decoder did not consume all bytes, " +
-                buffer.remaining() + " bytes left"
-            );
-        }
-
-        return new Intention<>(family, type, data, correlationId, originId);
+        return new Intention<>(
+            (byte) (intentionId >> 8), // Family
+            (byte) intentionId,        // Type
+            data,
+            correlationId,
+            originId
+        );
     }
 }

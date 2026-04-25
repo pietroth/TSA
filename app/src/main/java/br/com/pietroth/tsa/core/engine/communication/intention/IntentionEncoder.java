@@ -1,7 +1,5 @@
 package br.com.pietroth.tsa.core.engine.communication.intention;
 
-import java.nio.ByteBuffer;
-
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
@@ -13,31 +11,37 @@ public class IntentionEncoder {
         this.codecRegistry = codecRegistry;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends MIDFData> byte[] encode(Intention<T> intention) {
-        Codec<? extends MIDFData> codec = codecRegistry.get(intention.getFamily(), intention.getType());
-
+        Codec<T> codec = (Codec<T>) codecRegistry.get(intention.getFamily(), intention.getType());
+        
+        // 4 (length) + 4 (correlationId) + 2 (intentionId) + payload
         int payloadSize = codec.size();
-        int totalSize = 4 + 4 + 2 + payloadSize; // 4 bytes for correlationId + 4 bytes for length prefix + 2 bytes for event ID + payload size
+        int totalSize = 10 + payloadSize; 
 
-        ByteBuffer buffer = ByteBuffer.allocate(totalSize);
+        byte[] raw = new byte[totalSize];
+        int offset = 0;
 
-        buffer.position(4); // Reserve space for the length prefix
+        // Total Size (4 bytes)
+        raw[offset++] = (byte) (totalSize >> 24);
+        raw[offset++] = (byte) (totalSize >> 16);
+        raw[offset++] = (byte) (totalSize >> 8);
+        raw[offset++] = (byte) totalSize;
 
+        // Correlation ID (4 bytes)
         int correlationId = intention.getCorrelationId();
-        short intentionId = (short)((intention.getFamily() << 8) | (intention.getType() & 0xFF));
+        raw[offset++] = (byte) (correlationId >> 24);
+        raw[offset++] = (byte) (correlationId >> 16);
+        raw[offset++] = (byte) (correlationId >> 8);
+        raw[offset++] = (byte) correlationId;
 
-        buffer.putInt(correlationId);
-        buffer.putShort(intentionId);
+        // Intention ID (Family + Type = 2 bytes)
+        int intentionId = ((intention.getFamily() << 8) | (intention.getType() & 0xFF));
+        raw[offset++] = (byte) (intentionId >> 8);
+        raw[offset++] = (byte) intentionId;
+        
+        codec.encode(raw, offset, intention.getData());
 
-        @SuppressWarnings("unchecked")
-        Codec<MIDFData> c = (Codec<MIDFData>) codec;
-        c.encode(buffer, intention.getData());
-
-        buffer.putInt(0, totalSize); // Write the length prefix at the reserved space
-
-        byte[] raw = new byte[buffer.position()];
-        buffer.flip();
-        buffer.get(raw);
         return raw;
     }
 }
