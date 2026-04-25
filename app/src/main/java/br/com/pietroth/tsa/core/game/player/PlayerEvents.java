@@ -13,7 +13,7 @@ public class PlayerEvents {
         PlayerMoveData data = new PlayerMoveData(playerId, sx, sy);
         Event<PlayerMoveData> event = new Event<PlayerMoveData>(
             MIDFGlossary.Player.getGlobalId(),
-            MIDFGlossary.Player.PLAYER_MOVED.getId(),
+            MIDFGlossary.Player.PLAYER_MOVE.getId(),
             data,
             originId,
             new TargetScope(new OneClient(playerId))

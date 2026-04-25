@@ -16,7 +16,7 @@ public final class Validators {
 
         intentionVD.registerValidator(
             MIDFGlossary.Player.getGlobalId(),
-            MIDFGlossary.Player.PLAYER_MOVED.getId(),
+            MIDFGlossary.Player.PLAYER_MOVE.getId(),
             playerMoveValidator
         );
     }

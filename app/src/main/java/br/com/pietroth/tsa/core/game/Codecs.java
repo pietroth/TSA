@@ -16,7 +16,7 @@ public final class Codecs {
 
         registry.register(
             (byte) MIDFGlossary.Player.getGlobalId(),
-            (byte) MIDFGlossary.Player.PLAYER_MOVED.getId(),
+            (byte) MIDFGlossary.Player.PLAYER_MOVE.getId(),
             playerMovementCodec
         );
     }

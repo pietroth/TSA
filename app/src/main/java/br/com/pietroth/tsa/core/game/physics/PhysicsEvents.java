@@ -12,7 +12,7 @@ public class PhysicsEvents {
         MoveData data = new MoveData(sx, sy);
         Event<MoveData> event = new Event<MoveData>(
             MIDFGlossary.Physics.getGlobalId(),
-            MIDFGlossary.Physics.ENTITY_MOVED.getId(), 
+            MIDFGlossary.Physics.ENTITY_MOVE.getId(), 
             data, 
             originId,
             new TargetScope(new OneClient(originId))

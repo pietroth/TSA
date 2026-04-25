@@ -2,7 +2,7 @@ package br.com.pietroth.tsa.core.game.communication;
 
 public class MIDFGlossary {
     public static enum Player {
-        PLAYER_MOVED((byte) 10);
+        PLAYER_MOVE((byte) 10);
 
         private final byte id;      
         private static final byte GLOBAL_ID = 10;
@@ -21,7 +21,7 @@ public class MIDFGlossary {
     }
 
     public static enum Physics {
-        ENTITY_MOVED((byte) 10);
+        ENTITY_MOVE((byte) 10);
 
         private final byte id;
         private static final byte GLOBAL_ID = 8;
