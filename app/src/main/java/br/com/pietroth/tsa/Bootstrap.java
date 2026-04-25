@@ -10,8 +10,11 @@ import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
 import br.com.pietroth.tsa.core.game.Codecs;
 import br.com.pietroth.tsa.core.game.GameLoop;
+import br.com.pietroth.tsa.core.game.UseCases;
 import br.com.pietroth.tsa.core.game.Validators;
+import br.com.pietroth.tsa.core.game.physics.movement.MoveUseCase;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
+import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
 import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
 import br.com.pietroth.tsa.core.game.world.block.Blocks;
@@ -35,6 +38,12 @@ public class Bootstrap {
         Codecs.registerAll(
             codecRegistry, 
             new PlayerMoveCodec()
+        );
+
+        UseCases.registerAll(
+            useCaseRouter, 
+            new MoveUseCase(ecsRuntime.getContainer()), 
+            new PlayerMoveUseCase(ecsRuntime.getContainer())
         );
 
         EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder(codecRegistry)));
