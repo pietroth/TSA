@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.game.ecs.component;
+package br.com.pietroth.tsa.core.game.physics.movement;
 
 public class PositionComponent {
     public float x, y;

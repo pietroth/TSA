@@ -6,9 +6,9 @@ import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
-import br.com.pietroth.tsa.core.game.ecs.component.PositionComponent;
-import br.com.pietroth.tsa.core.game.ecs.component.VelocityComponent;
-import br.com.pietroth.tsa.core.game.ecs.system.MovementSystem;
+import br.com.pietroth.tsa.core.game.physics.movement.MovementSystem;
+import br.com.pietroth.tsa.core.game.physics.movement.PositionComponent;
+import br.com.pietroth.tsa.core.game.physics.movement.VelocityComponent;
 import br.com.pietroth.tsa.core.game.player.PlayerComponent;
 import br.com.pietroth.tsa.infrastructure.network.tcp.TCPServer;
 
