@@ -23,11 +23,55 @@ dependencies {
     implementation("de.articdive:jnoise-modifiers:4.1.0")
     implementation("dev.dominion.ecs:dominion-ecs-api:0.9.0")
     implementation("dev.dominion.ecs:dominion-ecs-engine:0.9.0")
+    implementation("org.openjdk.jmh:jmh-core:1.37")
+    annotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:1.37")
+}
+
+val jmh by tasks.registering(JavaExec::class) {
+    group = "benchmark"
+    description = "Runs JMH benchmarks from the main source set."
+    dependsOn(tasks.named("classes"))
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "org.openjdk.jmh.Main"
+    val reportDir = layout.buildDirectory.dir("reports/jmh")
+    val reportFile = reportDir.map { it.file("results.txt").asFile.absolutePath }
+    outputs.dir(reportDir)
+    jvmArgs("-XX:+UnlockDiagnosticVMOptions", "-XX:+PrintInlining")
+    args("-rf", "text", "-rff", reportFile.get())
+}
+
+val jmhFfmWithWrapperInlining by tasks.registering(JavaExec::class) {
+    group = "benchmark"
+    description = "Runs only ffmWithWrapper and prints inlining decisions for that method."
+    dependsOn(tasks.named("classes"))
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "org.openjdk.jmh.Main"
+    val reportDir = layout.buildDirectory.dir("reports/jmh")
+    val reportFile = reportDir.map { it.file("ffmWithWrapper-inlining.txt").asFile.absolutePath }
+    outputs.dir(reportDir)
+    jvmArgs(
+        "-XX:+UnlockDiagnosticVMOptions",
+        "-XX:CompileCommand=option,br/com/pietroth/tsa/DecoderBenchmark.ffmWithWrapper,PrintInlining"
+    )
+    args(
+        "DecoderBenchmark.ffmWithWrapper",
+        "-rf", "text",
+        "-rff", reportFile.get()
+    )
 }
 
 tasks.withType<JavaExec> {
     standardInput = System.`in`
 }
+
+tasks.withType<JavaCompile>().configureEach {
+    // options.compilerArgs.add("--enable-preview") // Just for Java 21
+}
+
+tasks.withType<JavaExec>().configureEach {
+    jvmArgs("--enable-native-access=ALL-UNNAMED")
+}
+
 
 testing {
     suites {
