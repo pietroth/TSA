@@ -7,8 +7,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.io.DataInputStream;
 import java.io.EOFException;
 import java.util.List;
 

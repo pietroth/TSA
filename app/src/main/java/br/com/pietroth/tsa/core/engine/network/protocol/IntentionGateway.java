@@ -6,6 +6,9 @@ import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
 import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
+
+import java.lang.foreign.MemorySegment;
+
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 
@@ -19,11 +22,11 @@ public class IntentionGateway implements ConnectionReceivedListener {
     }
 
     @Override
-    public void onConnectionReceived(Connection connection, byte[] data) {
+    public void onConnectionReceived(Connection connection, MemorySegment segment) {
         IntentionVD intentionVD = IntentionVDSingleton.get();
-        System.out.println("Gateway raw bytes: " + data.length);
+        System.out.println("Gateway raw bytes: " + segment.byteSize());
 
-        Intention<? extends MIDFData> intention = decoder.decode(data, 10);
+        Intention<? extends MIDFData> intention = decoder.decode(segment, 10);
 
         System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
             + " type=" + (intention.getType() & 0xFF)
