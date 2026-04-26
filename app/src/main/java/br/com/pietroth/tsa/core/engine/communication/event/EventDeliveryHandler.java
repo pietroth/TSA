@@ -2,7 +2,6 @@ package br.com.pietroth.tsa.core.engine.communication.event;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.util.List;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
