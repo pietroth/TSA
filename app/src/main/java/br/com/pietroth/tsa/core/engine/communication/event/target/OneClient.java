@@ -15,4 +15,9 @@ public class OneClient implements TargetModifier {
         list.add(clientId);
         return list;
     }
+
+    @Override
+    public int[] toArrayList() {
+        return new int[] { clientId };
+    }
 }
