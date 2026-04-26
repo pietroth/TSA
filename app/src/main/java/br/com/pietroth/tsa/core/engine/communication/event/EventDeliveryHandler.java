@@ -29,11 +29,9 @@ public class EventDeliveryHandler {
             }
 
             TargetModifier modifier = event.getTarget().modifier;
-            List<Integer> ids = modifier.toList();
+            int[] ids = modifier.toArrayList();
 
-            int[] idArray = ids.stream().mapToInt(Integer::intValue).toArray();
-
-            clientLCManager.sendTo(idArray, segment);
+            clientLCManager.sendTo(ids, segment);
         }
     }
 
