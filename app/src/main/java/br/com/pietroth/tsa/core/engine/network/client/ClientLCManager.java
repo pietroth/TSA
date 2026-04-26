@@ -2,9 +2,10 @@ package br.com.pietroth.tsa.core.engine.network.client;
 
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
 
+import java.io.IOException;
+import java.lang.foreign.MemorySegment;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -51,26 +52,26 @@ public class ClientLCManager implements ConnectionCreatedListener {
         clients.remove(id);
     }
 
-    public void sendTo(List<Integer> ids, byte[] data) {
-        for (int id : ids) {
-            Client client = clients.get(id);
+    public void sendTo(int[] ids, MemorySegment segment) { 
+        for (int i = 0; i < ids.length; i++) {
+            Client client = clients.get(ids[i]);
             if (client != null) {
                 try {
-                    client.getConnection().send(data);
-                } catch (java.io.IOException e) {
+                    client.getConnection().send(segment);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
 
-    public void sendToAll(byte[] data) {
-        clients.values().forEach(client -> {
+    public void sendToAll(MemorySegment segment) {
+        for (Client client : clients.values()) {
             try {
-                client.getConnection().send(data);
-            } catch (java.io.IOException e) {
+                client.getConnection().send(segment);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+        }
     }
 }

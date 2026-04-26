@@ -25,7 +25,8 @@ public class IntentionDecoder {
 
         Codec<T> codec = (Codec<T>) codecRegistry.get(intentionId);
 
-        T data = codec.decode(raw, (int) HEADER_SIZE);
+        MemorySegment dataSegment = segment.asSlice(HEADER_SIZE);
+        T data = codec.decode(dataSegment);
 
         return new Intention<>(
             (byte) (intentionId >> 8), // Family

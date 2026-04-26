@@ -1,5 +1,12 @@
 package br.com.pietroth.tsa.core.engine.communication;
 
+import java.lang.foreign.Arena;
+import java.lang.foreign.MemoryLayout;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.StructLayout;
+import java.lang.foreign.ValueLayout;
+import java.lang.invoke.VarHandle;
+
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
@@ -12,28 +19,37 @@ public class MIDFEncoder {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends MIDFData> byte[] encode(MIDF<T> MIDF) {
+    public <T extends MIDFData> MemorySegment encode(Arena arena, MIDF<T> MIDF) {
         Codec<T> codec = (Codec<T>) codecRegistry.get(MIDF.getFamily(), MIDF.getType());
         if (codec == null) {
             throw new RuntimeException("Codec not found. Family: " + MIDF.getFamily() + ", Type: " + MIDF.getType());
         }
 
         int payloadSize = codec.size();
-        int totalSize = 4 + 2 + payloadSize;
+        int totalSize = (int) HEADER_SIZE + payloadSize;
 
-        byte[] raw = new byte[totalSize];
-        int offset = 0;
+        MemorySegment segment = arena.allocate(totalSize);
 
-        raw[offset++] = (byte) (totalSize >> 24);
-        raw[offset++] = (byte) (totalSize >> 16);
-        raw[offset++] = (byte) (totalSize >> 8);
-        raw[offset++] = (byte) totalSize;
+        VH_TOTAL_SIZE.set(segment, 0L, totalSize);
 
-        int MIDFId = ((MIDF.getFamily() << 8) | (MIDF.getType() & 0xFF));
-        raw[offset++] = (byte) (MIDFId >> 8);
-        raw[offset++] = (byte) MIDFId;
+        short midfId = (short) ((MIDF.getFamily() << 8) | (MIDF.getType()) & 0xFF);
+        VH_MIDF_ID.set(segment, 0L, midfId);
 
-        codec.encode(raw, offset, MIDF.getData());
-        return raw;
+        codec.encode(segment.asSlice(HEADER_SIZE), MIDF.getData());
+
+        return segment;
     }
+
+    private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
+        ValueLayout.JAVA_INT.withName("totalSize"),
+        ValueLayout.JAVA_SHORT.withName("midfId")
+    );
+
+    private static final VarHandle VH_TOTAL_SIZE = 
+        HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("totalSize"));
+
+    private static final VarHandle VH_MIDF_ID = 
+        HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("midfId"));
+
+    private static final long HEADER_SIZE = HEADER_LAYOUT.byteSize();
 }

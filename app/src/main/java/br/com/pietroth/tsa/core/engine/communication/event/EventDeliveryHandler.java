@@ -1,5 +1,7 @@
 package br.com.pietroth.tsa.core.engine.communication.event;
 
+import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
 import java.util.List;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
@@ -17,16 +19,22 @@ public class EventDeliveryHandler {
 
     public void delivery(Event<? extends MIDFData> event) {
         ClientLCManager clientLCManager = ClientLCManagerSingleton.get();
-        byte[] raw = encoder.encode(event);
-
-        if (event.getTarget().forAllClients) {
-            clientLCManager.sendToAll(raw);
-            return;
-        }
-
-        TargetModifier modifier = event.getTarget().modifier;
-        List<Integer> ids = modifier.toList();
         
-        clientLCManager.sendTo(ids, raw);
+        try (Arena deliveryArena = Arena.ofConfined()) {
+            MemorySegment segment = encoder.encode(deliveryArena, event);
+            
+            if (event.getTarget().forAllClients) {
+                clientLCManager.sendToAll(segment);
+                return;
+            }
+
+            TargetModifier modifier = event.getTarget().modifier;
+            List<Integer> ids = modifier.toList();
+
+            int[] idArray = ids.stream().mapToInt(Integer::intValue).toArray();
+
+            clientLCManager.sendTo(idArray, segment);
+        }
     }
+
 }

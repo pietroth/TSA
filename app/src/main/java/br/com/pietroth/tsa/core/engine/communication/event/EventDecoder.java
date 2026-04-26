@@ -1,5 +1,11 @@
 package br.com.pietroth.tsa.core.engine.communication.event;
 
+import java.lang.foreign.MemoryLayout;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.StructLayout;
+import java.lang.foreign.ValueLayout;
+import java.lang.invoke.VarHandle;
+
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
@@ -12,18 +18,13 @@ public class EventDecoder {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends MIDFData> Event<T> decode(byte[] raw) {
-        int offset = 0;
-        offset += 4; // Skip total size
+    public <T extends MIDFData> Event<T> decode(MemorySegment segment) {
+        short eventId = (short) VH_EVENT_ID.get(segment, 0L);
 
-        int eventId =
-            ((raw[offset] & 0xFF) << 8) |
-            (raw[offset + 1] & 0xFF);
+        Codec<T> codec = (Codec<T>) codecRegistry.get(eventId);
 
-        offset += 2;
-
-        Codec<T> codec = (Codec<T>) codecRegistry.get((short) eventId);
-        T data = codec.decode(raw, offset);
+        MemorySegment bodySegment = segment.asSlice(HEADER_SIZE);
+        T data = codec.decode(bodySegment);
 
         return new Event<>(
             (byte) (eventId >> 8), // Family id
@@ -33,4 +34,14 @@ public class EventDecoder {
             null
         );
     }
+
+    private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
+        ValueLayout.JAVA_INT.withName("totalSize"),
+        ValueLayout.JAVA_SHORT.withName("eventId")
+    );
+
+    private static final VarHandle VH_EVENT_ID =
+        HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("eventId"));
+
+    private static final long HEADER_SIZE = HEADER_LAYOUT.byteSize();
 }
