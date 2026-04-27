@@ -8,7 +8,7 @@ import java.lang.invoke.VarHandle;
 
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 
-public class EntityMoveUseCase implements Codec<MoveData> {
+public class EntityMoveCodec implements Codec<MoveData> {
 
     @Override
     public int size() {
@@ -17,20 +17,21 @@ public class EntityMoveUseCase implements Codec<MoveData> {
 
     @Override
     public int size(MoveData data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return size();
     }
 
     @Override
     public void encode(MemorySegment dest, MoveData data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'encode'");
+        VH_SX.set(dest, 0L, data.sx);
+        VH_SY.set(dest, 0L, data.sy);
     }
 
     @Override
     public MoveData decode(MemorySegment src) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'decode'");
+        float sx = (float) VH_SX.get(src, 0L);
+        float sy = (float) VH_SY.get(src, 0L);
+
+        return new MoveData(sx, sy);
     }
 
     private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
