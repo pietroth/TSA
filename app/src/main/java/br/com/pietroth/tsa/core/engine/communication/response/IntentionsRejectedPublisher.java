@@ -1,5 +1,5 @@
 package br.com.pietroth.tsa.core.engine.communication.response;
 
-public class ResponsePublisher {
+public class IntentionsRejectedPublisher {
     
 }

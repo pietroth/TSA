@@ -6,16 +6,6 @@ import java.lang.invoke.VarHandle;
 
 public class PlayerMoveCodec implements Codec<PlayerMoveData> {
 
-    private static final StructLayout LAYOUT = MemoryLayout.structLayout(
-        ValueLayout.JAVA_INT.withName("playerId"),
-        ValueLayout.JAVA_FLOAT.withName("sx"),
-        ValueLayout.JAVA_FLOAT.withName("sy")
-    );
-
-    private static final VarHandle VH_PLAYER_ID = LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("playerId"));
-    private static final VarHandle VH_SX = LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sx"));
-    private static final VarHandle VH_SY = LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sy"));
-
     @Override
     public int size(PlayerMoveData data) {
         return size();
@@ -23,7 +13,7 @@ public class PlayerMoveCodec implements Codec<PlayerMoveData> {
 
     @Override
     public int size() {
-        return (int) LAYOUT.byteSize(); // 12 bytes
+        return (int) HEADER_SIZE; // 12 bytes
     }
 
     @Override
@@ -41,4 +31,15 @@ public class PlayerMoveCodec implements Codec<PlayerMoveData> {
 
         return new PlayerMoveData(playerId, sx, sy);
     }
+
+    private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
+        ValueLayout.JAVA_INT.withName("playerId"),
+        ValueLayout.JAVA_FLOAT.withName("sx"),
+        ValueLayout.JAVA_FLOAT.withName("sy")
+    );
+
+    private static final VarHandle VH_PLAYER_ID = HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("playerId"));
+    private static final VarHandle VH_SX = HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sx"));
+    private static final VarHandle VH_SY = HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sy"));
+    private static final long HEADER_SIZE = HEADER_LAYOUT.byteSize();
 }
