@@ -6,7 +6,7 @@ import java.util.Map;
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 
 public class CodecRegistry {
-    private final Map<Short, Codec<?>> registry = new HashMap<>();
+    private final Map<Short, Codec<? extends MIDFData>> registry = new HashMap<>();
 
     public <T extends MIDFData> void register(byte family, byte type, Codec<T> codec) {
         short MIDFId = (short)((family << 8) | (type & 0xFF));

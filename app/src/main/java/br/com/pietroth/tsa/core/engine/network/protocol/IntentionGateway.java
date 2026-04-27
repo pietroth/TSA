@@ -6,11 +6,10 @@ import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
 import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
-
-import java.lang.foreign.MemorySegment;
-
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
+
+import java.lang.foreign.MemorySegment;
 
 public class IntentionGateway implements ConnectionReceivedListener {
     private final IntentionDecoder decoder;

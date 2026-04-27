@@ -11,14 +11,14 @@ import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 
 public class EventDeliveryHandler {
     private final MIDFEncoder encoder;
+    private final ClientLCManager clientLCManager;
 
     public EventDeliveryHandler(MIDFEncoder encoder) {
         this.encoder = encoder;
+        this.clientLCManager = ClientLCManagerSingleton.get();
     }
 
     public void delivery(Event<? extends MIDFData> event) {
-        ClientLCManager clientLCManager = ClientLCManagerSingleton.get();
-        
         try (Arena deliveryArena = Arena.ofConfined()) {
             MemorySegment segment = encoder.encode(deliveryArena, event);
             
