@@ -1,15 +1,16 @@
 package br.com.pietroth.tsa.core.engine.communication.event;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
+import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 
 public class EventPublisher {
-    private final EventDeliveryHandler deliveryHandler;
+    private final DataProcessingPipeline processingPipeline;
 
-    public EventPublisher(EventDeliveryHandler deliveryHandler) {
-        this.deliveryHandler = deliveryHandler;
+    public EventPublisher(DataProcessingPipeline processingPipeline) {
+        this.processingPipeline = processingPipeline;
     }
 
     public void publish(Event<? extends MIDFData> event) {
-        deliveryHandler.delivery(event);
+        processingPipeline.processEvent(event);
     }
 }
