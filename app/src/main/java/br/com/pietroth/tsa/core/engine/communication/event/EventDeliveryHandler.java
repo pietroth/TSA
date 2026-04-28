@@ -5,6 +5,7 @@ import java.lang.foreign.MemorySegment;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
+import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.event.target.TargetModifier;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
@@ -18,9 +19,10 @@ public class EventDeliveryHandler {
         this.clientLCManager = ClientLCManagerSingleton.get();
     }
 
-    public void delivery(Event<? extends MIDFData> event) {
+    public void delivery(Event<? extends MIDFData> event, Codec<? extends MIDFData> codec) {
         try (Arena deliveryArena = Arena.ofConfined()) {
-            MemorySegment segment = encoder.encode(deliveryArena, event);
+            @SuppressWarnings("unchecked")
+            MemorySegment segment = encoder.encode(deliveryArena, (Event<MIDFData>) event, (Codec<MIDFData>) codec);
             
             if (event.getTarget().forAllClients) {
                 clientLCManager.sendToAll(segment);

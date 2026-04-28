@@ -46,7 +46,7 @@ public class Bootstrap {
             new PlayerMoveUseCase(ecsRuntime.getContainer())
         );
 
-        EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder(codecRegistry)));
+        EventPublisherSingleton.init(new EventDeliveryHandler(new MIDFEncoder()));
         IntentionVDSingleton.init();
 
         ClientLCManagerSingleton.init(

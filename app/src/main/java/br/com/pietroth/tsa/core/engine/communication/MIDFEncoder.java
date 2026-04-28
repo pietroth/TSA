@@ -8,23 +8,10 @@ import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
 
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
-import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
 public class MIDFEncoder {
 
-    private final CodecRegistry codecRegistry;
-
-    public MIDFEncoder(CodecRegistry codecRegistry) {
-        this.codecRegistry = codecRegistry;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends MIDFData> MemorySegment encode(Arena arena, MIDF<T> MIDF) {
-        Codec<T> codec = (Codec<T>) codecRegistry.get(MIDF.getFamily(), MIDF.getType());
-        if (codec == null) {
-            throw new RuntimeException("Codec not found. Family: " + MIDF.getFamily() + ", Type: " + MIDF.getType());
-        }
-
+    public <T extends MIDFData> MemorySegment encode(Arena arena, MIDF<T> MIDF, Codec<T> codec) {
         int payloadSize = codec.size();
         int totalSize = (int) HEADER_SIZE + payloadSize;
 

@@ -60,6 +60,23 @@ val jmhFfmWithWrapperInlining by tasks.registering(JavaExec::class) {
     )
 }
 
+val jmhIntentionLayouts by tasks.registering(JavaExec::class) {
+    group = "benchmark"
+    description = "Runs the SOA vs AOS dispatch-table benchmark and saves the results to a file."
+    dependsOn(tasks.named("classes"))
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "org.openjdk.jmh.Main"
+    val reportDir = layout.buildDirectory.dir("reports/jmh")
+    val reportFile = reportDir.map { it.file("intention-dispatch-layouts.txt").asFile.absolutePath }
+    outputs.dir(reportDir)
+    args(
+        "IntentionLayoutBenchmark.dispatchAos",
+        "IntentionLayoutBenchmark.dispatchSoa",
+        "-rf", "text",
+        "-rff", reportFile.get()
+    )
+}
+
 tasks.withType<JavaExec> {
     standardInput = System.`in`
 }
