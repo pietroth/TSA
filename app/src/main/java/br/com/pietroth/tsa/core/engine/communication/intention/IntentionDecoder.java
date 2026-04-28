@@ -8,22 +8,18 @@ import java.lang.invoke.VarHandle;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
-import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
 public class IntentionDecoder {
-
-    private final CodecRegistry codecRegistry;
-
-    public IntentionDecoder(CodecRegistry codecRegistry) {
-        this.codecRegistry = codecRegistry;
+    public int getId(MemorySegment segment) {
+        short id = (short) VH_INTENTION.get(segment, 0L);
+        int family = (id >> 8) & 0x3F;
+        int type = id & 0x3F;
+        return (family << 6) | type;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends MIDFData> Intention<T> decode(MemorySegment segment, int originId) {
+    public <T extends MIDFData> Intention<T> decode(MemorySegment segment, int originId, Codec<T> codec) {
         int correlationId = (int) VH_CORRELATION.get(segment, 0L);
         short intentionId = (short) VH_INTENTION.get(segment, 0L);
-
-        Codec<T> codec = (Codec<T>) codecRegistry.get(intentionId);
 
         MemorySegment dataSegment = segment.asSlice(HEADER_SIZE);
         T data = codec.decode(dataSegment);

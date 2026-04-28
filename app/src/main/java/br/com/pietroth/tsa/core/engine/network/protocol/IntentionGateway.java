@@ -1,42 +1,20 @@
 package br.com.pietroth.tsa.core.engine.network.protocol;
 
-import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
-import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVD;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
-import br.com.pietroth.tsa.core.engine.usecase.UseCaseRouter;
-import br.com.pietroth.tsa.core.engine.communication.intention.IntentionVDSingleton;
-import br.com.pietroth.tsa.core.engine.communication.MIDFData;
-import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
+import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 
 import java.lang.foreign.MemorySegment;
 
 public class IntentionGateway implements ConnectionReceivedListener {
-    private final IntentionDecoder decoder;
-    private final UseCaseRouter router;
+    private final DataProcessingPipeline processingPipeline;
 
-    public IntentionGateway(IntentionDecoder decoder, UseCaseRouter router) {
-        this.decoder = decoder;
-        this.router = router;
+    public IntentionGateway(DataProcessingPipeline processingPipeline) {
+        this.processingPipeline = processingPipeline;
     }
 
     @Override
     public void onConnectionReceived(Connection connection, MemorySegment segment) {
-        IntentionVD intentionVD = IntentionVDSingleton.get();
-        System.out.println("Gateway raw bytes: " + segment.byteSize());
-
-        Intention<? extends MIDFData> intention = decoder.decode(segment, 10);
-
-        System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
-            + " type=" + (intention.getType() & 0xFF)
-            + " data=" + intention.getData());
-
-        int validate = intentionVD.validate(intention);
-        System.out.println("Validation result=" + validate);
-
-        if (validate >= 1) {
-            router.route(intention.getFamily(), intention.getType(), intention.getData());
-        }
-
+        processingPipeline.processIntention(segment, connection.getId());
     }
 }

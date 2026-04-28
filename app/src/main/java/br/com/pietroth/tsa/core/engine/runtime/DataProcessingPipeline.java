@@ -45,14 +45,17 @@ public final class DataProcessingPipeline {
     @SuppressWarnings("unchecked")
     public void processIntention(MemorySegment segment, int originId) {
         System.out.println("Gateway raw bytes: " + segment.byteSize()); // debug
-
-        Intention<? extends MIDFData> intention = intentionDecoder.decode(segment, originId);
         
+        int key = intentionDecoder.getId(segment);
+
+        Codec<MIDFData> codec = (Codec<MIDFData>) codecs[key];
+        if (codec == null) return;
+
+        Intention<? extends MIDFData> intention = intentionDecoder.decode(segment, originId, codec);
+
         System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
             + " type=" + (intention.getType() & 0xFF)
             + " data=" + intention.getData()); // debug
-
-        int key = pack(intention.getFamily(), intention.getType());
 
         IntentionValidator<MIDFData> validator = (IntentionValidator<MIDFData>) validators[key];
 

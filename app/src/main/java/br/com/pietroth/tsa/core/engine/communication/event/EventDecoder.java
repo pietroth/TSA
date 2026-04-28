@@ -8,20 +8,10 @@ import java.lang.invoke.VarHandle;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
-import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
 public class EventDecoder {
-    private final CodecRegistry codecRegistry;
-
-    public EventDecoder(CodecRegistry codecRegistry) {
-        this.codecRegistry = codecRegistry;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends MIDFData> Event<T> decode(MemorySegment segment) {
+    public <T extends MIDFData> Event<T> decode(MemorySegment segment, Codec<T> codec) {
         short eventId = (short) VH_EVENT_ID.get(segment, 0L);
-
-        Codec<T> codec = (Codec<T>) codecRegistry.get(eventId);
 
         MemorySegment bodySegment = segment.asSlice(HEADER_SIZE);
         T data = codec.decode(bodySegment);

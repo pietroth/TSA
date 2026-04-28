@@ -9,19 +9,9 @@ import java.lang.invoke.VarHandle;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
-import br.com.pietroth.tsa.core.engine.communication.codec.CodecRegistry;
 
 public class IntentionEncoder {
-    private final CodecRegistry codecRegistry;
-
-    public IntentionEncoder(CodecRegistry codecRegistry) {
-        this.codecRegistry = codecRegistry;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends MIDFData> MemorySegment encode(Arena arena, Intention<T> intention) {
-        Codec<T> codec = (Codec<T>) codecRegistry.get(intention.getFamily(), intention.getType());
-        
+    public <T extends MIDFData> MemorySegment encode(Arena arena, Intention<T> intention, Codec<T> codec) {
         // 4 (length) + 4 (correlationId) + 2 (intentionId) + payload
         int payloadSize = codec.size();
         int totalSize = (int) HEADER_SIZE + payloadSize;
