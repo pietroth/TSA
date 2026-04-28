@@ -13,9 +13,7 @@ import java.lang.foreign.MemorySegment;
 
 @SuppressWarnings("rawtypes")
 public final class DataProcessingPipeline {
-    private final UseCase[] usecases;
-    private final IntentionValidator[] validators;
-    private final Codec[] codecs;
+    private final InnerProcessor[] processors = new InnerProcessor[4096];
 
     private final IntentionDecoder intentionDecoder;
     private final EventDeliveryHandler deliveryHandler;
@@ -23,60 +21,30 @@ public final class DataProcessingPipeline {
     public DataProcessingPipeline(IntentionDecoder intentionDecoder, EventDeliveryHandler deliveryHandler) {
         this.intentionDecoder = intentionDecoder;
         this.deliveryHandler = deliveryHandler;
-
-        usecases = new UseCase[4096];
-        validators = new IntentionValidator[4096];
-        codecs = new Codec[4096];
     }
 
-    public void register(
-        int family, 
-        int type, 
-        IntentionValidator<? extends MIDFData> validator, 
-        UseCase<? extends MIDFData> useCase, 
-        Codec<? extends MIDFData> codec) 
+    public <T extends MIDFData> void register(
+        int family,
+        int type,
+        IntentionValidator<T> validator,
+        UseCase<T> useCase,
+        Codec<T> codec)
     {
-        int key = pack(family, type);
-        validators[key] = validator;
-        usecases[key] = useCase;
-        codecs[key] = codec;
+        processors[pack(family, type)] = new InnerProcessor<>(validator, useCase, codec);
     }
 
-    @SuppressWarnings("unchecked")
     public void processIntention(MemorySegment segment, int originId) {
-        System.out.println("Gateway raw bytes: " + segment.byteSize()); // debug
-        
         int key = intentionDecoder.getId(segment);
+        InnerProcessor<?> processor = processors[key];
 
-        Codec<MIDFData> codec = (Codec<MIDFData>) codecs[key];
-        if (codec == null) return;
+        if (processor == null) return;
 
-        Intention<? extends MIDFData> intention = intentionDecoder.decode(segment, originId, codec);
-
-        System.out.println("Decoded intention family=" + (intention.getFamily() & 0xFF)
-            + " type=" + (intention.getType() & 0xFF)
-            + " data=" + intention.getData()); // debug
-
-        IntentionValidator<MIDFData> validator = (IntentionValidator<MIDFData>) validators[key];
-
-        if (validator != null) {
-            if (validator.validate((Intention) intention) < 1) {
-                return;
-            }
-        }
-
-        UseCase<MIDFData> useCase = (UseCase<MIDFData>) usecases[key];
-        if (useCase != null) {
-            useCase.execute(intention.getData());
-        }
+        executeIntention(processor, segment, originId);
     }
 
-    @SuppressWarnings("unchecked")
     public void processEvent(Event<? extends MIDFData> event) {
         int key = pack(event.getFamily(), event.getType());
-
-        Codec<MIDFData> codec = (Codec<MIDFData>) codecs[key];
-        if (codec != null) return;
+        Codec<?> codec = processors[key].codec;
 
         deliveryHandler.delivery(event, codec);
     }
@@ -86,5 +54,25 @@ public final class DataProcessingPipeline {
             throw new IllegalArgumentException("family/type out of range");
         }
         return ((family & 0x3F) << 6) | (type & 0x3F);
+    }
+
+    private record InnerProcessor<T extends MIDFData>(
+        IntentionValidator<T> validator,
+        UseCase<T> useCase,
+        Codec<T> codec
+    ) {}
+
+    private <T extends MIDFData> void executeIntention(InnerProcessor<T> processor, MemorySegment segment, int originId) {
+        Intention<T> intention = intentionDecoder.decode(segment, originId, processor.codec);
+
+        if (processor.validator != null) {
+            if (processor.validator.validate(intention) < 1) {
+                return;
+            }
+        }
+
+        if (processor.useCase != null) {
+            processor.useCase.execute(intention.getData());
+        }
     }
 }
