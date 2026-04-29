@@ -30,7 +30,7 @@ public class EventDeliveryHandler {
             }
 
             TargetModifier modifier = event.getTarget().modifier;
-            int[] ids = modifier.toArrayList();
+            int[] ids = modifier.toArray();
 
             clientLCManager.sendTo(ids, segment);
         }
