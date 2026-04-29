@@ -35,7 +35,8 @@ public class IntentionDecoder {
 
     private static final StructLayout INTENTION_HEADER = MemoryLayout.structLayout(
         ValueLayout.JAVA_INT.withName("correlationId"),
-        ValueLayout.JAVA_SHORT.withName("intentionId")
+        ValueLayout.JAVA_SHORT.withName("intentionId"),
+        MemoryLayout.paddingLayout(2)
     );
 
     private static final VarHandle VH_CORRELATION = 

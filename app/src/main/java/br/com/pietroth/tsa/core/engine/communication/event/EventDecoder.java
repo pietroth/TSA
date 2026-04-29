@@ -27,7 +27,8 @@ public class EventDecoder {
 
     private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
         ValueLayout.JAVA_INT.withName("totalSize"),
-        ValueLayout.JAVA_SHORT.withName("eventId")
+        ValueLayout.JAVA_SHORT.withName("eventId"),
+        MemoryLayout.paddingLayout(2)
     );
 
     private static final VarHandle VH_EVENT_ID =

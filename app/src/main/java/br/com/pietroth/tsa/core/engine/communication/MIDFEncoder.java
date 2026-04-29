@@ -29,7 +29,8 @@ public class MIDFEncoder {
 
     private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
         ValueLayout.JAVA_INT.withName("totalSize"),
-        ValueLayout.JAVA_SHORT.withName("midfId")
+        ValueLayout.JAVA_SHORT.withName("midfId"),
+        MemoryLayout.paddingLayout(2)
     );
 
     private static final VarHandle VH_TOTAL_SIZE = 

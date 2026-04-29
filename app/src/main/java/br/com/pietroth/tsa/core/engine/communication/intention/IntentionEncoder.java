@@ -12,7 +12,7 @@ import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 
 public class IntentionEncoder {
     public <T extends MIDFData> MemorySegment encode(Arena arena, Intention<T> intention, Codec<T> codec) {
-        // 4 (length) + 4 (correlationId) + 2 (intentionId) + payload
+        // 4 (length) + 4 (correlationId) + 2 (intentionId) + 2 (padding) + payload
         int payloadSize = codec.size();
         int totalSize = (int) HEADER_SIZE + payloadSize;
 
@@ -34,7 +34,8 @@ public class IntentionEncoder {
     private final static StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
         ValueLayout.JAVA_INT.withName("totalSize"),
         ValueLayout.JAVA_INT.withName("correlationId"),
-        ValueLayout.JAVA_SHORT.withName("intentionId")
+        ValueLayout.JAVA_SHORT.withName("intentionId"),
+        MemoryLayout.paddingLayout(2)
     );
 
     private final static VarHandle VH_TOTAL_SIZE = 
