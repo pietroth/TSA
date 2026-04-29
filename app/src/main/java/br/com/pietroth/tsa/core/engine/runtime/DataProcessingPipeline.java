@@ -8,6 +8,8 @@ import br.com.pietroth.tsa.core.engine.communication.event.EventDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionValidator;
+import br.com.pietroth.tsa.core.engine.communication.response.IR;
+import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
 import br.com.pietroth.tsa.core.engine.usecase.UseCase;
 
 import java.lang.foreign.Arena;
@@ -19,12 +21,20 @@ public final class DataProcessingPipeline {
 
     private final IntentionDecoder intentionDecoder;
     private final MIDFEncoder midfEncoder;
+    private final IRCodec irCodec;
+
     private final EventDeliveryHandler deliveryHandler;
 
-    public DataProcessingPipeline(IntentionDecoder intentionDecoder, EventDeliveryHandler deliveryHandler, MIDFEncoder midfEncoder) {
+    public DataProcessingPipeline(
+        IntentionDecoder intentionDecoder,
+        EventDeliveryHandler deliveryHandler,
+        MIDFEncoder midfEncoder,
+        IRCodec irCodec) 
+    {
         this.intentionDecoder = intentionDecoder;
         this.deliveryHandler = deliveryHandler;
         this.midfEncoder = midfEncoder;
+        this.irCodec = irCodec;
     }
 
     public <T extends MIDFData> void register(
@@ -53,6 +63,11 @@ public final class DataProcessingPipeline {
 
         MemorySegment segment = midfEncoder.encode(arena, (Event<MIDFData>) event, (Codec<MIDFData>) codec);
         deliveryHandler.delivery(segment, event.getOriginId(), event.getTarget());
+    }
+
+    public void processIR(Arena arena, IR ir) {
+        MemorySegment segment = irCodec.encode(arena, ir);
+        // ...
     }
 
     private static int pack(int family, int type) {
