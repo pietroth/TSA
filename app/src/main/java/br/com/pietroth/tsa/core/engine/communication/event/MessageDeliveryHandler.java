@@ -7,14 +7,14 @@ import br.com.pietroth.tsa.core.engine.communication.event.target.TargetScope;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
 
-public class EventDeliveryHandler {
+public class MessageDeliveryHandler {
     private final ClientLCManager clientLCManager;
 
-    public EventDeliveryHandler() {
+    public MessageDeliveryHandler() {
         this.clientLCManager = ClientLCManagerSingleton.get();
     }
 
-    public void delivery(MemorySegment segment, int removedId, TargetScope target) {
+    public void deliveryEvent(MemorySegment segment, int removedId, TargetScope target) {
         if (target.forAllClients) {
             clientLCManager.sendToAll(segment);
             return;
@@ -22,5 +22,9 @@ public class EventDeliveryHandler {
 
         TargetModifier modifier = target.modifier;
         clientLCManager.sendTo(modifier.exclude(removedId).toArray(), segment);
+    }
+
+    public void deliveryIr(MemorySegment segment, int targetId) {
+        clientLCManager.sendTo(new int[] { targetId }, segment);
     }
 }

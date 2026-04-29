@@ -4,6 +4,7 @@ import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
 import br.com.pietroth.tsa.core.engine.communication.event.EventDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
+import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
 import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
@@ -25,7 +26,7 @@ public class App {
             .ecsRuntime(runtime)
             .blockRegister(new MemoryBlockRegister(32)) 
             .dataProcessingPipeline(
-                new DataProcessingPipeline(new IntentionDecoder(), new EventDeliveryHandler(), new MIDFEncoder())
+                new DataProcessingPipeline(new IntentionDecoder(), new EventDeliveryHandler(), new MIDFEncoder(), new IRCodec())
             )
             .build();
         bootstrap.boot();
