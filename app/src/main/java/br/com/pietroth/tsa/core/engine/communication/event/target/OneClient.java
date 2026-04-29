@@ -12,4 +12,12 @@ public class OneClient implements TargetModifier {
     public int[] toArray() {
         return new int[] { clientId };
     }
+
+    @Override
+    public TargetModifier exclude(int id) {
+        if (clientId == id) {
+            return (TargetModifier) () -> new int[0];
+        }
+        return this;
+    }
 }
