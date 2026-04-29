@@ -4,12 +4,12 @@ import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.event.Event;
-import br.com.pietroth.tsa.core.engine.communication.event.MessageDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionValidator;
 import br.com.pietroth.tsa.core.engine.communication.response.IR;
 import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
+import br.com.pietroth.tsa.core.engine.network.MessageDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.usecase.UseCase;
 
 import java.lang.foreign.Arena;
@@ -67,7 +67,7 @@ public final class DataProcessingPipeline {
 
     public void processIR(Arena arena, IR ir) {
         MemorySegment segment = irCodec.encode(arena, ir);
-        // ...
+        deliveryHandler.deliveryIr(segment, ir.getCorrelationId());
     }
 
     private static int pack(int family, int type) {

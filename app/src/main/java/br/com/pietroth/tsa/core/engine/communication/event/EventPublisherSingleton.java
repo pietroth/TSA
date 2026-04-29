@@ -3,7 +3,7 @@ package br.com.pietroth.tsa.core.engine.communication.event;
 import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 
 public class EventPublisherSingleton {
-        private static EventPublisher instance;
+    private static EventPublisher instance;
 
     public static void init(DataProcessingPipeline processingPipeline) {
         if (instance != null) {
