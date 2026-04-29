@@ -2,9 +2,10 @@ package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
-import br.com.pietroth.tsa.core.engine.communication.event.EventDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
+import br.com.pietroth.tsa.core.engine.network.MessageDeliveryHandler;
+import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
@@ -20,14 +21,16 @@ public class App {
 
         // ECS Runtime
         DominionRuntime runtime = new DominionRuntime();
+        ClientLCManager clientLCManager = new ClientLCManager(10);
+        DataProcessingPipeline dataProcessingPipeline =
+            new DataProcessingPipeline(new IntentionDecoder(), new MessageDeliveryHandler(clientLCManager), new MIDFEncoder(), new IRCodec());
 
         // Game Loop
         Bootstrap bootstrap = new Bootstrap.Builder()
             .ecsRuntime(runtime)
             .blockRegister(new MemoryBlockRegister(32)) 
-            .dataProcessingPipeline(
-                new DataProcessingPipeline(new IntentionDecoder(), new EventDeliveryHandler(), new MIDFEncoder(), new IRCodec())
-            )
+            .dataProcessingPipeline(dataProcessingPipeline)
+            .clientLCManager(clientLCManager)
             .build();
         bootstrap.boot();
 

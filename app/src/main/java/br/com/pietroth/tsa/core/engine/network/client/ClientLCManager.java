@@ -16,10 +16,13 @@ import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 public class ClientLCManager implements ConnectionCreatedListener {
     private final Map<Integer, Client> clients;
     private final AtomicInteger idGenerator = new AtomicInteger(0);
-    private final IntentionGateway intentionGateway;
+    private IntentionGateway intentionGateway;
 
-    public ClientLCManager(int maxClients, IntentionGateway intentionGateway) {
+    public ClientLCManager(int maxClients) {
         this.clients = new ConcurrentHashMap<>();
+    }
+
+    public void setIntentionGateway(IntentionGateway intentionGateway) {
         this.intentionGateway = intentionGateway;
     }
 

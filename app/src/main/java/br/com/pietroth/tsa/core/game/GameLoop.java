@@ -4,7 +4,7 @@ import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
-import br.com.pietroth.tsa.core.engine.network.client.ClientLCManagerSingleton;
+import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
 import br.com.pietroth.tsa.core.game.physics.movement.MovementSystem;
 import br.com.pietroth.tsa.core.game.physics.movement.PositionComponent;
@@ -14,11 +14,13 @@ import br.com.pietroth.tsa.infrastructure.network.tcp.TCPServer;
 
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
+    private final ClientLCManager clientLCManager;
     private Server server;
 
     private GameLoop(Builder builder) {
         super(20);
         this.ecsRuntime = builder.ecsRuntime;
+        this.clientLCManager = builder.clientLCManager;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class GameLoop extends TicksPerSecondRunnable {
             .port(5555)
             .clientPool(Executors.newCachedThreadPool())
             .build();
-        server.subscribe(ClientLCManagerSingleton.get());
+        server.subscribe(clientLCManager);
         new Thread(server).start();
     }
 
@@ -54,15 +56,24 @@ public class GameLoop extends TicksPerSecondRunnable {
 
     public static class Builder {
         private ECSRuntime ecsRuntime;
+        private ClientLCManager clientLCManager;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
             return this;
         }
 
+        public Builder clientLCManager(ClientLCManager clientLCManager) {
+            this.clientLCManager = clientLCManager;
+            return this;
+        }
+
         public GameLoop build() {
             if (ecsRuntime == null) {
                 throw new IllegalStateException("ECSRuntime must be provided");
+            }
+            if (clientLCManager == null) {
+                throw new IllegalStateException("ClientLCManager must be provided");
             }
 
             return new GameLoop(this);

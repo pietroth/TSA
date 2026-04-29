@@ -9,6 +9,7 @@ import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionValidator;
 import br.com.pietroth.tsa.core.engine.communication.response.IR;
 import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
+import br.com.pietroth.tsa.core.engine.communication.response.IRPublisherSingleton;
 import br.com.pietroth.tsa.core.engine.network.MessageDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.usecase.UseCase;
 
@@ -53,7 +54,8 @@ public final class DataProcessingPipeline {
 
         if (processor == null) return;
 
-        executeIntention(processor, segment, originId);
+        int result = executeIntention(processor, segment, originId);
+        IRPublisherSingleton.get().publish(new IR(result, originId));
     }
 
     @SuppressWarnings("unchecked")
@@ -83,17 +85,20 @@ public final class DataProcessingPipeline {
         Codec<T> codec
     ) {}
 
-    private <T extends MIDFData> void executeIntention(InnerProcessor<T> processor, MemorySegment segment, int originId) {
+    private <T extends MIDFData> int executeIntention(InnerProcessor<T> processor, MemorySegment segment, int originId) {
         Intention<T> intention = intentionDecoder.decode(segment, originId, processor.codec);
 
         if (processor.validator != null) {
             if (processor.validator.validate(intention) < 1) {
-                return;
+                return -1;
             }
         }
 
         if (processor.useCase != null) {
             processor.useCase.execute(intention.getData());
+            return 0; // success
         }
+
+        return -1;
     }
 }
