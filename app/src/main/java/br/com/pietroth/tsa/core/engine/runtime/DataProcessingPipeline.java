@@ -10,6 +10,7 @@ import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionValidator;
 import br.com.pietroth.tsa.core.engine.usecase.UseCase;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 @SuppressWarnings("rawtypes")
@@ -45,11 +46,13 @@ public final class DataProcessingPipeline {
         executeIntention(processor, segment, originId);
     }
 
-    public void processEvent(Event<? extends MIDFData> event) {
+    @SuppressWarnings("unchecked")
+    public void processEvent(Arena arena, Event<? extends MIDFData> event) {
         int key = pack(event.getFamily(), event.getType());
         Codec<?> codec = processors[key].codec;
 
-        midfEncoder.encode(null, null, null);
+        MemorySegment segment = midfEncoder.encode(arena, (Event<MIDFData>) event, (Codec<MIDFData>) codec);
+        deliveryHandler.delivery(segment, event.getTarget());
     }
 
     private static int pack(int family, int type) {

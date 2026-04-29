@@ -1,5 +1,7 @@
 package br.com.pietroth.tsa.core.engine.communication.event;
 
+import java.lang.foreign.Arena;
+
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 
@@ -11,6 +13,8 @@ public class EventPublisher {
     }
 
     public void publish(Event<? extends MIDFData> event) {
-        processingPipeline.processEvent(event);
+        try (Arena arena = Arena.ofConfined()) {
+            processingPipeline.processEvent(arena, event);
+        }
     }
 }
