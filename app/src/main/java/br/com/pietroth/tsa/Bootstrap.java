@@ -8,6 +8,7 @@ import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
 import br.com.pietroth.tsa.core.game.GameLoop;
+import br.com.pietroth.tsa.core.game.communication.GameDataPipelineRegistrar;
 import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
 import br.com.pietroth.tsa.core.game.world.block.Blocks;
 
@@ -29,6 +30,7 @@ public class Bootstrap {
             
         IRPublisherSingleton.init(new IRPublisher(dataProcessingPipeline));
         EventPublisherSingleton.init(dataProcessingPipeline);
+        GameDataPipelineRegistrar.registerAll(dataProcessingPipeline, ecsRuntime);
 
         Blocks.registerAll(blockRegister);
 

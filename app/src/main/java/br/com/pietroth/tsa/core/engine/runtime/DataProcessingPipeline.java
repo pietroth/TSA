@@ -61,7 +61,15 @@ public final class DataProcessingPipeline {
     @SuppressWarnings("unchecked")
     public void processEvent(Arena arena, Event<? extends MIDFData> event) {
         int key = pack(event.getFamily(), event.getType());
-        Codec<?> codec = processors[key].codec;
+        InnerProcessor<?> processor = processors[key];
+
+        if (processor == null) {
+            throw new IllegalStateException(
+                "No processor registered for event family=" + event.getFamily() + " type=" + event.getType()
+            );
+        }
+
+        Codec<?> codec = processor.codec;
 
         MemorySegment segment = midfEncoder.encode(arena, (Event<MIDFData>) event, (Codec<MIDFData>) codec);
         deliveryHandler.deliveryEvent(segment, event.getOriginId(), event.getTarget());
