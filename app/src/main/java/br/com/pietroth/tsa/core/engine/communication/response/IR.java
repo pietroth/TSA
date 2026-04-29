@@ -18,6 +18,10 @@ public class IR {
         return status & 0xFF;
     }
 
+    public boolean isValid() {
+        return status > 0;
+    }
+
     public int getCorrelationId() {
         return correlationId;
     }
