@@ -24,7 +24,9 @@ public class App {
         Bootstrap bootstrap = new Bootstrap.Builder()
             .ecsRuntime(runtime)
             .blockRegister(new MemoryBlockRegister(32)) 
-            .dataProcessingPipeline(new DataProcessingPipeline(new IntentionDecoder(), new EventDeliveryHandler(new MIDFEncoder())))
+            .dataProcessingPipeline(
+                new DataProcessingPipeline(new IntentionDecoder(), new EventDeliveryHandler(), new MIDFEncoder())
+            )
             .build();
         bootstrap.boot();
 

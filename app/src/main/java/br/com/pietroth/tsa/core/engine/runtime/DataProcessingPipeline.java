@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa.core.engine.runtime;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
+import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 import br.com.pietroth.tsa.core.engine.communication.event.Event;
 import br.com.pietroth.tsa.core.engine.communication.event.EventDeliveryHandler;
@@ -16,11 +17,13 @@ public final class DataProcessingPipeline {
     private final InnerProcessor[] processors = new InnerProcessor[4096];
 
     private final IntentionDecoder intentionDecoder;
+    private final MIDFEncoder midfEncoder;
     private final EventDeliveryHandler deliveryHandler;
 
-    public DataProcessingPipeline(IntentionDecoder intentionDecoder, EventDeliveryHandler deliveryHandler) {
+    public DataProcessingPipeline(IntentionDecoder intentionDecoder, EventDeliveryHandler deliveryHandler, MIDFEncoder midfEncoder) {
         this.intentionDecoder = intentionDecoder;
         this.deliveryHandler = deliveryHandler;
+        this.midfEncoder = midfEncoder;
     }
 
     public <T extends MIDFData> void register(
@@ -46,7 +49,7 @@ public final class DataProcessingPipeline {
         int key = pack(event.getFamily(), event.getType());
         Codec<?> codec = processors[key].codec;
 
-        deliveryHandler.delivery(event, codec);
+        midfEncoder.encode(null, null, null);
     }
 
     private static int pack(int family, int type) {
