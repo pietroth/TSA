@@ -49,6 +49,7 @@ public final class DataProcessingPipeline {
     }
 
     public void processIntention(MemorySegment segment, int originId) {
+        System.out.println("Processing intention from originId=" + originId);
         int key = intentionDecoder.getId(segment);
         InnerProcessor<?> processor = processors[key];
 
@@ -60,6 +61,7 @@ public final class DataProcessingPipeline {
 
     @SuppressWarnings("unchecked")
     public void processEvent(Arena arena, Event<? extends MIDFData> event) {
+        System.out.println("Processing event: family=" + event.getFamily() + " type=" + event.getType());
         int key = pack(event.getFamily(), event.getType());
         InnerProcessor<?> processor = processors[key];
 
