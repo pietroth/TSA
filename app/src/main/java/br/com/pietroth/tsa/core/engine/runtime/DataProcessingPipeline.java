@@ -52,7 +52,7 @@ public final class DataProcessingPipeline {
         Codec<?> codec = processors[key].codec;
 
         MemorySegment segment = midfEncoder.encode(arena, (Event<MIDFData>) event, (Codec<MIDFData>) codec);
-        deliveryHandler.delivery(segment, event.getTarget());
+        deliveryHandler.delivery(segment, event.getOriginId(), event.getTarget());
     }
 
     private static int pack(int family, int type) {
