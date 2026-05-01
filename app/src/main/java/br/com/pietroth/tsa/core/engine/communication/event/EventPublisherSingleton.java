@@ -1,15 +1,13 @@
 package br.com.pietroth.tsa.core.engine.communication.event;
 
-import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
-
 public class EventPublisherSingleton {
     private static EventPublisher instance;
 
-    public static void init(DataProcessingPipeline processingPipeline) {
+    public static void init(EventPublisher eventPublisher) {
         if (instance != null) {
             throw new IllegalStateException("EventPublisherSingleton is already initialized");
         }
-        instance = new EventPublisher(processingPipeline);
+        instance = eventPublisher;
     }
 
     public static EventPublisher get() {

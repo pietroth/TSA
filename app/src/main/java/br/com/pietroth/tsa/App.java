@@ -1,12 +1,8 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
-import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
-import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
-import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
-import br.com.pietroth.tsa.core.engine.network.MessageDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
-import br.com.pietroth.tsa.core.engine.runtime.DataProcessingPipeline;
+import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
@@ -22,14 +18,14 @@ public class App {
         // ECS Runtime
         DominionRuntime runtime = new DominionRuntime();
         ClientLCManager clientLCManager = new ClientLCManager(10);
-        DataProcessingPipeline dataProcessingPipeline =
-            new DataProcessingPipeline(new IntentionDecoder(), new MessageDeliveryHandler(clientLCManager), new MIDFEncoder(), new IRCodec());
+        ComponentResolver componentResolver =
+            new ComponentResolver();
 
         // Game Loop
         Bootstrap bootstrap = new Bootstrap.Builder()
             .ecsRuntime(runtime)
-            .blockRegister(new MemoryBlockRegister(32)) 
-            .dataProcessingPipeline(dataProcessingPipeline)
+            .blockRegister(new MemoryBlockRegister(32))
+            .componentResolver(componentResolver)
             .clientLCManager(clientLCManager)
             .build();
         bootstrap.boot();
