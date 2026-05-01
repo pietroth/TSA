@@ -9,7 +9,6 @@ import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionValidator;
 import br.com.pietroth.tsa.core.engine.communication.response.IR;
 import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
-import br.com.pietroth.tsa.core.engine.communication.response.IRPublisherSingleton;
 import br.com.pietroth.tsa.core.engine.network.MessageDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.usecase.UseCase;
 
@@ -48,15 +47,19 @@ public final class DataProcessingPipeline {
         processors[pack(family, type)] = new InnerProcessor<>(validator, useCase, codec);
     }
 
-    public void processIntention(MemorySegment segment, int originId) {
+    @SuppressWarnings("unchecked")
+    public int processIntention(MemorySegment segment, int originId) {
         System.out.println("Processing intention from originId=" + originId);
         int key = intentionDecoder.getId(segment);
         InnerProcessor<?> processor = processors[key];
 
-        if (processor == null) return;
+        if (processor == null) return -1; // No processor registered for this intention
 
-        int result = executeIntention(processor, segment, originId);
-        IRPublisherSingleton.get().publish(new IR(result, originId));
+        InnerProcessor<?> rawProcessor = processor;
+        InnerProcessor processorTyped = rawProcessor;
+        Intention intention = intentionDecoder.decode(segment, originId, processorTyped.codec);
+
+        return processorTyped.validator.validate(intention);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,20 +98,4 @@ public final class DataProcessingPipeline {
         Codec<T> codec
     ) {}
 
-    private <T extends MIDFData> int executeIntention(InnerProcessor<T> processor, MemorySegment segment, int originId) {
-        Intention<T> intention = intentionDecoder.decode(segment, originId, processor.codec);
-
-        if (processor.validator != null) {
-            if (processor.validator.validate(intention) < 1) {
-                return -1;
-            }
-        }
-
-        if (processor.useCase != null) {
-            processor.useCase.execute(intention.getData());
-            return 0; // success
-        }
-
-        return -1;
-    }
 }
