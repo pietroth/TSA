@@ -24,7 +24,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
     @Override
     public void onConnectionReceived(Connection connection, MemorySegment segment) {
         int id = decoder.getId(segment);
-        InnerProcessor<?> processor = processingPipeline.lookup((id >> 6) & 0x3F, id & 0xF3);
+        InnerProcessor<?> processor = processingPipeline.lookup((id >> 6) & 0x3F, id & 0x3F);
 
         if (processor == null) 
             throw new IllegalStateException("No processor found for intention id " + id);
