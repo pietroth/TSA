@@ -30,18 +30,19 @@ public class IntentionDecoder {
         );
     }
 
-    private static final StructLayout INTENTION_HEADER = MemoryLayout.structLayout(
+    private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
+        ValueLayout.JAVA_INT.withName("totalSize"),
         ValueLayout.JAVA_INT.withName("correlationId"),
         ValueLayout.JAVA_SHORT.withName("intentionId"),
         MemoryLayout.paddingLayout(2)
     );
 
     private static final VarHandle VH_CORRELATION = 
-        INTENTION_HEADER.varHandle(MemoryLayout.PathElement.groupElement("correlationId"));
+        HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("correlationId"));
 
     private static final VarHandle VH_INTENTION =
-        INTENTION_HEADER.varHandle(MemoryLayout.PathElement.groupElement("intentionId"));
+        HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("intentionId"));
     
-    private static final long HEADER_SIZE = INTENTION_HEADER.byteSize();
+    private static final long HEADER_SIZE = HEADER_LAYOUT.byteSize();
 
 }
