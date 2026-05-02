@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa.core.game.physics.movement;
 
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
+import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
 
 public class MoveData implements MIDFData {
     private final byte type;
@@ -9,11 +10,11 @@ public class MoveData implements MIDFData {
     public final float sx;
     public final float sy;
 
-    public MoveData(byte family, byte type, float sx, float sy) {
-        this.sx = sy;
+    public MoveData(float sx, float sy) {
+        this.sx = sx;
         this.sy = sy;
-        this.type = type;
-        this.family = family;
+        this.type = MIDFGlossary.Physics.ENTITY_MOVE.getId();
+        this.family = MIDFGlossary.Physics.getGlobalId();
     }
 
     @Override

@@ -4,12 +4,11 @@ import br.com.pietroth.tsa.core.engine.communication.event.Event;
 import br.com.pietroth.tsa.core.engine.communication.event.EventPublisherSingleton;
 import br.com.pietroth.tsa.core.engine.communication.event.target.OneClient;
 import br.com.pietroth.tsa.core.engine.communication.event.target.TargetScope;
-import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
 import br.com.pietroth.tsa.core.game.physics.movement.MoveData;
 
 public class PhysicsEvents {
     public static void publish_entityMove(int originId, float sx, float sy) {
-        MoveData data = new MoveData(MIDFGlossary.Physics.getGlobalId(), MIDFGlossary.Physics.ENTITY_MOVE.getId(), sx, sy);
+        MoveData data = new MoveData(sx, sy);
         Event<MoveData> event = new Event<MoveData>(
             data, 
             originId,
