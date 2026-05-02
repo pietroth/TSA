@@ -88,7 +88,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
     }
 
     public void sendToAll(MemorySegment segment) {
-        for (Client client : clients) {
+        for (int i = 0; i < maxClients; i++) {
+            Client client = clients[i];
             if (client != null) {
                 sendTo(client, segment);
             }
