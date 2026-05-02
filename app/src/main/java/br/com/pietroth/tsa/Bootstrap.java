@@ -2,7 +2,6 @@ package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.core.engine.communication.event.EventPublisher;
 import br.com.pietroth.tsa.core.engine.communication.event.EventPublisherSingleton;
-
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;

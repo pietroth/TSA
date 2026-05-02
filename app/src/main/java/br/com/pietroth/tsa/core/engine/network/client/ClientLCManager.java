@@ -1,12 +1,13 @@
 package br.com.pietroth.tsa.core.engine.network.client;
 
-import java.io.IOException;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
@@ -95,10 +96,6 @@ public class ClientLCManager implements ConnectionCreatedListener {
     }
 
     private void sendTo(Client client, MemorySegment segment) {
-        try {
-            client.getConnection().send(segment);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        NetworkAggregatorSingleton.get().append(client.getId(), segment.toArray(ValueLayout.JAVA_BYTE));
     }
 }
