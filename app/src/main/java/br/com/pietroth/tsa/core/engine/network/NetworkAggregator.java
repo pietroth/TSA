@@ -39,4 +39,10 @@ public class NetworkAggregator {
             }
         }
     }
+
+    public void flushAll(OutputStream[] outputStreams) {
+        for (int i = 0; i < buffers.length; i++) {
+            flush(i, outputStreams[i]);
+        }
+    }
 }
