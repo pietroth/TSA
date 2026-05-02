@@ -1,25 +1,26 @@
 package br.com.pietroth.tsa.core.engine.network.client;
 
-import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
-
 import java.io.IOException;
 import java.lang.foreign.MemorySegment;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
+import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
 
 public class ClientLCManager implements ConnectionCreatedListener {
-    private final Map<Integer, Client> clients;
+    private final Client[] clients;
     private final AtomicInteger idGenerator = new AtomicInteger(0);
     private IntentionGateway intentionGateway;
+    private final int maxClients;
 
     public ClientLCManager(int maxClients) {
-        this.clients = new ConcurrentHashMap<>();
+        this.maxClients = maxClients;
+        this.clients = new Client[maxClients];
     }
 
     public void setIntentionGateway(IntentionGateway intentionGateway) {
@@ -29,52 +30,68 @@ public class ClientLCManager implements ConnectionCreatedListener {
     @Override
     public synchronized void onConnectionCreated(Connection connection) {
         int id = idGenerator.getAndIncrement();
-        connection.setId(id); // Don't remove, it links client id with connection id
+        
+        if (id >= maxClients) {
+            throw new IllegalStateException("Maximum number of clients reached: " + maxClients);
+        }
+        
+        connection.setId(id);
 
         Client client = new Client.Builder()
                 .id(id)
                 .connection(connection)
                 .build();
-                
+
         client.getConnection().subscribe(intentionGateway);
 
-        if (clients.putIfAbsent(id, client) != null) {
-            throw new IllegalStateException("Duplicate client ID: " + id);
-        }
+        clients[id] = client;
     }
 
     public Collection<Client> getClientsView() {
-        return Collections.unmodifiableCollection(clients.values());
+        return Arrays.stream(clients)
+                     .filter(Objects::nonNull)
+                     .collect(Collectors.toList());
     }
 
     public Client getClientById(int id) {
-        return clients.get(id);
+        if (id < 0 || id >= maxClients) return null;
+        return clients[id];
     }
 
     public void disconnectClient(int id) {
-        clients.remove(id);
+        if (id >= 0 && id < maxClients) {
+            clients[id] = null;
+        }
     }
 
-    public void sendTo(int[] ids, MemorySegment segment) { 
-        for (int i = 0; i < ids.length; i++) {
-            Client client = clients.get(ids[i]);
-            if (client != null) {
-                try {
-                    client.getConnection().send(segment);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+    public void sendTo(int id, MemorySegment segment) {
+        Client client = getClientById(id);
+        if (client == null) {
+            return;
+        }
+
+        sendTo(client, segment);
+    }
+
+    public void sendTo(int[] ids, MemorySegment segment) {
+        for (int id : ids) {
+            sendTo(id, segment);
         }
     }
 
     public void sendToAll(MemorySegment segment) {
-        for (Client client : clients.values()) {
-            try {
-                client.getConnection().send(segment);
-            } catch (IOException e) {
-                e.printStackTrace();
+        for (Client client : clients) {
+            if (client != null) {
+                sendTo(client, segment);
             }
+        }
+    }
+
+    private void sendTo(Client client, MemorySegment segment) {
+        try {
+            client.getConnection().send(segment);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

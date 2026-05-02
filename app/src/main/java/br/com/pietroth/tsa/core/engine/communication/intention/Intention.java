@@ -7,8 +7,8 @@ public class Intention<T extends MIDFData> extends MIDF<T> {
     private final int originId;
     private final int correlationId; // Correlation ID with Response
 
-    public Intention(byte family, byte type, T data, int correlationId, int originId) {
-        super(family, type, data);
+    public Intention(T data, int correlationId, int originId) {
+        super(data);
         this.correlationId = correlationId;
         this.originId = originId;
     }

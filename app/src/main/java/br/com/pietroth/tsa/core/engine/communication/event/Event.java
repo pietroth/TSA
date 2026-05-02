@@ -8,8 +8,8 @@ public class Event<T extends MIDFData> extends MIDF<T> {
     private final int originId;
     private final TargetScope target;
 
-    public Event(byte family, byte type, T data, int originId, TargetScope target) {
-        super(family, type, data);
+    public Event(T data, int originId, TargetScope target) {
+        super(data);
         this.originId = originId;
         this.target = target;
     }

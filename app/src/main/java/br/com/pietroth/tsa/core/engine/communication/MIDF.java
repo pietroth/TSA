@@ -3,22 +3,18 @@ package br.com.pietroth.tsa.core.engine.communication;
 // MIDF literally means Message with Identifier, Data and Family. /ˈmiː.dɪ.fi/ (MEE-di-fi)
 
 public abstract class MIDF<T extends MIDFData> {
-    private final byte family;
-    private final byte type;
     private final T data;
 
-    public MIDF(byte family, byte type, T data) {
-        this.family = family;
-        this.type = type;
+    public MIDF(T data) {
         this.data = data;
     }
 
     public byte getFamily() {
-        return family;
+        return data.getFamily();
     }
 
     public byte getType() {
-        return type;
+        return data.getType();
     }
 
     public T getData() {

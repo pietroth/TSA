@@ -19,14 +19,11 @@ public class IntentionDecoder {
 
     public <T extends MIDFData> Intention<T> decode(MemorySegment segment, int originId, Codec<T> codec) {
         int correlationId = (int) VH_CORRELATION.get(segment, 0L);
-        short intentionId = (short) VH_INTENTION.get(segment, 0L);
 
         MemorySegment dataSegment = segment.asSlice(HEADER_SIZE);
         T data = codec.decode(dataSegment);
 
         return new Intention<>(
-            (byte) (intentionId >> 8), // Family
-            (byte) intentionId,        // Type
             data,
             correlationId,
             originId

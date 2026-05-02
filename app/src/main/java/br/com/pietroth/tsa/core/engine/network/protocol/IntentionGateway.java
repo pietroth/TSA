@@ -40,7 +40,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         {
             IRPublisherSingleton.get().publish(new IR(
                 validationResult,
-                id
+                intention.getCorrelationId()
             ));
             return;
         }
@@ -48,7 +48,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
         processor.useCase().execute(intention.getData());
         IRPublisherSingleton.get().publish(new IR(
             0, // success
-            id
+            intention.getCorrelationId()
         ));
     }
 }

@@ -25,6 +25,7 @@ dependencies {
     implementation("dev.dominion.ecs:dominion-ecs-engine:0.9.0")
     implementation("org.openjdk.jmh:jmh-core:1.37")
     annotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:1.37")
+    implementation("it.unimi.dsi:fastutil:8.5.18")
 }
 
 val jmh by tasks.registering(JavaExec::class) {

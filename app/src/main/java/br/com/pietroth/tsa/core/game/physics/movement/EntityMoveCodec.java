@@ -6,6 +6,7 @@ import java.lang.foreign.StructLayout;
 import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
 
+import br.com.pietroth.tsa.core.engine.communication.MIDFDataCodec;
 import br.com.pietroth.tsa.core.engine.communication.codec.Codec;
 
 public class EntityMoveCodec implements Codec<MoveData> {
@@ -31,7 +32,7 @@ public class EntityMoveCodec implements Codec<MoveData> {
         float sx = (float) VH_SX.get(src, 0L);
         float sy = (float) VH_SY.get(src, 0L);
 
-        return new MoveData(sx, sy);
+        return new MoveData(MIDFDataCodec.getFamily(src), MIDFDataCodec.getType(src), sx, sy);
     }
 
     private static final StructLayout HEADER_LAYOUT = MemoryLayout.structLayout(
@@ -42,5 +43,5 @@ public class EntityMoveCodec implements Codec<MoveData> {
     private static final VarHandle VH_SX = HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sx"));
     private static final VarHandle VH_SY = HEADER_LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sy"));
     
-    private static final long HEADER_SIZE = HEADER_LAYOUT.byteSize();
+    private static final long HEADER_SIZE = HEADER_LAYOUT.byteSize();   
 }

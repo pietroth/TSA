@@ -9,10 +9,8 @@ import br.com.pietroth.tsa.core.game.physics.movement.MoveData;
 
 public class PhysicsEvents {
     public static void publish_entityMove(int originId, float sx, float sy) {
-        MoveData data = new MoveData(sx, sy);
+        MoveData data = new MoveData(MIDFGlossary.Physics.getGlobalId(), MIDFGlossary.Physics.ENTITY_MOVE.getId(), sx, sy);
         Event<MoveData> event = new Event<MoveData>(
-            MIDFGlossary.Physics.getGlobalId(),
-            MIDFGlossary.Physics.ENTITY_MOVE.getId(), 
             data, 
             originId,
             new TargetScope(new OneClient(originId))
