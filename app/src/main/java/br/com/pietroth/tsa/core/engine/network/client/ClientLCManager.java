@@ -2,10 +2,6 @@ package br.com.pietroth.tsa.core.engine.network.client;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
@@ -54,10 +50,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
         clients[id] = client;
     }
 
-    public Collection<Client> getClientsView() {
-        return Arrays.stream(clients)
-                     .filter(Objects::nonNull)
-                     .collect(Collectors.toList());
+    public Client[] getClients() {
+        return clients;
     }
 
     public Client getClientById(int id) {
