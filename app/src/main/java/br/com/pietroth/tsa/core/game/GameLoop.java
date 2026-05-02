@@ -1,9 +1,12 @@
 package br.com.pietroth.tsa.core.game;
 
+import java.io.OutputStream;
 import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
+import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
+import br.com.pietroth.tsa.core.engine.network.client.Client;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
 import br.com.pietroth.tsa.core.game.physics.movement.MovementSystem;
@@ -16,6 +19,8 @@ public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
     private final ClientLCManager clientLCManager;
     private Server server;
+
+    private OutputStream[] activeStreams = new OutputStream[0];
 
     private GameLoop(Builder builder) {
         super(20);
@@ -44,6 +49,22 @@ public class GameLoop extends TicksPerSecondRunnable {
     @Override
     protected void tick() {
         ecsRuntime.tick();
+
+        Client[] clients = clientLCManager.getClients();
+        if (activeStreams.length != clients.length) {
+            activeStreams = new OutputStream[clients.length];
+        }
+
+        for (int i = 0; i < clients.length; i++) {
+            if (clients[i] != null) {
+                activeStreams[i] = clients[i].getConnection().getOutputStream();
+            }
+            else {
+                activeStreams[i] = null;
+            }
+        }
+
+        NetworkAggregatorSingleton.get().flushAll(activeStreams);
     }
 
     private void scheduleSystems() {
