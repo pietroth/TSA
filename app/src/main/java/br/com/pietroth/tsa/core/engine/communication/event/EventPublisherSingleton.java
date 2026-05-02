@@ -3,11 +3,11 @@ package br.com.pietroth.tsa.core.engine.communication.event;
 public class EventPublisherSingleton {
     private static EventPublisher instance;
 
-    public static void init(EventPublisher eventPublisher) {
+    public static void init(EventPublisher publisher) {
         if (instance != null) {
             throw new IllegalStateException("EventPublisherSingleton is already initialized");
         }
-        instance = eventPublisher;
+        instance = publisher;
     }
 
     public static EventPublisher get() {
