@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa.core.engine.network.transport;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.foreign.MemorySegment;
 
 public interface Connection extends Runnable {
@@ -10,4 +11,5 @@ public interface Connection extends Runnable {
     void unsubscribe(ConnectionReceivedListener listener);
     void setId(int id);
     int getId();
+    OutputStream getOutputStream();
 }

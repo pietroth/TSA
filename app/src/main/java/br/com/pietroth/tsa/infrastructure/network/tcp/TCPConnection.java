@@ -114,4 +114,9 @@ public class TCPConnection implements Connection {
             n += count;
         }
     }
+
+    @Override
+    public OutputStream getOutputStream() {
+        return output;
+    }
 }
