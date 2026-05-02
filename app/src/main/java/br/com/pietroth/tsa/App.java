@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
+import br.com.pietroth.tsa.core.engine.network.NetworkAggregator;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
@@ -27,6 +28,7 @@ public class App {
             .blockRegister(new MemoryBlockRegister(32))
             .componentResolver(componentResolver)
             .clientLCManager(clientLCManager)
+            .networkAggregator(new NetworkAggregator(20, 20))
             .build();
         bootstrap.boot();
 

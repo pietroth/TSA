@@ -5,6 +5,6 @@ import br.com.pietroth.tsa.core.engine.communication.intention.IntentionValidato
 
 public class PlayerMoveValidator implements IntentionValidator<PlayerMoveData> {
     public int validate(Intention<PlayerMoveData> intention) {
-        return 1;
+        return 0;
     }
 }
