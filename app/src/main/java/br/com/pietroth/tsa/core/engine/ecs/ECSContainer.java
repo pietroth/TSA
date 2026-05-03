@@ -7,4 +7,6 @@ public interface ECSContainer {
     ECSEntity createEntity(Object... components);
     void deleteEntity(ECSEntity entity);
     void forEachEntityWith(Class<?>[] components, EntityConsumer consumer);
+    ECSEntity getEntity(int id);
+    boolean containsEntity(int id);
 }

@@ -5,9 +5,11 @@ import dev.dominion.ecs.api.Entity;
 
 public class DominionEntity implements ECSEntity {
     private final Entity entity;
+    private final int id;
 
-    public DominionEntity(Entity entity) {
+    public DominionEntity(int id, Entity entity) {
         this.entity = entity;
+        this.id = id;
     }
 
     public Entity raw() {
@@ -16,6 +18,10 @@ public class DominionEntity implements ECSEntity {
 
     public <T> T getComponent(Class<T> component) {
         return entity.get(component);
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

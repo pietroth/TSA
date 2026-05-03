@@ -5,24 +5,61 @@ import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
 import br.com.pietroth.tsa.core.engine.ecs.entity.EntityConsumer;
 import dev.dominion.ecs.api.Dominion;
 import dev.dominion.ecs.api.Entity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntStack;
 
 public class DominionContainer implements ECSContainer {
     private final Dominion dominion;
 
+    private final Int2ObjectMap<DominionEntity> entities;
+    private final IntStack freeIds;
+    private int nextId;
+
     public DominionContainer() {
         this.dominion = Dominion.create();
+        this.entities = new Int2ObjectOpenHashMap<>();
+        this.freeIds = new IntArrayList();
+        this.nextId = 0;
     }
 
     @Override
     public ECSEntity createEntity(Object... components) {
-        Entity entity = dominion.createEntity(components);
-        return new DominionEntity(entity);
+        int id = freeIds.isEmpty() ? nextId++ : freeIds.popInt();
+        
+        Entity rawEntity = dominion.createEntity(components);
+        DominionEntity entity = new DominionEntity(id, rawEntity);
+
+        if (entities.put(id, entity) != null) {
+            throw new IllegalStateException("Entity ID collision: " + id);
+        }
+
+        return entity;
     }
 
     @Override
     public void deleteEntity(ECSEntity entity) {
-        DominionEntity dominionEntity = (DominionEntity) entity;
+        DominionEntity dominionEntity = requireDominionEntity(entity);
+        int id = dominionEntity.getId();
+
+        DominionEntity removed = entities.remove(id);
+        if (removed == null) {
+            throw new IllegalStateException("Entity not found in container: " + id);
+        }
+
         dominion.deleteEntity(dominionEntity.raw());
+        freeIds.push(id);
+    }
+
+    @Override
+    public ECSEntity getEntity(int id) {
+        return entities.get(id);
+    }
+
+    @Override
+    public boolean containsEntity(int id) {
+        return entities.containsKey(id);
     }
 
     @Override
@@ -68,6 +105,19 @@ public class DominionContainer implements ECSContainer {
     }
 
     private ECSEntity wrapEntity(Entity entity) {
-        return new DominionEntity(entity);
+        for (DominionEntity value : entities.values()) {
+            if (value.raw().equals(entity)) {
+                return value;
+            }
+        }
+
+        throw new IllegalStateException("Entity is not registered in entities");
+    }
+
+    private DominionEntity requireDominionEntity(ECSEntity entity) {
+        if (!(entity instanceof DominionEntity dominionEntity)) {
+            throw new IllegalArgumentException("Entity must be a DominionEntity");
+        }
+        return dominionEntity;
     }
 }
