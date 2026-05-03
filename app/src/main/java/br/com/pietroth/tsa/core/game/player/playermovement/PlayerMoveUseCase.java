@@ -12,9 +12,9 @@ public class PlayerMoveUseCase implements UseCase<PlayerMoveData> {
     public PlayerMoveUseCase(ECSContainer container) {
         this.container = container;
     }
-
-    public void execute(PlayerMoveData data) {
-        ECSEntity entity = container.getEntity(data.playerId);
+    @Override
+    public void execute(int playerId, PlayerMoveData data) {
+        ECSEntity entity = container.getEntity(playerId);
         if (entity != null) {
             PlayerComponent player = entity.getComponent(PlayerComponent.class);
             VelocityComponent velocity = entity.getComponent(VelocityComponent.class);

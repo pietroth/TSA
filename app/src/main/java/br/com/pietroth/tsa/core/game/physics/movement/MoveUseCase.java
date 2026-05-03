@@ -11,7 +11,7 @@ public class MoveUseCase implements UseCase<MoveData> {
     }
 
     @Override
-    public void execute(MoveData data) {
+    public void execute(int entityId, MoveData data) {
         container.forEachEntityWith(new Class[]{VelocityComponent.class, PositionComponent.class}, entity -> {
             VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
             velocity.x += data.sx;
