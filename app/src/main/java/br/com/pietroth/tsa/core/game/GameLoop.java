@@ -29,7 +29,7 @@ public class GameLoop extends TicksPerSecondRunnable {
         super(20);
         this.ecsRuntime = builder.ecsRuntime;
         this.clientLCManager = builder.clientLCManager;
-        this.player2EntityResolver = new Player2EntityResolver();
+        this.player2EntityResolver = builder.player2EntityResolver;
     }
 
     @Override
@@ -84,6 +84,7 @@ public class GameLoop extends TicksPerSecondRunnable {
     public static class Builder {
         private ECSRuntime ecsRuntime;
         private ClientLCManager clientLCManager;
+        private Player2EntityResolver player2EntityResolver;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
@@ -95,12 +96,20 @@ public class GameLoop extends TicksPerSecondRunnable {
             return this;
         }
 
+        public Builder player2EntityResolver(Player2EntityResolver player2EntityResolver) {
+            this.player2EntityResolver = player2EntityResolver;
+            return this;
+        }
+
         public GameLoop build() {
             if (ecsRuntime == null) {
                 throw new IllegalStateException("ECSRuntime must be provided");
             }
             if (clientLCManager == null) {
                 throw new IllegalStateException("ClientLCManager must be provided");
+            }
+            if (player2EntityResolver == null) {
+                throw new IllegalStateException("Player2EntityResolver must be provided");
             }
 
             return new GameLoop(this);

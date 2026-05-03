@@ -21,6 +21,7 @@ public class App {
 
         // ECS Runtime
         DominionRuntime runtime = new DominionRuntime();
+        Player2EntityResolver player2EntityResolver = new Player2EntityResolver();
         ComponentResolver componentResolver =
             new ComponentResolver();
         ClientLCManager clientLCManager = 
@@ -32,13 +33,14 @@ public class App {
             .blockRegister(new MemoryBlockRegister(32))
             .componentResolver(componentResolver)
             .clientLCManager(clientLCManager)
+            .player2EntityResolver(player2EntityResolver)
             .networkAggregator(new NetworkAggregator(20, 20))
             .build();
         bootstrap.boot();
 
         // Movement UseCase
         PlayerMoveUseCase playerMovement =
-                new PlayerMoveUseCase(runtime.getContainer(), new Player2EntityResolver());
+                new PlayerMoveUseCase(runtime.getContainer(), player2EntityResolver);
 
         // Input
         JFrame frame = new JFrame("TSA Debug Input");

@@ -23,6 +23,7 @@ public class Bootstrap {
     private final BlockRegister blockRegister;
     private final ComponentResolver componentResolver;
     private final ClientLCManager clientLCManager;
+    private final Player2EntityResolver player2EntityResolver;
     private final NetworkAggregator networkAggregator;
 
     public Bootstrap(Builder builder) {
@@ -30,6 +31,7 @@ public class Bootstrap {
         this.blockRegister = builder.blockRegister;
         this.componentResolver = builder.componentResolver;
         this.clientLCManager = builder.clientLCManager;
+        this.player2EntityResolver = builder.player2EntityResolver;
         this.networkAggregator = builder.networkAggregator;
     }
 
@@ -43,7 +45,7 @@ public class Bootstrap {
             new MIDFEncoder(),
             deliveryHandler
         ));
-        GameDataPipelineRegister.registerAll(componentResolver, ecsRuntime, new Player2EntityResolver());
+        GameDataPipelineRegister.registerAll(componentResolver, ecsRuntime, player2EntityResolver);
 
         Blocks.registerAll(blockRegister);
 
@@ -52,6 +54,7 @@ public class Bootstrap {
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
             .clientLCManager(clientLCManager)
+            .player2EntityResolver(player2EntityResolver)
             .build();
         new Thread(loop).start();
     }
@@ -61,6 +64,7 @@ public class Bootstrap {
         private BlockRegister blockRegister;
         private ComponentResolver componentResolver;
         private ClientLCManager clientLCManager;
+        private Player2EntityResolver player2EntityResolver;
         private NetworkAggregator networkAggregator;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
@@ -83,6 +87,11 @@ public class Bootstrap {
             return this;
         }
 
+        public Builder player2EntityResolver(Player2EntityResolver player2EntityResolver) {
+            this.player2EntityResolver = player2EntityResolver;
+            return this;
+        }
+
         public Builder networkAggregator(NetworkAggregator networkAggregator) {
             this.networkAggregator = networkAggregator;
             return this;
@@ -93,6 +102,7 @@ public class Bootstrap {
             if (blockRegister == null) throw new IllegalStateException("BlockRegister is required");
             if (componentResolver == null) throw new IllegalStateException("ComponentResolver is required");
             if (clientLCManager == null) throw new IllegalStateException("ClientLCManager is required");
+            if (player2EntityResolver == null) throw new IllegalStateException("Player2EntityResolver is required");
             if (networkAggregator == null) throw new IllegalStateException("NetworkAggregator is required");
             return new Bootstrap(this);
         }
