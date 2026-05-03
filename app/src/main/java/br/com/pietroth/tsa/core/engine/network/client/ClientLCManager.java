@@ -4,11 +4,14 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
+import br.com.pietroth.tsa.core.engine.network.protocol.ConnectionProcessedListener;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntStack;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 // LC = LifeCycle
 
@@ -17,6 +20,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
     private final IntStack freeIds; 
     private IntentionGateway intentionGateway;
     private final int maxClients;
+
+    private final ObjectList<ConnectionProcessedListener> listeners = new ObjectArrayList<>();
 
     public ClientLCManager(int maxClients, IntentionGateway intentionGateway) {
         this.intentionGateway = intentionGateway;
@@ -52,6 +57,7 @@ public class ClientLCManager implements ConnectionCreatedListener {
         client.getConnection().subscribe(intentionGateway);
 
         clients[id] = client;
+        notifyConnectionProcessed(connection);
     }
 
     public Client[] getClients() {
@@ -96,5 +102,19 @@ public class ClientLCManager implements ConnectionCreatedListener {
 
     private void sendTo(Client client, MemorySegment segment) {
         NetworkAggregatorSingleton.get().append(client.getId(), segment.toArray(ValueLayout.JAVA_BYTE));
+    }
+
+    public void subscribe(ConnectionProcessedListener listener) {
+        listeners.add(listener);
+    }
+
+    public void unsubscribe(ConnectionProcessedListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void notifyConnectionProcessed(Connection connection) {
+        for (ConnectionProcessedListener listener : listeners) {
+            listener.onConnectionProcessed(connection);
+        }
     }
 }

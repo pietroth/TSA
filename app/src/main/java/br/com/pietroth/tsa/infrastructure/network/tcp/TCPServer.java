@@ -6,16 +6,15 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListener;
-
-import java.util.List;
-import java.util.ArrayList;
 
 public class TCPServer implements Server {
     private final int port;
     private final ExecutorService clientPool;
-    private final List<ConnectionCreatedListener> listeners = new ArrayList<>();
+    private final ObjectList<ConnectionCreatedListener> listeners = new ObjectArrayList<>();
 
     private TCPServer(Builder builder) {
         this.port = builder.port;
