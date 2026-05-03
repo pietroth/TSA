@@ -6,6 +6,7 @@ import br.com.pietroth.tsa.core.engine.network.NetworkAggregator;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
+import br.com.pietroth.tsa.core.game.player.Player2EntityResolver;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
@@ -37,7 +38,7 @@ public class App {
 
         // Movement UseCase
         PlayerMoveUseCase playerMovement =
-                new PlayerMoveUseCase(runtime.getContainer());
+                new PlayerMoveUseCase(runtime.getContainer(), new Player2EntityResolver());
 
         // Input
         JFrame frame = new JFrame("TSA Debug Input");

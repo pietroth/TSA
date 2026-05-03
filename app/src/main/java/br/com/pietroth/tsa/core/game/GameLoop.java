@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
+import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
 import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
 import br.com.pietroth.tsa.core.engine.network.client.Client;
@@ -12,12 +13,14 @@ import br.com.pietroth.tsa.core.engine.network.transport.Server;
 import br.com.pietroth.tsa.core.game.physics.movement.MovementSystem;
 import br.com.pietroth.tsa.core.game.physics.movement.PositionComponent;
 import br.com.pietroth.tsa.core.game.physics.movement.VelocityComponent;
+import br.com.pietroth.tsa.core.game.player.Player2EntityResolver;
 import br.com.pietroth.tsa.core.game.player.PlayerComponent;
 import br.com.pietroth.tsa.infrastructure.network.tcp.TCPServer;
 
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
     private final ClientLCManager clientLCManager;
+    private final Player2EntityResolver player2EntityResolver;
     private Server server;
 
     private OutputStream[] activeStreams = new OutputStream[0];
@@ -26,17 +29,20 @@ public class GameLoop extends TicksPerSecondRunnable {
         super(20);
         this.ecsRuntime = builder.ecsRuntime;
         this.clientLCManager = builder.clientLCManager;
+        this.player2EntityResolver = new Player2EntityResolver();
     }
 
     @Override
     protected void initialize() {
         scheduleSystems();
 
-        ecsRuntime.createEntity(
-            new PlayerComponent(1),
+        int playerId = 1;
+        ECSEntity entity = ecsRuntime.createEntity(
+            new PlayerComponent(playerId),
             new PositionComponent(0, 0),
             new VelocityComponent(0, 0)
         );
+        player2EntityResolver.bind(playerId, entity.getId());
 
         server = TCPServer.builder()
             .port(5555)

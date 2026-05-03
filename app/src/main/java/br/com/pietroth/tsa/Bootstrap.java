@@ -14,6 +14,7 @@ import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.GameDataPipelineRegister;
 import br.com.pietroth.tsa.core.game.GameLoop;
+import br.com.pietroth.tsa.core.game.player.Player2EntityResolver;
 import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
 import br.com.pietroth.tsa.core.game.world.block.Blocks;
 
@@ -42,7 +43,7 @@ public class Bootstrap {
             new MIDFEncoder(),
             deliveryHandler
         ));
-        GameDataPipelineRegister.registerAll(componentResolver, ecsRuntime);
+        GameDataPipelineRegister.registerAll(componentResolver, ecsRuntime, new Player2EntityResolver());
 
         Blocks.registerAll(blockRegister);
 
