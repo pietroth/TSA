@@ -1,6 +1,7 @@
 package br.com.pietroth.tsa.core.game.player.playermovement;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSContainer;
+import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
 import br.com.pietroth.tsa.core.engine.usecase.UseCase;
 import br.com.pietroth.tsa.core.game.physics.movement.VelocityComponent;
 import br.com.pietroth.tsa.core.game.player.PlayerComponent;
@@ -13,14 +14,15 @@ public class PlayerMoveUseCase implements UseCase<PlayerMoveData> {
     }
 
     public void execute(PlayerMoveData data) {
-        container.forEachEntityWith(new Class[]{PlayerComponent.class, VelocityComponent.class}, entity -> {
+        ECSEntity entity = container.getEntity(data.playerId);
+        if (entity != null) {
             PlayerComponent player = entity.getComponent(PlayerComponent.class);
             VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
 
-            if (player.id == data.playerId) {
+            if (player != null && velocity != null) {
                 velocity.x += data.sx;
                 velocity.y += data.sy;
             }
-        });
+        }
     }
 }
