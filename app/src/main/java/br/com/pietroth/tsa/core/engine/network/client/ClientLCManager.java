@@ -10,6 +10,8 @@ import br.com.pietroth.tsa.core.engine.network.transport.ConnectionCreatedListen
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntStack;
 
+// LC = LifeCycle
+
 public class ClientLCManager implements ConnectionCreatedListener {
     private final Client[] clients;
     private final IntStack freeIds; 
