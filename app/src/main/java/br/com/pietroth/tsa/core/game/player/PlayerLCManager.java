@@ -21,7 +21,7 @@ public class PlayerLCManager implements ConnectionProcessedListener {
     @Override
     public void onConnectionProcessed(Connection connection) {
         ECSEntity player = container.createEntity(
-            new PlayerComponent(connection.getId()),
+            new PlayerComponent(),
             new PositionComponent(0, 0),
             new VelocityComponent(0, 0)
         );

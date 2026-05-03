@@ -38,7 +38,7 @@ public class GameLoop extends TicksPerSecondRunnable {
 
         int playerId = 1;
         ECSEntity entity = ecsRuntime.createEntity(
-            new PlayerComponent(playerId),
+            new PlayerComponent(),
             new PositionComponent(0, 0),
             new VelocityComponent(0, 0)
         );
