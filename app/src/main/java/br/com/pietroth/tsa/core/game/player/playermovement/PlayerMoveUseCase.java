@@ -14,8 +14,8 @@ public class PlayerMoveUseCase implements UseCase<PlayerMoveData> {
 
     public void execute(PlayerMoveData data) {
         container.forEachEntityWith(new Class[]{PlayerComponent.class, VelocityComponent.class}, entity -> {
-            PlayerComponent player = entity.get(PlayerComponent.class);
-            VelocityComponent velocity = entity.get(VelocityComponent.class);
+            PlayerComponent player = entity.getComponent(PlayerComponent.class);
+            VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
 
             if (player.id == data.playerId) {
                 velocity.x += data.sx;

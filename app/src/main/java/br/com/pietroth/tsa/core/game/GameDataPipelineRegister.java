@@ -4,6 +4,8 @@ import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.communication.MIDFGlossary;
 import br.com.pietroth.tsa.core.game.physics.movement.EntityMoveCodec;
+import br.com.pietroth.tsa.core.game.physics.movement.EntityMoveValidator;
+import br.com.pietroth.tsa.core.game.physics.movement.MoveUseCase;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveCodec;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveValidator;
@@ -23,8 +25,8 @@ public final class GameDataPipelineRegister {
         pipeline.register(
             MIDFGlossary.Physics.getGlobalId(),
             MIDFGlossary.Physics.ENTITY_MOVE.getId(),
-            null,
-            null,
+            new EntityMoveValidator(),
+            new MoveUseCase(ecsRuntime.getContainer()),
             new EntityMoveCodec()
         );
     }

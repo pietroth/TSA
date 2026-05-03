@@ -11,9 +11,9 @@ public class IRCodec {
     public MemorySegment encode(Arena arena, IR ir) {
         MemorySegment segment = arena.allocate(HEADER_SIZE);
         
-        VH_TOTAL_SIZE.set(segment, 0L, HEADER_SIZE);
+        VH_TOTAL_SIZE.set(segment, 0L, (int) HEADER_SIZE);
         VH_CORRELATION.set(segment, 0L, ir.getCorrelationId());
-        VH_STATUS.set(segment, 0L, ir.getStatus());
+        VH_STATUS.set(segment, 0L, (byte) ir.getStatus());
 
         return segment;
     }

@@ -14,7 +14,7 @@ public class DominionEntity implements ECSEntity {
         return entity;
     }
 
-    public <T> T get(Class<T> component) {
+    public <T> T getComponent(Class<T> component) {
         return entity.get(component);
     }
 

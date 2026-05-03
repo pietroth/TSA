@@ -18,8 +18,8 @@ public class MovementSystem implements Runnable {
     @Override
     public void run() {
         container.forEachEntityWith(new Class[]{PositionComponent.class, VelocityComponent.class}, entity -> {
-            PositionComponent position = entity.get(PositionComponent.class);
-            VelocityComponent velocity = entity.get(VelocityComponent.class);
+            PositionComponent position = entity.getComponent(PositionComponent.class);
+            VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
 
             this.lastX = position.x;
             this.lastY = position.y;

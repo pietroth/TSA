@@ -3,7 +3,7 @@ package br.com.pietroth.tsa.core.engine.communication.response;
 // IR means Immediate Response /ˈaɪər/ (air)
 
 public class IR {
-    private int correlationId; // Correlation ID with Intention and serves as a targetId
+    private int correlationId; 
     private byte status;
 
     public IR(int status, int correlationId) {

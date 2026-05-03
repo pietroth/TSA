@@ -21,8 +21,6 @@ public class TCPConnection implements Connection {
     private final OutputStream output;
     private List<ConnectionReceivedListener> listeners = new ArrayList<>();
 
-    private final Arena arena = Arena.ofConfined();
-
     public TCPConnection(Socket socket, int id) throws IOException 
     {
         this.id = id;
@@ -55,10 +53,10 @@ public class TCPConnection implements Connection {
 
     @Override 
     public void run() {
-        try (arena) {
+        try (Arena arena = Arena.ofConfined()) {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    MemorySegment segment = read();
+                    MemorySegment segment = read(arena);
 
                     if (segment != null) {
                         notifyConnectionReceived(this, segment);
@@ -71,7 +69,7 @@ public class TCPConnection implements Connection {
     }
 
     @Override
-    public MemorySegment read() throws IOException {
+    public MemorySegment read(Arena arena) throws IOException {
         byte[] header = new byte[4];
         readFully(input, header, 4);
         int length = (header[0] & 0xFF) |

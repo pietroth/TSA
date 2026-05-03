@@ -50,9 +50,7 @@ public class TCPServer implements Server {
                 TCPConnection connection = new TCPConnection(clientSocket);
                 notifyConnectionCreated(connection);
 
-                clientPool.submit(
-                    connection
-                );
+                clientPool.execute(connection);
                 System.out.println("Client connection submitted to thread pool: " + clientSocket.getRemoteSocketAddress());
             }
         } catch (IOException e) {
