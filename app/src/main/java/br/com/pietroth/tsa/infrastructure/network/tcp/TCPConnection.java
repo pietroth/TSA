@@ -74,8 +74,10 @@ public class TCPConnection implements Connection {
     public MemorySegment read() throws IOException {
         byte[] header = new byte[4];
         readFully(input, header, 4);
-
-        int length = MemorySegment.ofArray(header).get(ValueLayout.JAVA_INT, 0);
+        int length = (header[0] & 0xFF) |
+            ((header[1] & 0xFF) << 8) |
+            ((header[2] & 0xFF) << 16) |
+            ((header[3] & 0xFF) << 24);
         if (length < 6) throw new IOException("Invalid frame size");
 
         MemorySegment segment = arena.allocate(length);

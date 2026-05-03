@@ -53,6 +53,7 @@ public class TCPServer implements Server {
                 clientPool.submit(
                     connection
                 );
+                System.out.println("Client connection submitted to thread pool: " + clientSocket.getRemoteSocketAddress());
             }
         } catch (IOException e) {
             e.printStackTrace();

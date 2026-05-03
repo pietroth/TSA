@@ -40,6 +40,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
         
         connection.setId(id);
 
+        System.out.println("New Id linked to connection: " + connection.getId());
+
         Client client = new Client.Builder()
                 .id(id)
                 .connection(connection)
