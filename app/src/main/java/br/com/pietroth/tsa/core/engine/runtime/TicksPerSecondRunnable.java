@@ -1,4 +1,4 @@
-package br.com.pietroth.tsa.core.engine;
+package br.com.pietroth.tsa.core.engine.runtime;
 
 public abstract class TicksPerSecondRunnable implements Runnable {
 

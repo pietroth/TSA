@@ -5,11 +5,11 @@ import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
 import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
-import br.com.pietroth.tsa.core.engine.TicksPerSecondRunnable;
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
 import br.com.pietroth.tsa.core.engine.network.client.Client;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
+import br.com.pietroth.tsa.core.engine.runtime.TicksPerSecondRunnable;
 import br.com.pietroth.tsa.core.game.physics.movement.MovementSystem;
 import br.com.pietroth.tsa.core.game.physics.movement.PositionComponent;
 import br.com.pietroth.tsa.core.game.physics.movement.VelocityComponent;

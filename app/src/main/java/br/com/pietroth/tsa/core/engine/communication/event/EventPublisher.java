@@ -22,7 +22,7 @@ public class EventPublisher {
 
     public void publish(Event<? extends MIDFData> event) {
         processEvent(event);
-        System.out.println("Published event. Family: " + event.getFamily() + ", Type: " + event.getType() + ", OriginId: " + event.getOriginId() + ", Target: " + event.getTarget());
+        System.out.println("Published event. Family: " + event.getFamily() + ", Type: " + event.getType() + ", OriginId: " + event.getOriginId() + ", Target Size: " + event.getTarget().modifier.toArray().length);
     }
 
     @SuppressWarnings("unchecked")

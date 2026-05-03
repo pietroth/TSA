@@ -40,7 +40,7 @@ public class ClientLCManager implements ConnectionCreatedListener {
         System.out.println(connection.getId() + " connected. Assigned client ID: " + id);
         System.out.println("New connection created with ID: " + id);
         
-        connection.setId(id);
+        connection.setId(id); // This links created Id with connection Id; Don't remove it!
 
         System.out.println("New Id linked to connection: " + connection.getId());
 
