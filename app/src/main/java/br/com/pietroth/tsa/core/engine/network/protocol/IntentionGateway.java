@@ -47,7 +47,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
             return;
         }
 
-        processor.useCase().execute(intention.getData());
+        processor.useCase().execute(intention.getOriginId(), intention.getData());
         IRPublisherSingleton.get().publish(new IR(
             0, // success
             intention.getCorrelationId()

@@ -9,7 +9,7 @@ import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 public class PlayerEvents {
 
     public static void publish_PlayerMoved(int originId, int playerId, float sx, float sy) {
-        PlayerMoveData data = new PlayerMoveData(playerId, sx, sy);
+        PlayerMoveData data = new PlayerMoveData(sx, sy);
         Event<PlayerMoveData> event = new Event<PlayerMoveData>(
             data,
             originId,

@@ -52,22 +52,22 @@ public class App {
                 switch (e.getKeyCode()) {
         
                     case KeyEvent.VK_W:
-                        playerMovement.execute(new PlayerMoveData(1, 0, 1));
+                        playerMovement.execute(1, new PlayerMoveData(0, 1));
                         System.out.println("W");
                         break;
 
                     case KeyEvent.VK_S:
-                        playerMovement.execute(new PlayerMoveData(1, 0, -1));
+                        playerMovement.execute(1, new PlayerMoveData(0, -1));
                         System.out.println("S");
                         break;
 
                     case KeyEvent.VK_A:
-                        playerMovement.execute(new PlayerMoveData(1, 1, 0));
+                        playerMovement.execute(1, new PlayerMoveData(-1, 0));
                         System.out.println("A");
                         break;
 
                     case KeyEvent.VK_D:
-                        playerMovement.execute(new PlayerMoveData(1, -1, 0));
+                        playerMovement.execute(1, new PlayerMoveData(1, 0));
                         System.out.println("D");
                         break;
 
