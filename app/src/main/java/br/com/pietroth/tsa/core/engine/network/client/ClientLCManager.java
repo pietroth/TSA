@@ -16,7 +16,8 @@ public class ClientLCManager implements ConnectionCreatedListener {
     private IntentionGateway intentionGateway;
     private final int maxClients;
 
-    public ClientLCManager(int maxClients) {
+    public ClientLCManager(int maxClients, IntentionGateway intentionGateway) {
+        this.intentionGateway = intentionGateway;
         this.maxClients = maxClients;
         this.clients = new Client[maxClients];
 
@@ -26,10 +27,6 @@ public class ClientLCManager implements ConnectionCreatedListener {
         }
     }
 
-    public void setIntentionGateway(IntentionGateway intentionGateway) {
-        this.intentionGateway = intentionGateway;
-    }
-
     @Override
     public synchronized void onConnectionCreated(Connection connection) {
         if (freeIds.isEmpty()) {
@@ -37,6 +34,9 @@ public class ClientLCManager implements ConnectionCreatedListener {
         }
 
         int id = freeIds.popInt();
+
+        System.out.println(connection.getId() + " connected. Assigned client ID: " + id);
+        System.out.println("New connection created with ID: " + id);
         
         connection.setId(id);
 

@@ -14,11 +14,12 @@ public class IRPublisher {
         this.delivery = delivery;
     }
 
-    public void publish(IR ir) {
+    public void publish(IR ir, int originId) {
         try (Arena arena = Arena.ofConfined()) {
            MemorySegment segment = codec.encode(arena, ir);
 
-           delivery.deliveryIr(segment, ir.getCorrelationId());
+           delivery.deliveryIr(segment, originId);
+           System.out.println("Published IR. CorrelationId: " + ir.getCorrelationId() + ", Status: " + ir.getStatus() + ", OriginId: " + originId);
         }
     }
 }

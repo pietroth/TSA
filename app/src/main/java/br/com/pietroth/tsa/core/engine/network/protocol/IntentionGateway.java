@@ -23,6 +23,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
 
     @Override
     public void onConnectionReceived(Connection connection, MemorySegment segment) {
+        System.out.println("Received intention. OriginId: " + connection.getId() + ", Size: " + segment.byteSize());
         int id = decoder.getId(segment);
         InnerProcessor<?> processor = processingPipeline.lookup((id >> 6) & 0x3F, id & 0x3F);
 
@@ -30,6 +31,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
             throw new IllegalStateException("No processor found for intention id " + id);
 
         processIntention(processor, connection, segment, id);
+        System.out.println("Processed intention. Id: " + id + ", OriginId: " + connection.getId());
     }
 
     private <T extends MIDFData> void processIntention(InnerProcessor<T> processor, Connection connection, MemorySegment segment, int id) {
@@ -41,7 +43,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
             IRPublisherSingleton.get().publish(new IR(
                 validationResult,
                 intention.getCorrelationId()
-            ));
+            ), intention.getOriginId());
             return;
         }
 
@@ -49,6 +51,6 @@ public class IntentionGateway implements ConnectionReceivedListener {
         IRPublisherSingleton.get().publish(new IR(
             0, // success
             intention.getCorrelationId()
-        ));
+        ), intention.getOriginId());
     }
 }
