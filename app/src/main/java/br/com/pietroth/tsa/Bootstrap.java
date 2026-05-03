@@ -3,7 +3,6 @@ package br.com.pietroth.tsa;
 import br.com.pietroth.tsa.core.engine.communication.event.EventPublisher;
 import br.com.pietroth.tsa.core.engine.communication.event.EventPublisherSingleton;
 import br.com.pietroth.tsa.core.engine.communication.MIDFEncoder;
-import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.response.IRCodec;
 import br.com.pietroth.tsa.core.engine.communication.response.IRPublisher;
 import br.com.pietroth.tsa.core.engine.communication.response.IRPublisherSingleton;
@@ -12,7 +11,6 @@ import br.com.pietroth.tsa.core.engine.network.MessageDeliveryHandler;
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregator;
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
-import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.GameDataPipelineRegister;
 import br.com.pietroth.tsa.core.game.GameLoop;
@@ -36,8 +34,6 @@ public class Bootstrap {
 
     public void boot() {
         MessageDeliveryHandler deliveryHandler = new MessageDeliveryHandler(clientLCManager);
-
-        clientLCManager.setIntentionGateway(new IntentionGateway(componentResolver, new IntentionDecoder()));
 
         NetworkAggregatorSingleton.init(networkAggregator);
         IRPublisherSingleton.init(new IRPublisher(new IRCodec(), deliveryHandler));

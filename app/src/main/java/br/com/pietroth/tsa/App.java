@@ -1,8 +1,10 @@
 package br.com.pietroth.tsa;
 
 import br.com.pietroth.tsa.infrastructure.ecs.dominion.DominionRuntime;
+import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregator;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
+import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
 import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
@@ -18,9 +20,10 @@ public class App {
 
         // ECS Runtime
         DominionRuntime runtime = new DominionRuntime();
-        ClientLCManager clientLCManager = new ClientLCManager(10);
         ComponentResolver componentResolver =
             new ComponentResolver();
+        ClientLCManager clientLCManager = 
+            new ClientLCManager(10, new IntentionGateway(componentResolver, new IntentionDecoder()));
 
         // Game Loop
         Bootstrap bootstrap = new Bootstrap.Builder()
