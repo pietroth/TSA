@@ -4,23 +4,19 @@ import java.io.OutputStream;
 import java.util.concurrent.Executors;
 
 import br.com.pietroth.tsa.core.engine.ecs.ECSRuntime;
-import br.com.pietroth.tsa.core.engine.ecs.entity.ECSEntity;
 import br.com.pietroth.tsa.core.engine.network.NetworkAggregatorSingleton;
 import br.com.pietroth.tsa.core.engine.network.client.Client;
 import br.com.pietroth.tsa.core.engine.network.client.ClientLCManager;
 import br.com.pietroth.tsa.core.engine.network.transport.Server;
 import br.com.pietroth.tsa.core.engine.runtime.TicksPerSecondRunnable;
 import br.com.pietroth.tsa.core.game.physics.movement.MovementSystem;
-import br.com.pietroth.tsa.core.game.physics.movement.PositionComponent;
-import br.com.pietroth.tsa.core.game.physics.movement.VelocityComponent;
-import br.com.pietroth.tsa.core.game.player.Player2EntityResolver;
-import br.com.pietroth.tsa.core.game.player.PlayerComponent;
+import br.com.pietroth.tsa.core.game.player.PlayerLCManager;
 import br.com.pietroth.tsa.infrastructure.network.tcp.TCPServer;
 
 public class GameLoop extends TicksPerSecondRunnable {
     private final ECSRuntime ecsRuntime;
     private final ClientLCManager clientLCManager;
-    private final Player2EntityResolver player2EntityResolver;
+    private final PlayerLCManager playerLCManager;
     private Server server;
 
     private OutputStream[] activeStreams = new OutputStream[0];
@@ -29,7 +25,7 @@ public class GameLoop extends TicksPerSecondRunnable {
         super(20);
         this.ecsRuntime = builder.ecsRuntime;
         this.clientLCManager = builder.clientLCManager;
-        this.player2EntityResolver = builder.player2EntityResolver;
+        this.playerLCManager = builder.playerLCManager;
     }
 
     @Override
@@ -37,12 +33,7 @@ public class GameLoop extends TicksPerSecondRunnable {
         scheduleSystems();
 
         int playerId = 1;
-        ECSEntity entity = ecsRuntime.createEntity(
-            new PlayerComponent(),
-            new PositionComponent(0, 0),
-            new VelocityComponent(0, 0)
-        );
-        player2EntityResolver.bind(playerId, entity.getId());
+        playerLCManager.createPlayer(playerId);
 
         server = TCPServer.builder()
             .port(5555)
@@ -84,7 +75,7 @@ public class GameLoop extends TicksPerSecondRunnable {
     public static class Builder {
         private ECSRuntime ecsRuntime;
         private ClientLCManager clientLCManager;
-        private Player2EntityResolver player2EntityResolver;
+        private PlayerLCManager playerLCManager;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
             this.ecsRuntime = ecsRuntime;
@@ -96,8 +87,8 @@ public class GameLoop extends TicksPerSecondRunnable {
             return this;
         }
 
-        public Builder player2EntityResolver(Player2EntityResolver player2EntityResolver) {
-            this.player2EntityResolver = player2EntityResolver;
+        public Builder playerLCManager(PlayerLCManager playerLCManager) {
+            this.playerLCManager = playerLCManager;
             return this;
         }
 
@@ -108,7 +99,7 @@ public class GameLoop extends TicksPerSecondRunnable {
             if (clientLCManager == null) {
                 throw new IllegalStateException("ClientLCManager must be provided");
             }
-            if (player2EntityResolver == null) {
+            if (playerLCManager == null) {
                 throw new IllegalStateException("Player2EntityResolver must be provided");
             }
 

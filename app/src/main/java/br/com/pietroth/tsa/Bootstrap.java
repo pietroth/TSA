@@ -15,6 +15,7 @@ import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.GameDataPipelineRegister;
 import br.com.pietroth.tsa.core.game.GameLoop;
 import br.com.pietroth.tsa.core.game.player.Player2EntityResolver;
+import br.com.pietroth.tsa.core.game.player.PlayerLCManager;
 import br.com.pietroth.tsa.core.game.world.block.BlockRegister;
 import br.com.pietroth.tsa.core.game.world.block.Blocks;
 
@@ -24,6 +25,7 @@ public class Bootstrap {
     private final ComponentResolver componentResolver;
     private final ClientLCManager clientLCManager;
     private final Player2EntityResolver player2EntityResolver;
+    private final PlayerLCManager playerLCManager;
     private final NetworkAggregator networkAggregator;
 
     public Bootstrap(Builder builder) {
@@ -32,6 +34,7 @@ public class Bootstrap {
         this.componentResolver = builder.componentResolver;
         this.clientLCManager = builder.clientLCManager;
         this.player2EntityResolver = builder.player2EntityResolver;
+        this.playerLCManager = builder.playerLCManager;
         this.networkAggregator = builder.networkAggregator;
     }
 
@@ -54,7 +57,7 @@ public class Bootstrap {
         GameLoop loop = GameLoop.builder()
             .ecsRuntime(ecsRuntime)
             .clientLCManager(clientLCManager)
-            .player2EntityResolver(player2EntityResolver)
+            .playerLCManager(playerLCManager)
             .build();
         new Thread(loop).start();
     }
@@ -65,6 +68,7 @@ public class Bootstrap {
         private ComponentResolver componentResolver;
         private ClientLCManager clientLCManager;
         private Player2EntityResolver player2EntityResolver;
+        private PlayerLCManager playerLCManager;
         private NetworkAggregator networkAggregator;
 
         public Builder ecsRuntime(ECSRuntime ecsRuntime) {
@@ -89,6 +93,11 @@ public class Bootstrap {
 
         public Builder player2EntityResolver(Player2EntityResolver player2EntityResolver) {
             this.player2EntityResolver = player2EntityResolver;
+            return this;
+        }
+
+        public Builder playerLCManager(PlayerLCManager playerLCManager) {
+            this.playerLCManager = playerLCManager;
             return this;
         }
 
