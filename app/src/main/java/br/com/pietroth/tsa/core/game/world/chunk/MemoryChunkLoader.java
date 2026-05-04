@@ -1,34 +1,36 @@
 package br.com.pietroth.tsa.core.game.world.chunk;
 
-import java.util.Map;
-import java.util.HashMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 public class MemoryChunkLoader implements ChunkLoader {
-    private final Map<ChunkPosition, Chunk> loadedChunks; // Change it;
+    private final Long2ObjectMap<Chunk> loadedChunks;
 
     public MemoryChunkLoader( ) {
-       loadedChunks = new HashMap<>();
+       loadedChunks = new Long2ObjectOpenHashMap<>();
     }
 
     @Override
     public void load(Chunk chunk) {
-        ChunkPosition pos = new ChunkPosition(chunk.getX(), chunk.getY());
-        loadedChunks.put(pos, chunk);
+        loadedChunks.put(pack(chunk.getX(), chunk.getY()), chunk);
     }
 
     @Override
     public boolean isLoaded(int x, int y) {
-        ChunkPosition pos = new ChunkPosition(x, y);
-        return loadedChunks.containsKey(pos);
+        return loadedChunks.containsKey(pack(x, y));
     }
 
     @Override
     public void unload(int x, int y) {
-        loadedChunks.remove(new ChunkPosition(x, y));
+        loadedChunks.remove(pack(x, y));
     }
 
     @Override
     public Chunk getChunk(int x, int y) {
-        return loadedChunks.get(new ChunkPosition(x, y));
+        return loadedChunks.get(pack(x, y));
+    }
+
+    private long pack(int x, int y) {
+        return ((long) x << 32) | (y & 0xFFFFFFFFL);
     }
 }
