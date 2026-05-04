@@ -40,17 +40,21 @@ public class IntentionGateway implements ConnectionReceivedListener {
         int validationResult = processor.validator().validate(intention);
         if (validationResult != 0) // validation failed, publish IR and return
         {
-            IRPublisherSingleton.get().publish(new IR(
-                validationResult,
-                intention.getCorrelationId()
-            ), intention.getOriginId());
+            IRPublisherSingleton.get().publish(
+                new IR.Builder()
+                    .error(intention.getCorrelationId(), (byte) IR.ERROR, (byte) validationResult)
+                    .build(),
+                intention.getOriginId()
+            );
             return;
         }
 
         processor.useCase().execute(intention.getOriginId(), intention.getData());
-        IRPublisherSingleton.get().publish(new IR(
-            0, // success
-            intention.getCorrelationId()
-        ), intention.getOriginId());
+        IRPublisherSingleton.get().publish(
+            new IR.Builder()
+                .success(intention.getCorrelationId(), (byte) IR.SUCCESS)
+                .build(),
+            intention.getOriginId()
+        );
     }
 }
