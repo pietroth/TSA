@@ -8,24 +8,24 @@ import br.com.pietroth.tsa.core.game.world.biome.BiomeType;
 
 public class NoiseChunkFiller implements ChunkFiller {
     private final BiomePicker biomePicker;
-    private final NoiseLayer temperatureNoiseLayer;
-    private final NoiseLayer elevationNoiseLayer;
-    private final NoiseLayer humidityNoiseLayer;
-    private final NoiseLayer lakeNoiseLayer;
+    private final NoiseLayer firstNoiseLayer;
+    private final NoiseLayer secondNoiseLayer;
+    private final NoiseLayer thirdNoiseLayer;
+    private final NoiseLayer fourthNoiseLayer;
 
     public NoiseChunkFiller(
             BiomePicker biomePicker,
-            NoiseLayer temperatureNoiseLayer,
-            NoiseLayer elevationNoiseLayer,
-            NoiseLayer humidityNoiseLayer,
-            NoiseLayer lakeNoiseLayer
+            NoiseLayer firstNoiseLayer,
+            NoiseLayer secondNoiseLayer,
+            NoiseLayer thirdNoiseLayer,
+            NoiseLayer fourthNoiseLayer
         ){
 
         this.biomePicker = biomePicker;
-        this.temperatureNoiseLayer = temperatureNoiseLayer;
-        this.elevationNoiseLayer = elevationNoiseLayer;
-        this.humidityNoiseLayer = humidityNoiseLayer;
-        this.lakeNoiseLayer = lakeNoiseLayer;
+        this.firstNoiseLayer = firstNoiseLayer;
+        this.secondNoiseLayer = secondNoiseLayer;
+        this.thirdNoiseLayer = thirdNoiseLayer;
+        this.fourthNoiseLayer = fourthNoiseLayer;
     }
 
     @Override
@@ -39,12 +39,12 @@ public class NoiseChunkFiller implements ChunkFiller {
                 int globalX = chunk.getGlobalBlockX(x);
                 int globalY = chunk.getGlobalBlockY(y);
 
-                float temperature = fractalNoise(temperatureNoiseLayer, globalX, globalY, 4, 0.5f, 2.0f);
-                float elevation = fractalNoise(elevationNoiseLayer, globalX, globalY, 5, 0.5f, 2.0f);
-                float humidity = fractalNoise(humidityNoiseLayer, globalX, globalY, 4, 0.5f, 2.0f);
-                float lake = fractalNoise(lakeNoiseLayer, globalX, globalY, 4, 0.5f, 2.0f);
+                float first = fractalNoise(firstNoiseLayer, globalX, globalY, 4, 0.5f, 2.0f);
+                float second = fractalNoise(secondNoiseLayer, globalX, globalY, 5, 0.5f, 2.0f);
+                float third = fractalNoise(thirdNoiseLayer, globalX, globalY, 4, 0.5f, 2.0f);
+                float fourth = fractalNoise(fourthNoiseLayer, globalX, globalY, 4, 0.5f, 2.0f);
 
-                BiomeType biome = biomePicker.pickBiome(temperature, elevation, humidity, lake);
+                BiomeType biome = biomePicker.pickBiome(first, second, third, fourth);
 
                 int blockId = biome.getSurfaceBlockId();
                 byte state = 0;
