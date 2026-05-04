@@ -1,15 +1,12 @@
 package br.com.pietroth.tsa.core.game.world.biome;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class Biomes {
     private final BiomeRegister biomeRegister;
-    private final List<BiomeType> biomeTypes;
+    private final BiomeType[] biomeTypes;
 
     public Biomes(BiomeRegister biomeRegister) {
         this.biomeRegister = biomeRegister;
-        this.biomeTypes = new ArrayList<>();
+        this.biomeTypes = new BiomeType[16];
 
         addBiome(new BiomeType(1, 10)); // plains; block: grass;
         addBiome(new BiomeType(10, 2)); // ocean; block: water;
@@ -20,7 +17,7 @@ public class Biomes {
     }
 
     private void addBiome(BiomeType biomeType) {
-        biomeTypes.add(biomeType);
+        biomeTypes[biomeType.getId()] = biomeType;
     }
 
     private void registerBiomes() {
