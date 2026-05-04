@@ -1,18 +1,19 @@
 package br.com.pietroth.tsa.core.game.world.biome;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MemoryBiomeRegister implements BiomeRegister {
-    private final Map<Integer, BiomeType> biomeTypes = new HashMap<>();
+    private final BiomeType[] biomeTypes;
+
+    public MemoryBiomeRegister(int maxBiomes) {
+        biomeTypes = new BiomeType[maxBiomes];
+    }
 
     @Override
     public void register(BiomeType biomeType) {
-        biomeTypes.put(biomeType.getId(), biomeType);
+        biomeTypes[biomeType.getId()] = biomeType;
     }
 
     @Override
     public BiomeType get(int id) {
-        return biomeTypes.get(id);
+        return biomeTypes[id];
     }
 }
