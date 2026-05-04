@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class MemoryChunkLoader implements ChunkLoader {
-    private final Map<ChunkPosition, Chunk> loadedChunks;
+    private final Map<ChunkPosition, Chunk> loadedChunks; // Change it;
 
     public MemoryChunkLoader( ) {
        loadedChunks = new HashMap<>();
