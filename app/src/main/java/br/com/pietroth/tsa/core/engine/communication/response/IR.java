@@ -19,8 +19,8 @@ public final class IR {
         this.data = builder.data;
     } 
 
-    public int getStatus() {
-        return status & 0xFF;
+    public byte getStatus() {
+        return status;
     }
 
     public boolean isSuccess() {
@@ -29,6 +29,14 @@ public final class IR {
 
     public int getCorrelationId() {
         return correlationId;
+    }
+
+    public byte getErrorCode() {
+        return errorCode;
+    }
+
+    public byte[] getData() {
+        return data;
     }
 
     public static class Builder {
