@@ -49,8 +49,7 @@ public class DebugWorldGeneration {
         humidityLayer = new HumidityNoiseLayer(new SimplexNoiseAlgorithm(seedRandom.nextLong()));
         lakeNoiseLayer = new LakeNoiseLayer(new SimplexNoiseAlgorithm(seedRandom.nextLong()));
 
-        BiomeRegister biomeRegister = new MemoryBiomeRegister(16);
-        new Biomes(biomeRegister);
+        BiomeRegister biomeRegister = new MemoryBiomeRegister(16); 
         BiomePicker biomePicker = new BiomePicker(biomeRegister);
 
         ChunkLoader loader = new MemoryChunkLoader();
