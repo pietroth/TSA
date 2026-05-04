@@ -8,18 +8,17 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.net.Socket;
 import java.io.EOFException;
-import java.util.List;
 
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import java.util.ArrayList;
 
 public class TCPConnection implements Connection {
     private int id;
     private final InputStream input;
     private final OutputStream output;
-    private List<ConnectionReceivedListener> listeners = new ArrayList<>();
+    private ObjectArrayList<ConnectionReceivedListener> listeners = new ObjectArrayList<>();
 
     public TCPConnection(Socket socket, int id) throws IOException 
     {
