@@ -2,17 +2,22 @@ package br.com.pietroth.tsa.core.engine.communication.response;
 
 // IR means Immediate Response /ˈaɪər/ (air)
 
-public class IR {
-    private int correlationId; 
-    private byte status;
+public final class IR {
+    public static final int SUCCESS = 0;
+    public static final int PARTIAL = 1;
+    public static final int ERROR = 2; 
 
-    public IR(int status, int correlationId) {
-        if (status < 0 || status > 255) {
-            throw new IllegalArgumentException("Status must be between 0 and 255");
-        }
-        this.status = (byte) status;
-        this.correlationId = correlationId;
-    }
+    private final int correlationId; 
+    private final byte status;
+    private final byte errorCode;
+    private final byte[] data;
+
+    public IR(Builder builder) {
+        this.correlationId = builder.correlationId;
+        this.status = builder.status;
+        this.errorCode = builder.errorCode;
+        this.data = builder.data;
+    } 
 
     public int getStatus() {
         return status & 0xFF;
@@ -24,5 +29,57 @@ public class IR {
 
     public int getCorrelationId() {
         return correlationId;
+    }
+
+    public static class Builder {
+        private int correlationId;
+        private byte status = -1;
+        private byte errorCode;
+        private byte[] data;
+        private boolean modeSet = false; 
+
+        // Assistant method to verify if one of the methos alredy be called;
+        private void checkModeSet() {
+            if (modeSet) {
+                throw new IllegalStateException("Um dos métodos (success, partial, error) já foi chamado!");
+            }
+        }
+
+        public Builder success(int correlationId, byte status) {
+            checkModeSet();
+            this.correlationId = correlationId;
+            this.status = status;
+            this.modeSet = true;
+            return this;
+        }
+
+        public Builder partial(int correlationId, byte status, byte[] data) {
+            checkModeSet();
+            this.correlationId = correlationId;
+            this.status = status;
+            this.data = data;
+            this.modeSet = true;
+            return this;
+        }
+
+        public Builder error(int correlationId, byte status, byte errorCode) {
+            checkModeSet();
+            this.correlationId = correlationId;
+            this.status = status;
+            this.errorCode = errorCode;
+            this.modeSet = true;
+            return this;
+        }
+
+        public IR build() {
+            if (!modeSet) {
+                throw new IllegalStateException("None method has been called!");
+            }
+            if (status < 0 || status > 2) {
+                throw new IllegalStateException("Status must be between 0 and 2!");
+            }
+    
+            return new IR(this);
+        }
     }
 }

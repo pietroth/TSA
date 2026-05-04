@@ -8,13 +8,7 @@ import br.com.pietroth.tsa.core.engine.network.protocol.IntentionGateway;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
 import br.com.pietroth.tsa.core.game.player.Player2EntityResolver;
 import br.com.pietroth.tsa.core.game.player.PlayerLCManager;
-import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveData;
-import br.com.pietroth.tsa.core.game.player.playermovement.PlayerMoveUseCase;
 import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
-
-import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class App {
 
@@ -40,52 +34,9 @@ public class App {
             .networkAggregator(new NetworkAggregator(20, 20))
             .build();
         bootstrap.boot();
-
-        // Movement UseCase
-        PlayerMoveUseCase playerMovement =
-                new PlayerMoveUseCase(runtime.getContainer(), player2EntityResolver);
-
-        // Input
-        JFrame frame = new JFrame("TSA Debug Input");
-        frame.setSize(400, 200);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                switch (e.getKeyCode()) {
         
-                    case KeyEvent.VK_W:
-                        playerMovement.execute(1, new PlayerMoveData(0, 1));
-                        System.out.println("W");
-                        break;
-
-                    case KeyEvent.VK_S:
-                        playerMovement.execute(1, new PlayerMoveData(0, -1));
-                        System.out.println("S");
-                        break;
-
-                    case KeyEvent.VK_A:
-                        playerMovement.execute(1, new PlayerMoveData(-1, 0));
-                        System.out.println("A");
-                        break;
-
-                    case KeyEvent.VK_D:
-                        playerMovement.execute(1, new PlayerMoveData(1, 0));
-                        System.out.println("D");
-                        break;
-
-                }
-
-            }
-
-        });
-
-        frame.setVisible(true);
-        frame.requestFocus();
-
+        // Movement UseCase
+        DebugWorldGeneration debugWorldGeneration = new DebugWorldGeneration();
+        debugWorldGeneration.start();
     }
-
 }

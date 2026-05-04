@@ -3,6 +3,8 @@ package br.com.pietroth.tsa;
 import br.com.pietroth.tsa.core.game.world.chunk.*;
 import br.com.pietroth.tsa.core.game.world.chunk.generation.*;
 import br.com.pietroth.tsa.core.game.world.biome.*;
+import br.com.pietroth.tsa.core.game.world.block.Blocks;
+import br.com.pietroth.tsa.core.game.world.block.MemoryBlockRegister;
 import br.com.pietroth.tsa.core.game.world.generation.*;
 import br.com.pietroth.tsa.core.game.world.WorldConstants;
 import br.com.pietroth.tsa.infrastructure.worldgeneration.simplexnoise.SimplexNoiseAlgorithm;
@@ -54,6 +56,9 @@ public class DebugWorldGeneration {
 
         ChunkLoader loader = new MemoryChunkLoader();
         ChunkFiller filler = new NoiseChunkFiller(biomePicker, temperatureLayer, elevationLayer, humidityLayer, lakeNoiseLayer);
+
+        Biomes.registerAll(biomeRegister);
+        Blocks.registerAll(new MemoryBlockRegister(32));
 
         manager = new ChunkManager(loader, filler);
         blocksPerChunk = WorldConstants.BLOCKS_PER_CHUNK;
