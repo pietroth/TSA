@@ -30,31 +30,27 @@ public class IntentionGateway implements ConnectionReceivedListener {
         if (processor == null) 
             throw new IllegalStateException("No processor found for intention id " + id);
 
-        processIntention(processor, connection, segment, id);
+        processIntention(processor, connection, segment);
         System.out.println("Processed intention. Id: " + id + ", OriginId: " + connection.getId());
     }
 
-    private <T extends MIDFData> void processIntention(InnerProcessor<T> processor, Connection connection, MemorySegment segment, int id) {
+    private <T extends MIDFData> void processIntention(InnerProcessor<T> processor, Connection connection, MemorySegment segment) {
         Intention<T> intention = decoder.decode(segment, connection.getId(), processor.codec());
 
         int validationResult = processor.validator().validate(intention);
         if (validationResult != 0) // validation failed, publish IR and return
         {
-            IRPublisherSingleton.get().publish(
-                new IR.Builder()
-                    .error(intention.getCorrelationId(), (byte) IR.ERROR, (byte) validationResult)
-                    .build(),
-                intention.getOriginId()
+            IRPublisherSingleton.get().publish(new IR.Builder()
+                .success(intention.getCorrelationId(), (byte) 0)
+                .build(),
+                intention.getCorrelationId()
             );
             return;
         }
 
         processor.useCase().execute(intention.getOriginId(), intention.getData());
-        IRPublisherSingleton.get().publish(
-            new IR.Builder()
-                .success(intention.getCorrelationId(), (byte) IR.SUCCESS)
-                .build(),
-            intention.getOriginId()
-        );
+        IRPublisherSingleton.get().publish(new IR.Builder()
+            .success(intention.getCorrelationId(), (byte) 0)
+            .build(), intention.getOriginId());
     }
 }
