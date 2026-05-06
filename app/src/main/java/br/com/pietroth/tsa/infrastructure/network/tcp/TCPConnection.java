@@ -52,7 +52,7 @@ public class TCPConnection implements Connection {
 
     @Override 
     public void run() {
-        try (Arena arena = Arena.ofConfined()) {
+        try (Arena arena = Arena.ofShared()) {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     MemorySegment segment = read(arena);
