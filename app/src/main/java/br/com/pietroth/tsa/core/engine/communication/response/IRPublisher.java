@@ -15,7 +15,7 @@ public class IRPublisher {
     }
 
     public void publish(IR ir, int originId) {
-        try (Arena arena = Arena.ofConfined()) {
+        try (Arena arena = Arena.ofShared()) {
            MemorySegment segment = codec.encode(arena, ir);
 
            delivery.deliveryIr(segment, originId);
