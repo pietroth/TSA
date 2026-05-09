@@ -2,10 +2,11 @@ package br.com.pietroth.tsa.core.game.physics.movement;
 
 import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 import br.com.pietroth.tsa.core.engine.communication.validator.Validator;
+import br.com.pietroth.tsa.core.engine.communication.validator.ValidatorResponse;
 
 public class EntityMoveValidator implements Validator<MoveData> {
     @Override
-    public int validate(Intention<MoveData> intention) {
-        return 0;
+    public ValidatorResponse validate(Intention<MoveData> intention) {
+        return null;
     }
 }

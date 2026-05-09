@@ -13,7 +13,6 @@ import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-
 public class TCPConnection implements Connection {
     private int id;
     private final InputStream input;

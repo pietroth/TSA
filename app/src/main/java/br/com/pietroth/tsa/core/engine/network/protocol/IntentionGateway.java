@@ -4,6 +4,8 @@ import br.com.pietroth.tsa.core.engine.communication.intention.Intention;
 import br.com.pietroth.tsa.core.engine.communication.intention.IntentionDecoder;
 import br.com.pietroth.tsa.core.engine.communication.response.IR;
 import br.com.pietroth.tsa.core.engine.communication.response.IRPublisherSingleton;
+import br.com.pietroth.tsa.core.engine.communication.validator.ValidatorResponse;
+import br.com.pietroth.tsa.core.engine.communication.validator.ValidatorType;
 import br.com.pietroth.tsa.core.engine.network.transport.Connection;
 import br.com.pietroth.tsa.core.engine.network.transport.ConnectionReceivedListener;
 import br.com.pietroth.tsa.core.engine.runtime.ComponentResolver;
@@ -37,20 +39,31 @@ public class IntentionGateway implements ConnectionReceivedListener {
     private <T extends MIDFData> void processIntention(InnerProcessor<T> processor, Connection connection, MemorySegment segment) {
         Intention<T> intention = decoder.decode(segment, connection.getId(), processor.codec());
 
-        int validationResult = processor.validator().validate(intention);
-        if (validationResult != 0) // validation failed, publish IR and return
+        ValidatorResponse validationResult = processor.validator().validate(intention);
+
+        if (validationResult.getType() == ValidatorType.ERROR) // validation failed, publish IR and return
         {
             IRPublisherSingleton.get().publish(new IR.Builder()
-                .success(intention.getCorrelationId(), (byte) 0)
+                .error(intention.getCorrelationId(), (byte) IR.ERROR, validationResult.getCode())
                 .build(),
                 intention.getCorrelationId()
             );
             return;
         }
 
+        else if (validationResult.getType() == ValidatorType.PARTIAL) // validation partial, publish IR and execute
+        {
+            IRPublisherSingleton.get().publish(new IR.Builder()
+                .partial(intention.getCorrelationId(), (byte) IR.PARTIAL, validationResult.getData())
+                .build(),
+                intention.getCorrelationId()
+            );
+        }
+
         processor.useCase().execute(intention.getOriginId(), intention.getData());
-        IRPublisherSingleton.get().publish(new IR.Builder()
-            .success(intention.getCorrelationId(), (byte) 0)
-            .build(), intention.getOriginId());
+
+            IRPublisherSingleton.get().publish(new IR.Builder()
+                .success(intention.getCorrelationId(), (byte) 0)
+                .build(), intention.getOriginId());
     }
 }
