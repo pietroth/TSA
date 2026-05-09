@@ -1,5 +1,7 @@
 package br.com.pietroth.tsa.core.engine.communication.response;
 
+import java.lang.foreign.MemorySegment;
+
 // IR means Immediate Response /ˈaɪər/ (air)
 
 public final class IR {
@@ -10,7 +12,7 @@ public final class IR {
     private final int correlationId; 
     private final byte status;
     private final byte errorCode;
-    private final byte[] data;
+    private final MemorySegment data;
 
     public IR(Builder builder) {
         this.correlationId = builder.correlationId;
@@ -35,7 +37,7 @@ public final class IR {
         return errorCode;
     }
 
-    public byte[] getData() {
+    public MemorySegment getData() {
         return data;
     }
 
@@ -43,7 +45,7 @@ public final class IR {
         private int correlationId;
         private byte status = -1;
         private byte errorCode;
-        private byte[] data;
+        private MemorySegment data;
         private boolean modeSet = false; 
 
         // Assistant method to verify if one of the methos alredy be called;
@@ -61,7 +63,7 @@ public final class IR {
             return this;
         }
 
-        public Builder partial(int correlationId, byte status, byte[] data) {
+        public Builder partial(int correlationId, byte status, MemorySegment data) {
             checkModeSet();
             this.correlationId = correlationId;
             this.status = status;

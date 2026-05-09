@@ -9,9 +9,9 @@ import java.lang.invoke.VarHandle;
 
 public class IRCodec {
     public MemorySegment encode(Arena arena, IR ir) {
-        byte[] data = ir.getData();
-        int payloadSize = data == null ? 0 : data.length;
-        int totalSize = (int) HEADER_SIZE + payloadSize;
+        MemorySegment data = ir.getData();
+        long payloadSize = data == null ? 0 : data.byteSize();
+        long totalSize = (int) HEADER_SIZE + payloadSize;
 
         MemorySegment segment = arena.allocate(totalSize);
 
@@ -21,7 +21,7 @@ public class IRCodec {
         VH_ERROR_CODE.set(segment, 0L, ir.getErrorCode());
 
         if (data != null && payloadSize > 0) {
-            segment.asSlice(HEADER_SIZE, payloadSize).copyFrom(MemorySegment.ofArray(data));
+            segment.asSlice(HEADER_SIZE, payloadSize).copyFrom(data);
         }
 
         return segment;
@@ -41,10 +41,10 @@ public class IRCodec {
             return builder.error(correlationId, status, errorCode).build();
         }
 
-        byte[] data = null;
+        MemorySegment data = MemorySegment.NULL;
         long payloadSize = segment.byteSize() - HEADER_SIZE;
         if (payloadSize > 0) {
-            data = segment.asSlice(HEADER_SIZE, payloadSize).toArray(ValueLayout.JAVA_BYTE);
+            data = segment.asSlice(HEADER_SIZE, payloadSize);
         }
 
         return builder.partial(correlationId, status, data).build();
