@@ -52,6 +52,8 @@ public class Bootstrap {
 
         Blocks.registerAll(blockRegister);
 
+        clientLCManager.subscribe(playerLCManager);
+
         // GameLoop builder
 
         GameLoop loop = GameLoop.builder()

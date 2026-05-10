@@ -12,7 +12,7 @@ public class PhysicsEvents {
         Event<MoveData> event = new Event<MoveData>(
             data, 
             originId,
-            new TargetScope(new OneClient(originId))
+            new TargetScope(new OneClient(originId)) // To update in the future;
         );
         EventPublisherSingleton.get().publish(event);
     }

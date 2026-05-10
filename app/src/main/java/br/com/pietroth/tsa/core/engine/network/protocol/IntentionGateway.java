@@ -13,6 +13,7 @@ import br.com.pietroth.tsa.core.engine.runtime.InnerProcessor;
 import br.com.pietroth.tsa.core.engine.communication.MIDFData;
 
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 
 public class IntentionGateway implements ConnectionReceivedListener {
     private final ComponentResolver processingPipeline;
@@ -38,6 +39,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
 
     private <T extends MIDFData> void processIntention(InnerProcessor<T> processor, Connection connection, MemorySegment segment) {
         Intention<T> intention = decoder.decode(segment, connection.getId(), processor.codec());
+        T executionData = intention.getData();
 
         ValidatorResponse validationResult = processor.validator().validate(intention);
 
@@ -46,8 +48,9 @@ public class IntentionGateway implements ConnectionReceivedListener {
             IRPublisherSingleton.get().publish(new IR.Builder()
                 .error(intention.getCorrelationId(), (byte) IR.ERROR, validationResult.getCode())
                 .build(),
-                intention.getCorrelationId()
-            );  
+                intention.getOriginId()
+            );
+            System.out.println("IR published (Error): Correlation Id: " + intention.getCorrelationId());
             return;
         }
 
@@ -56,14 +59,22 @@ public class IntentionGateway implements ConnectionReceivedListener {
             IRPublisherSingleton.get().publish(new IR.Builder()
                 .partial(intention.getCorrelationId(), (byte) IR.PARTIAL, validationResult.getData())
                 .build(),
-                intention.getCorrelationId()
+                intention.getOriginId()
             );
+            System.out.println("IR published (Partial): Correlation Id: " + intention.getCorrelationId() + "; Data: " + validationResult.getData().toArray(ValueLayout.JAVA_BYTE));
+
+            if (validationResult.getData() != null && validationResult.getData() != MemorySegment.NULL) {
+                executionData = processor.codec().decode(validationResult.getData());
+            }
         }
 
-        processor.useCase().execute(intention.getOriginId(), intention.getData());
+        processor.useCase().execute(intention.getOriginId(), executionData);
 
-            IRPublisherSingleton.get().publish(new IR.Builder()
-                .success(intention.getCorrelationId(), (byte) 0)
-                .build(), intention.getOriginId());
+        IRPublisherSingleton.get().publish(new IR.Builder()
+            .success(intention.getCorrelationId(), (byte) 0)
+            .build(), 
+            intention.getOriginId());
+
+        System.out.println("IR published (Success): Correlation Id: " + intention.getCorrelationId());
     }
 }

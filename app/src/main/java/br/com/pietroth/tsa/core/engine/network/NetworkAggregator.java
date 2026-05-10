@@ -12,7 +12,7 @@ public class NetworkAggregator {
         this.cursors = new int[maxBuffers];
     }
 
-    public void append(int bufferId, byte[] data) {
+    public synchronized void append(int bufferId, byte[] data) {
         int pos = cursors[bufferId];
         if (pos + data.length > buffers[bufferId].length) {
             // expand buffer if needed
@@ -27,7 +27,7 @@ public class NetworkAggregator {
         cursors[bufferId] = 0;
     }
 
-    public void flush(int bufferId, OutputStream outputStream) {
+    public synchronized void flush(int bufferId, OutputStream outputStream) {
         int bytesToSend = cursors[bufferId];
         if (bytesToSend > 0) {
             try {
@@ -40,7 +40,7 @@ public class NetworkAggregator {
         }
     }
 
-    public void flushAll(OutputStream[] outputStreams) {
+    public synchronized void flushAll(OutputStream[] outputStreams) {
         int limit = Math.min(buffers.length, outputStreams.length);
         for (int i = 0; i < limit; i++) {
                 if (outputStreams[i] != null) { 

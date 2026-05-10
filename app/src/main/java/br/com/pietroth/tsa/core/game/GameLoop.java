@@ -33,7 +33,7 @@ public class GameLoop extends TicksPerSecondRunnable {
         scheduleSystems();
 
         int playerId = 1;
-        playerLCManager.createPlayer(playerId);
+        playerLCManager.createPlayer(playerId); // player test
 
         server = TCPServer.builder()
             .port(5555)

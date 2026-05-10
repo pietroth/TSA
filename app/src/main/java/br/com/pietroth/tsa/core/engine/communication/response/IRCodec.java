@@ -10,8 +10,8 @@ import java.lang.invoke.VarHandle;
 public class IRCodec {
     public MemorySegment encode(Arena arena, IR ir) {
         MemorySegment data = ir.getData();
-        long payloadSize = data == null ? 0 : data.byteSize();
-        long totalSize = (int) HEADER_SIZE + payloadSize;
+        int payloadSize = data == null ? 0 : (int) data.byteSize();
+        int totalSize = (int) HEADER_SIZE + payloadSize;
 
         MemorySegment segment = arena.allocate(totalSize);
 
