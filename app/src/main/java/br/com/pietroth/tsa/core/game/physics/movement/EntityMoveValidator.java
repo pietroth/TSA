@@ -7,6 +7,6 @@ import br.com.pietroth.tsa.core.engine.communication.validator.ValidatorResponse
 public class EntityMoveValidator implements Validator<MoveData> {
     @Override
     public ValidatorResponse validate(Intention<MoveData> intention) {
-        return null;
+        return ValidatorResponse.success();
     }
 }

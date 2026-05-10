@@ -47,7 +47,7 @@ public class IntentionGateway implements ConnectionReceivedListener {
                 .error(intention.getCorrelationId(), (byte) IR.ERROR, validationResult.getCode())
                 .build(),
                 intention.getCorrelationId()
-            );
+            );  
             return;
         }
 
