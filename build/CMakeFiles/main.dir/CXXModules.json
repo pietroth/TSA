@@ -1,0 +1,197 @@
+{
+	"modules" : 
+	{
+		"tsa.world.chunk" : 
+		{
+			"bmi" : "/home/pietroth/Cpp/TSA/TSA/build/CMakeFiles/main.dir/tsa.world.chunk.gcm",
+			"is-private" : false
+		},
+		"tsa.world.tile" : 
+		{
+			"bmi" : "/home/pietroth/Cpp/TSA/TSA/build/CMakeFiles/main.dir/tsa.world.tile.gcm",
+			"is-private" : false
+		}
+	},
+	"references" : 
+	{
+		"communication.base_protocol" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.base_protocol.gcm"
+		},
+		"communication.event" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.event.gcm"
+		},
+		"communication.intention" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.intention.gcm"
+		},
+		"communication.mbt" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.mbt.gcm"
+		},
+		"communication.message" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.message.gcm"
+		},
+		"communication.notification" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.notification.gcm"
+		},
+		"communication.response" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/communication.response.gcm"
+		},
+		"network.client" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.client.gcm"
+		},
+		"network.connection_manager" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.connection_manager.gcm"
+		},
+		"network.message_batch" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.message_batch.gcm"
+		},
+		"network.network_manager" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm"
+		},
+		"network.server" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.server.gcm"
+		},
+		"network.target" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.target.gcm"
+		},
+		"network.transport" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "external/LightnerX/CMakeFiles/LightnerX.dir/network.transport.gcm"
+		},
+		"std" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi"
+		},
+		"std.compat" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/df29794099f5.bmi"
+		},
+		"tsa.world.chunk" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "CMakeFiles/main.dir/tsa.world.chunk.gcm"
+		},
+		"tsa.world.tile" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "CMakeFiles/main.dir/tsa.world.tile.gcm"
+		}
+	},
+	"usages" : 
+	{
+		"communication.base_protocol" : 
+		[
+			"std"
+		],
+		"communication.event" : 
+		[
+			"communication.base_protocol",
+			"communication.mbt",
+			"network.client",
+			"network.network_manager",
+			"std"
+		],
+		"communication.intention" : 
+		[
+			"communication.base_protocol",
+			"communication.mbt",
+			"std"
+		],
+		"communication.mbt" : 
+		[
+			"std"
+		],
+		"communication.message" : 
+		[
+			"communication.base_protocol",
+			"communication.event",
+			"communication.intention",
+			"communication.mbt",
+			"communication.notification",
+			"communication.response",
+			"network.client",
+			"network.connection_manager",
+			"network.message_batch",
+			"network.network_manager",
+			"network.target",
+			"network.transport",
+			"std"
+		],
+		"communication.notification" : 
+		[
+			"communication.base_protocol",
+			"communication.mbt",
+			"std"
+		],
+		"communication.response" : 
+		[
+			"communication.base_protocol",
+			"std"
+		],
+		"network.client" : 
+		[
+			"network.network_manager",
+			"std"
+		],
+		"network.connection_manager" : 
+		[
+			"network.network_manager",
+			"std"
+		],
+		"network.message_batch" : 
+		[
+			"network.connection_manager",
+			"network.network_manager",
+			"network.target",
+			"network.transport",
+			"std"
+		],
+		"network.server" : 
+		[
+			"network.network_manager",
+			"std"
+		],
+		"network.target" : 
+		[
+			"std"
+		],
+		"network.transport" : 
+		[
+			"network.connection_manager",
+			"network.network_manager",
+			"std"
+		],
+		"std.compat" : 
+		[
+			"std"
+		]
+	}
+}

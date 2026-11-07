@@ -1,0 +1,8 @@
+[
+  {
+    "label": "Build and Run",
+    "command": "cmake --build build && ./build/main",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false
+  }
+]

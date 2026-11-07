@@ -1,0 +1,28 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/network/transport.cppm.o",
+"provides": [
+{
+"logical-name": "network.transport",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "network.network_manager"
+}
+,
+{
+"logical-name": "std"
+}
+,
+{
+"logical-name": "network.connection_manager"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

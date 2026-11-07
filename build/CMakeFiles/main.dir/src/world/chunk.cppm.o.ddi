@@ -1,0 +1,17 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/main.dir/src/world/chunk.cppm.o",
+"provides": [
+{
+"logical-name": "tsa.world.chunk",
+"is-interface": true
+}
+],
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

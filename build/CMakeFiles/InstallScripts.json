@@ -1,0 +1,14 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/pietroth/Cpp/TSA/TSA/build/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/external/GameNetworkingSockets/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/external/GameNetworkingSockets/examples/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/external/GameNetworkingSockets/src/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/communication/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/network/cmake_install.cmake",
+		"/home/pietroth/Cpp/TSA/TSA/build/src/world/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,62 @@
+{
+	"abstract" : true,
+	"artifacts" : 
+	[
+		{
+			"path" : "/usr/bin/protoc"
+		}
+	],
+	"backtrace" : 3,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"find_package"
+		],
+		"files" : 
+		[
+			"/usr/share/cmake-4.2/Modules/FindProtobuf.cmake",
+			"external/LightnerX/external/GameNetworkingSockets/src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"file" : 0,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1125,
+				"parent" : 2
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"id" : "protobuf::protoc::@91adf030002d2fd5b9e9",
+	"imported" : true,
+	"local" : true,
+	"name" : "protobuf::protoc",
+	"nameOnDisk" : "protoc",
+	"paths" : 
+	{
+		"build" : "external/LightnerX/external/GameNetworkingSockets/src",
+		"source" : "external/LightnerX/external/GameNetworkingSockets/src"
+	},
+	"sources" : [],
+	"type" : "EXECUTABLE"
+}

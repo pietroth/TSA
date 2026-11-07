@@ -1,0 +1,24 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/communication/response.cppm.o",
+"provides": [
+{
+"logical-name": "communication.response",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "communication.base_protocol"
+}
+,
+{
+"logical-name": "std"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

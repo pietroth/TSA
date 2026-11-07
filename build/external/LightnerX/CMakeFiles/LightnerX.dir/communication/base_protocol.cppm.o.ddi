@@ -1,0 +1,20 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/communication/base_protocol.cppm.o",
+"provides": [
+{
+"logical-name": "communication.base_protocol",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "std"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

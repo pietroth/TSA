@@ -1,0 +1,48 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/communication/message.cppm.o",
+"provides": [
+{
+"logical-name": "communication.message",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "network.target"
+}
+,
+{
+"logical-name": "network.connection_manager"
+}
+,
+{
+"logical-name": "communication.intention"
+}
+,
+{
+"logical-name": "communication.event"
+}
+,
+{
+"logical-name": "std"
+}
+,
+{
+"logical-name": "communication.response"
+}
+,
+{
+"logical-name": "communication.notification"
+}
+,
+{
+"logical-name": "network.message_batch"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

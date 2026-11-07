@@ -1,0 +1,32 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/communication/event.cppm.o",
+"provides": [
+{
+"logical-name": "communication.event",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "communication.mbt"
+}
+,
+{
+"logical-name": "network.client"
+}
+,
+{
+"logical-name": "communication.base_protocol"
+}
+,
+{
+"logical-name": "std"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

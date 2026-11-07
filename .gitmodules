@@ -1,0 +1,3 @@
+[submodule "external/LightnerX"]
+	path = external/LightnerX
+	url = https://github.com/pietroth/LightnerX

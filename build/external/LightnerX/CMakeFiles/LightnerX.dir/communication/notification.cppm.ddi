@@ -1,0 +1,28 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/communication/notification.cppm.o",
+"provides": [
+{
+"logical-name": "communication.notification",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "communication.base_protocol"
+}
+,
+{
+"logical-name": "std"
+}
+,
+{
+"logical-name": "communication.mbt"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

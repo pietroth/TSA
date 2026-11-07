@@ -1,0 +1,24 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/network/client.cppm.o",
+"provides": [
+{
+"logical-name": "network.client",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "network.network_manager"
+}
+,
+{
+"logical-name": "std"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

@@ -1,0 +1,169 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "RelWithDebInfo",
+	"cxx-modules" : 
+	{
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/base_protocol.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/base_protocol.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/event.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/event.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/intention.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/intention.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/mbt.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/mbt.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/message.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/message.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/notification.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/notification.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/communication/response.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "communication",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/communication/response.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/client.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/client.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/connection_manager.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/connection_manager.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/message_batch.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/message_batch.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/network_manager.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/network_manager.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/server.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/server.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/target.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/target.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"external/LightnerX/CMakeFiles/LightnerX.dir/network/transport.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "network",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX/network/transport.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		}
+	},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX",
+	"dir-cur-src" : "/home/pietroth/Cpp/TSA/TSA/external/LightnerX",
+	"dir-top-bld" : "/home/pietroth/Cpp/TSA/TSA/build",
+	"dir-top-src" : "/home/pietroth/Cpp/TSA/TSA",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/home/pietroth/Cpp/TSA/TSA/external/LightnerX",
+		"/home/pietroth/Cpp/TSA/TSA/external/LightnerX/external/GameNetworkingSockets/src/../include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : 
+	[
+		"/home/pietroth/Cpp/TSA/TSA/build/CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir"
+	],
+	"module-dir" : "/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/CMakeFiles/LightnerX.dir",
+	"sources" : {}
+}

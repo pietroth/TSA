@@ -1,0 +1,4 @@
+$root .
+network.server external/LightnerX/CMakeFiles/LightnerX.dir/network.server.gcm
+std CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+network.network_manager external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm

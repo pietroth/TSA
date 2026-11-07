@@ -1,0 +1,333 @@
+{
+	"configurations" : 
+	[
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "OpenSSL::Crypto::@4229243817e1aca1afe0",
+					"jsonFile" : "target-OpenSSL__Crypto-RelWithDebInfo-4a7a33a9c8faa3ff8897.json",
+					"name" : "OpenSSL::Crypto",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "OpenSSL::SSL::@4229243817e1aca1afe0",
+					"jsonFile" : "target-OpenSSL__SSL-RelWithDebInfo-be0393d14a1546d98ef1.json",
+					"name" : "OpenSSL::SSL",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "OpenSSL::applink::@4229243817e1aca1afe0",
+					"jsonFile" : "target-OpenSSL__applink-RelWithDebInfo-28707e9f1aba52353a11.json",
+					"name" : "OpenSSL::applink",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "Threads::Threads::@91adf030002d2fd5b9e9",
+					"jsonFile" : "target-Threads__Threads-RelWithDebInfo-ed3ee4ae329cb767c820.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "__CMAKE::CXX23::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-__CMAKE__CXX23-RelWithDebInfo-cb971496e6c82ce6484e.json",
+					"name" : "__CMAKE::CXX23",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "__CMAKE::CXX26::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-__CMAKE__CXX26-RelWithDebInfo-6e647229f8c3def2ad34.json",
+					"name" : "__CMAKE::CXX26",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "protobuf::libprotobuf::@91adf030002d2fd5b9e9",
+					"jsonFile" : "target-protobuf__libprotobuf-RelWithDebInfo-74a92d6d109931019dfc.json",
+					"name" : "protobuf::libprotobuf",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "protobuf::libprotobuf-lite::@91adf030002d2fd5b9e9",
+					"jsonFile" : "target-protobuf__libprotobuf-lite-RelWithDebInfo-94478e8b94e8c64cbd2c.json",
+					"name" : "protobuf::libprotobuf-lite",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "protobuf::protoc::@91adf030002d2fd5b9e9",
+					"jsonFile" : "target-protobuf__protoc-RelWithDebInfo-2340962da9d10119e6bf.json",
+					"name" : "protobuf::protoc",
+					"projectIndex" : 2
+				}
+			],
+			"directories" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						4,
+						5
+					],
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						7
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-9ad1a58d4644cf6543fa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.2"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				},
+				{
+					"build" : "external/LightnerX",
+					"childIndexes" : 
+					[
+						2,
+						5,
+						6
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.LightnerX-RelWithDebInfo-f6421e8c520f4fea8002.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "external/LightnerX",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"build" : "external/LightnerX/external/GameNetworkingSockets",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.LightnerX.external.GameNetworkingSockets-RelWithDebInfo-5dbf20ba7b6986e4c72e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "external/LightnerX/external/GameNetworkingSockets"
+				},
+				{
+					"build" : "external/LightnerX/external/GameNetworkingSockets/examples",
+					"jsonFile" : "directory-external.LightnerX.external.GameNetworkingSockets.examples-RelWithDebInfo-b8d2e1be6589e1c8b50c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "external/LightnerX/external/GameNetworkingSockets/examples"
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						3,
+						6,
+						7,
+						8
+					],
+					"build" : "external/LightnerX/external/GameNetworkingSockets/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.LightnerX.external.GameNetworkingSockets.src-RelWithDebInfo-dbaa4e0e3ac4dcf07fc3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "external/LightnerX/external/GameNetworkingSockets/src",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "external/LightnerX/communication",
+					"jsonFile" : "directory-external.LightnerX.communication-RelWithDebInfo-c4d2c5e0a334f24a03b5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "external/LightnerX/communication"
+				},
+				{
+					"build" : "external/LightnerX/network",
+					"jsonFile" : "directory-external.LightnerX.network-RelWithDebInfo-4f912ec21f4b0cf607a2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "external/LightnerX/network"
+				},
+				{
+					"build" : "src/world",
+					"jsonFile" : "directory-src.world-RelWithDebInfo-fb2d6c5594730670dff9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/world"
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						4,
+						5
+					],
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						7
+					],
+					"name" : "TSA",
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						5,
+						6
+					],
+					"name" : "LightnerX",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						6,
+						7,
+						8
+					],
+					"directoryIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"name" : "GameNetworkingSockets",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 4,
+					"id" : "GameNetworkingSockets::@91adf030002d2fd5b9e9",
+					"jsonFile" : "target-GameNetworkingSockets-RelWithDebInfo-365da31e2101353a9798.json",
+					"name" : "GameNetworkingSockets",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "GameNetworkingSockets_s::@91adf030002d2fd5b9e9",
+					"jsonFile" : "target-GameNetworkingSockets_s-RelWithDebInfo-ab59ffa4d519f5a0001a.json",
+					"name" : "GameNetworkingSockets_s",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "LightnerX::@37f72ddf869ba505fb5d",
+					"jsonFile" : "target-LightnerX-RelWithDebInfo-ba9e6f42223d271a7582.json",
+					"name" : "LightnerX",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "__CMAKE__CXX26@synth_be6dce11a94e::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-__CMAKE__CXX26@synth_be6dce11a94e-RelWithDebInfo-e21e9f7877ba6c534b4f.json",
+					"name" : "__CMAKE__CXX26@synth_be6dce11a94e",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-RelWithDebInfo-bd0401a910a1dcd0785b.json",
+					"name" : "main",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/pietroth/Cpp/TSA/TSA/build",
+		"source" : "/home/pietroth/Cpp/TSA/TSA"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	}
+}

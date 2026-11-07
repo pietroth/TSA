@@ -1,0 +1,53 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "RelWithDebInfo",
+	"cxx-modules" : 
+	{
+		"CMakeFiles/main.dir/src/world/chunk.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "src/world",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/src/world/chunk.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		},
+		"CMakeFiles/main.dir/src/world/tile.cppm.o" : 
+		{
+			"bmi-only" : false,
+			"destination" : null,
+			"name" : "CXX_MODULES",
+			"relative-directory" : "src/world",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/src/world/tile.cppm",
+			"type" : "CXX_MODULES",
+			"visibility" : "PUBLIC"
+		}
+	},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/pietroth/Cpp/TSA/TSA/build",
+	"dir-cur-src" : "/home/pietroth/Cpp/TSA/TSA",
+	"dir-top-bld" : "/home/pietroth/Cpp/TSA/TSA/build",
+	"dir-top-src" : "/home/pietroth/Cpp/TSA/TSA",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : [],
+	"language" : "CXX",
+	"linked-target-dirs" : 
+	[
+		"/home/pietroth/Cpp/TSA/TSA/build/external/LightnerX/CMakeFiles/LightnerX.dir",
+		"/home/pietroth/Cpp/TSA/TSA/build/CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir"
+	],
+	"module-dir" : "/home/pietroth/Cpp/TSA/TSA/build/CMakeFiles/main.dir",
+	"sources" : 
+	{
+		"CMakeFiles/main.dir/src/main.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/pietroth/Cpp/TSA/TSA/src/main.cpp"
+		}
+	}
+}

@@ -1,0 +1,43 @@
+ninja_dyndep_version = 1.0
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/event.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.event.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/network.client.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi external/LightnerX/CMakeFiles/LightnerX.dir/communication.base_protocol.gcm external/LightnerX/CMakeFiles/LightnerX.dir/communication.mbt.gcm
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/base_protocol.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.base_protocol.gcm: dyndep | CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/mbt.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.mbt.gcm: dyndep | CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/intention.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.intention.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/communication.mbt.gcm external/LightnerX/CMakeFiles/LightnerX.dir/communication.base_protocol.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/notification.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.notification.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/communication.base_protocol.gcm external/LightnerX/CMakeFiles/LightnerX.dir/communication.mbt.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/response.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.response.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/communication.base_protocol.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/communication/message.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/communication.message.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/network.target.gcm external/LightnerX/CMakeFiles/LightnerX.dir/network.connection_manager.gcm external/LightnerX/CMakeFiles/LightnerX.dir/communication.intention.gcm external/LightnerX/CMakeFiles/LightnerX.dir/communication.event.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi external/LightnerX/CMakeFiles/LightnerX.dir/communication.response.gcm external/LightnerX/CMakeFiles/LightnerX.dir/communication.notification.gcm external/LightnerX/CMakeFiles/LightnerX.dir/network.message_batch.gcm
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/server.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.server.gcm: dyndep | CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/client.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.client.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/connection_manager.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.connection_manager.gcm: dyndep | CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/transport.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.transport.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi external/LightnerX/CMakeFiles/LightnerX.dir/network.connection_manager.gcm
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/network_manager.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.network_manager.gcm: dyndep
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/message_batch.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.message_batch.gcm: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/network.connection_manager.gcm CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi external/LightnerX/CMakeFiles/LightnerX.dir/network.target.gcm external/LightnerX/CMakeFiles/LightnerX.dir/network.transport.gcm
+  restat = 1
+
+build external/LightnerX/CMakeFiles/LightnerX.dir/network/target.cppm.o | external/LightnerX/CMakeFiles/LightnerX.dir/network.target.gcm: dyndep | CMakeFiles/__CMAKE__CXX26@synth_be6dce11a94e.dir/1f708004f604.bmi
+  restat = 1
+

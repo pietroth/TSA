@@ -1,0 +1,32 @@
+{
+"rules": [
+{
+"primary-output": "external/LightnerX/CMakeFiles/LightnerX.dir/network/message_batch.cppm.o",
+"provides": [
+{
+"logical-name": "network.message_batch",
+"is-interface": true
+}
+],
+"requires": [
+{
+"logical-name": "network.transport"
+}
+,
+{
+"logical-name": "std"
+}
+,
+{
+"logical-name": "network.connection_manager"
+}
+,
+{
+"logical-name": "network.target"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}

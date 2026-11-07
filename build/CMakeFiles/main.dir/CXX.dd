@@ -1,0 +1,9 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/main.dir/src/main.cpp.o: dyndep | external/LightnerX/CMakeFiles/LightnerX.dir/network.server.gcm
+
+build CMakeFiles/main.dir/src/world/tile.cppm.o | CMakeFiles/main.dir/tsa.world.tile.gcm: dyndep
+  restat = 1
+
+build CMakeFiles/main.dir/src/world/chunk.cppm.o | CMakeFiles/main.dir/tsa.world.chunk.gcm: dyndep
+  restat = 1
+

@@ -1,0 +1,55 @@
+{
+	"abstract" : true,
+	"backtrace" : 3,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"find_package"
+		],
+		"files" : 
+		[
+			"/usr/share/cmake-4.2/Modules/FindOpenSSL.cmake",
+			"external/LightnerX/external/GameNetworkingSockets/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 135,
+				"parent" : 0
+			},
+			{
+				"file" : 0,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 846,
+				"parent" : 2
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"id" : "OpenSSL::applink::@4229243817e1aca1afe0",
+	"imported" : true,
+	"local" : true,
+	"name" : "OpenSSL::applink",
+	"paths" : 
+	{
+		"build" : "external/LightnerX/external/GameNetworkingSockets",
+		"source" : "external/LightnerX/external/GameNetworkingSockets"
+	},
+	"sources" : [],
+	"type" : "INTERFACE_LIBRARY"
+}
